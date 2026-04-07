@@ -233,6 +233,18 @@ The more the team uses it, the smarter every future session becomes. For any per
 
 This prompt builds the vault. For ongoing sessions, use `second-brain-operator.md` — a companion skill that teaches any AI how to behave inside the vault (read context first, follow the rules, log daily, route info to the right files). Load it at the start of every session.
 
+## Visualize it with Obsidian (recommended)
+
+Once the vault is built, open the folder as an [Obsidian](https://obsidian.md) vault for a visual layer on top of your markdown files:
+
+- **Graph View** — see how every file connects to every other file
+- **Backlinks** — click any file and see everything that references it
+- **Quick Search** — find anything across the vault instantly
+- **Daily Notes** — maps perfectly to the `logs/` folder
+- **Live Preview** — edit markdown with a clean visual editor
+
+Obsidian is free, works on all platforms, and syncs via any cloud drive. Your vault is already Obsidian-compatible — just open the folder.
+
 ---
 
 *Start with Phase 1. Ask me the questionnaire.*

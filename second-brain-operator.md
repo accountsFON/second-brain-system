@@ -110,6 +110,14 @@ Do NOT skip this step. Do NOT start producing work until you've read the context
 - **Start sessions by reading, end sessions by writing** — read context first, log everything at the end.
 - **Be a good citizen** — leave the vault better than you found it. Fix small issues (broken links, missing dates, missing cross-references) as you encounter them.
 
+## Obsidian compatibility (optional enhancement)
+
+If the vault is used with [Obsidian](https://obsidian.md), you can optionally add `[[wikilinks]]` alongside standard markdown links for enhanced graph view and backlinks. When doing so:
+- Add a `**Related Files:**` line using both formats: `**Related Files:** [[file-a]] · [[file-b]]`
+- Use the filename only in wikilinks (no `.md` extension, no folder path)
+- Obsidian auto-updates wikilinks when files move — no manual fix needed
+- Standard markdown links (`[text](path/to/file.md)`) remain the primary format for cross-tool compatibility
+
 ---
 
 *This operator skill is part of the Second Brain system. For initial vault setup, use `second-brain-initiate.md`.*
