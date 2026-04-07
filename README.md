@@ -88,6 +88,20 @@ The vault compounds. Every session makes the next one smarter.
 - **Consultancies** that need context continuity across engagements
 - **Any team** tired of repeating themselves to AI tools
 
+## Supercharge it with Obsidian
+
+The vault is plain markdown and works anywhere. But if you want a visual layer, open it as an [Obsidian](https://obsidian.md) vault. You get:
+
+- **Graph View** — see how every file connects to every other file in a visual web
+- **Backlinks** — click any file and instantly see everything that references it
+- **Quick Search** — find anything across the entire vault in milliseconds
+- **Live Preview** — edit markdown with a clean visual editor
+- **Daily Notes** — Obsidian's daily notes plugin maps perfectly to the `logs/` folder
+
+Obsidian is free, works on Mac/Windows/Linux/mobile, and syncs via any cloud drive (Google Drive, Dropbox, OneDrive, iCloud). Your vault is already Obsidian-compatible out of the box.
+
+**To get started:** Download [Obsidian](https://obsidian.md), click "Open folder as vault", and point it at your vault folder. That's it.
+
 ## Design principles
 
 1. **CLAUDE.md is the brain** — concise navigation file, links to everything
