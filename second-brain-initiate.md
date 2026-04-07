@@ -89,6 +89,7 @@ This is the most important file. Include:
 - **Folder structure** — documented table showing every top-level folder and its purpose
 - **Navigation table** — maps "what info do I need?" to "which file has it?"
 - **Rules** — daily logging, cross-referencing, intake processing, how to add new clients/projects
+- **Context protection rule** — context files are protected. Add to them, never overwrite. If new info contradicts existing content, stop and ask the user before changing. No bulk rewrites. Log every change.
 - **How to use this vault** — step-by-step for any team member or AI starting a session
 - **Wiring rule** — every new `.md` file must include `**Related Files:**` links near the top
 

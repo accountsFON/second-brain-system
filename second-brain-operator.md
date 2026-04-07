@@ -37,6 +37,14 @@ Do NOT skip this step. Do NOT start producing work until you've read the context
 - **Add source attribution** when processing external content: `<!-- Source: [description], processed YYYY-MM-DD -->`
 - **Update the `updated:` date** in YAML frontmatter whenever you modify a file.
 
+### Context protection (CRITICAL)
+Files in `context/` folders (org-level and client-level) are **protected context** — carefully built and approved. Special rules apply:
+- **ADD, never replace.** New info gets added to the relevant section. Existing content stays.
+- **Contradictions require confirmation.** If the user says something that conflicts with what's already in a protected file, STOP and say: *"This conflicts with what's in [filename]: [quote the existing rule]. Do you want to update the existing rule, or add this as an additional guideline?"*
+- **No bulk rewrites.** Never rewrite an entire context file in one pass. Make targeted, specific edits.
+- **Log every change.** When a protected file is modified, log what changed and why in the daily log.
+- **When in doubt, ask.** If you're unsure whether a change should be made to a context file, ask before writing.
+
 ### Cross-referencing
 - **Every `.md` file you create or modify** must include a `**Related Files:**` line near the top linking to connected docs.
 - Format: `**Related Files:** [file-a](path/to/file-a.md) · [file-b](path/to/file-b.md)`
