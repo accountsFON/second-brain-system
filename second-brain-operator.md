@@ -109,7 +109,7 @@ Files in `context/` folders (org-level and client-level) are **protected context
 
 This is not optional. Every session must close with these steps:
 
-1. **Update today's daily log** with everything significant that happened — decisions, files created/modified, context added, next steps.
+1. **Update today's daily log** with everything significant that happened — decisions, files created/modified, context added, next steps. **Timestamp every section header** (e.g., `## [2:30 PM] — Session description`).
 2. **Update any status columns** in README files or CLAUDE.md that changed.
 3. **Update `updated:` dates** in frontmatter of any files you modified.
 4. **Flag anything unfinished** — add `> TODO:` placeholders or note next steps in the log.
