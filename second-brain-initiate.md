@@ -88,9 +88,12 @@ This is the most important file. Include:
 - **Org identity** — 3-5 line summary from my answers
 - **Folder structure** — documented table showing every top-level folder and its purpose
 - **Navigation table** — maps "what info do I need?" to "which file has it?"
-- **Rules** — daily logging, cross-referencing, intake processing, how to add new clients/projects
+- **Rules** — daily logging, cross-referencing, intake processing, how to add new clients/projects, timestamps on all log entries
 - **Context protection rule** — context files are protected. Add to them, never overwrite. If new info contradicts existing content, stop and ask the user before changing. No bulk rewrites. Log every change.
-- **How to use this vault** — step-by-step for any team member or AI starting a session
+- **Mandatory session protocol** — three phases every AI session must follow:
+  - **Session start:** Read CLAUDE.md, read latest daily log, read client context if applicable. Verify context is loaded before producing any work.
+  - **During session:** Route new context to files, cross-reference, don't let knowledge live only in chat.
+  - **Session end:** Update daily log with timestamped entries, update status columns, flag unfinished work with TODOs.
 - **Wiring rule** — every new `.md` file must include `**Related Files:**` links near the top
 
 #### 2. `context/` — Org-level context (only files I provided content for)
@@ -229,6 +232,7 @@ After building everything, give me:
 - **Cross-references:** `**Related Files:** [file-a](path/to/file-a.md) · [file-b](path/to/file-b.md)` near the top of every file
 - **Missing info:** `> TODO: [describe what's needed]` — never invent or assume
 - **Daily logs:** `logs/YYYY-MM-DD.md` — log significant work, decisions, context shared
+- **Timestamps in logs:** Every log section header gets a timestamp. Format: `## [HH:MM] — [Description]`
 - **Navigation tables:** Use markdown tables in CLAUDE.md and README files to map files to purpose and status
 - **No empty files:** If you don't have content for a file, don't create it. Use the template to show what WILL exist.
 - **Status tracking:** Use a Status column in tables (`Active`, `Complete`, `Planned`, `Paused`, `Archived`)
