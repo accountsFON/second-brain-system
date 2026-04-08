@@ -66,10 +66,11 @@ Paste into any AI tool pointed at an empty folder. It:
 ### `second-brain-operator.md` — Run every session
 
 Load as your first message in any AI session. It teaches the AI to:
-- Read CLAUDE.md and the latest daily log before starting work
+- **Mandatory session start** — read CLAUDE.md, read latest daily log, verify context is loaded before doing any work
+- **Context protection** — never overwrite protected files. Contradictions require confirmation.
 - Route new information to the correct files (not buried in chat)
 - Cross-reference every file to related docs
-- Update daily logs with significant work
+- **Mandatory session end** — update daily logs with timestamped entries, flag unfinished work
 - Process raw docs from the Intake folder
 - Follow naming conventions and file standards
 
@@ -109,9 +110,11 @@ Obsidian is free, works on Mac/Windows/Linux/mobile, and syncs via any cloud dri
 1. **CLAUDE.md is the brain** — concise navigation file, links to everything
 2. **One truth per file** — no mega-docs, everything cross-referenced
 3. **Context is layered** — org-level at root, client/project folders inherit and override
-4. **Daily logs** — institutional memory that survives across sessions and people
-5. **Start minimal** — only create files you have content for, grow organically
-6. **Works everywhere** — plain markdown, no tool lock-in
+4. **Daily logs with timestamps** — institutional memory that survives across sessions and people
+5. **Sessions are active, not passive** — mandatory protocol: read context first, route knowledge to files during, log everything at the end
+6. **Context is protected** — approved content can't be casually overwritten. Contradictions require confirmation.
+7. **Start minimal** — only create files you have content for, grow organically
+8. **Works everywhere** — plain markdown, no tool lock-in
 
 ---
 
