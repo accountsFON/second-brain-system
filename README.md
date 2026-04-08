@@ -37,7 +37,9 @@ your-vault/
 ├── CLAUDE.md                  # The brain — navigation, rules, org identity
 ├── context/                   # Org-level knowledge (team, services, brand, voice, tools)
 ├── skills/                    # Shared AI prompts the whole team can use
-├── _client-template/          # Copy this for each new client or project
+├── clients/                   # One folder per client (copied from template)
+├── projects/                  # Internal projects (non-client work)
+├── _client-template/          # Copy into clients/ for each new client
 ├── templates/                 # Meeting notes, decision records, campaign briefs
 ├── resources/                 # Shared assets and archive
 ├── Intake/                    # Drop raw docs here for AI processing

@@ -130,9 +130,18 @@ Each skill file should contain:
 
 Adapt skill names and add more based on the org's actual work (e.g., a "campaign-brief" skill for a marketing org, a "sprint-planning" skill for a dev shop, a "client-report" skill for a consulting firm).
 
-#### 4. `_client-template/` (or `_project-template/`)
+#### 4. `clients/` and/or `projects/` — Top-level grouping
 
-A template folder that gets copied for each new client or project. Adapt the naming based on my answers (clients vs. projects vs. accounts).
+Based on my questionnaire answers, create the appropriate grouping folders:
+- If the org serves **external clients**: create `clients/` — all client folders go inside
+- If the org manages **internal projects**: create `projects/` — all internal project folders go inside
+- If **both**: create both folders
+
+This keeps the root clean as the vault grows. Client #30 doesn't clutter the root alongside org-level folders.
+
+#### 5. `_client-template/` (or `_project-template/`)
+
+A template folder that gets copied into `clients/` (or `projects/`) for each new client or project. Adapt naming based on my answers.
 
 ```
 _client-template/
@@ -157,11 +166,11 @@ _client-template/
 
 Each `_template.md` should contain a fillable template with sections, placeholders, and instructions — not just an empty file.
 
-#### 5. First client/project folder
+#### 6. First client/project folder
 
-Copy the template, rename it for the client/project I chose, and populate it with whatever context I provided.
+Copy the template into `clients/` (or `projects/`), rename it for the client/project I chose, and populate it with whatever context I provided.
 
-#### 6. `templates/` — Reusable document templates
+#### 7. `templates/` — Reusable document templates
 
 | File | Purpose |
 |------|---------|
@@ -169,7 +178,7 @@ Copy the template, rename it for the client/project I chose, and populate it wit
 | `decision-record.md` | Decision log template (what was decided, why, who, alternatives considered) |
 | `campaign-brief.md` | Campaign/project brief template (adapt to org type) |
 
-#### 7. `resources/` — Shared reference material
+#### 8. `resources/` — Shared reference material
 
 ```
 resources/
@@ -180,14 +189,14 @@ resources/
     └── README.md          (archive policy)
 ```
 
-#### 8. `Intake/` — Raw document drop zone
+#### 9. `Intake/` — Raw document drop zone
 
 ```
 Intake/
 └── README.md              (explains: drop any raw doc here, then run the intake-processor skill)
 ```
 
-#### 9. `logs/` — Org-level daily logs
+#### 10. `logs/` — Org-level daily logs
 
 Create today's log (`logs/YYYY-MM-DD.md`) documenting the vault creation — what was built, what context was captured, what's still TODO.
 

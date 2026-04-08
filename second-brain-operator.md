@@ -20,7 +20,7 @@ Before doing ANY work, read these files in order:
 
 1. **`CLAUDE.md`** — The master file at the vault root. This is the brain. It tells you the org identity, folder structure, navigation map, and all the rules. Read it completely.
 2. **The most recent file in `logs/`** — This is the org-level daily log. It tells you what happened most recently and what's in progress.
-3. **If working on a specific client/project:** Read `[client-name]/README.md` and their most recent log in `[client-name]/logs/`.
+3. **If working on a specific client/project:** Read `clients/[client-name]/README.md` and their most recent log in `clients/[client-name]/logs/`.
 
 Do NOT skip this step. Do NOT start producing work until you've read the context.
 
@@ -28,7 +28,7 @@ Do NOT skip this step. Do NOT start producing work until you've read the context
 
 ### Finding information
 - Use the **Navigation Table** in CLAUDE.md to find what you need — it maps questions to files.
-- Client-specific context lives in `[client-name]/context/` — always check there before asking the user for info that might already exist.
+- Client-specific context lives in `clients/[client-name]/context/` — always check there before asking the user for info that might already exist.
 - If the vault has a `skills/` folder, check it for reusable prompts before building something from scratch.
 
 ### Contributing information
@@ -52,7 +52,7 @@ Files in `context/` folders (org-level and client-level) are **protected context
 
 ### Daily logging
 - **Log significant work** to `logs/YYYY-MM-DD.md` (org-level) during the session.
-- If working on a specific client, ALSO log to `[client-name]/logs/YYYY-MM-DD.md`.
+- If working on a specific client, ALSO log to `clients/[client-name]/logs/YYYY-MM-DD.md`.
 - What counts as significant: decisions made, files created/modified, research conducted, strategy changes, milestones, context added.
 - If today's log doesn't exist, create it with frontmatter:
   ```yaml
@@ -86,7 +86,7 @@ Files in `context/` folders (org-level and client-level) are **protected context
 ### Adding new clients or projects
 - If the vault has a `_client-template/` or `_project-template/` folder, **copy it** to create new clients/projects. Never edit the template directly.
 - If the vault has a `skills/new-client-setup.md` skill, follow those instructions.
-- Rename the copied folder to `[client-name]/` (lowercase, hyphens).
+- Rename the copied folder to `clients/[client-name]/` (lowercase, hyphens).
 - Always create a first daily log entry documenting the setup.
 
 ### Using skills
