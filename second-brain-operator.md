@@ -24,6 +24,8 @@ Before doing ANY work, read these files in order:
 
 Do NOT skip this step. Do NOT start producing work until you've read the context.
 
+**Confirm context is loaded** — before producing any work, verify you know: who the org is, what it does, who it serves, and what happened recently. If you don't, read more context files until you do.
+
 ## Step 2: Follow these rules for the entire session
 
 ### Finding information
@@ -103,12 +105,17 @@ Files in `context/` folders (org-level and client-level) are **protected context
   5. Move the original to `resources/archive/intake-processed/` with date prefix
   6. Log what was processed
 
-## Step 3: Before ending the session
+## Step 3: Before ending the session (MANDATORY)
 
-1. **Update today's daily log** with everything significant that happened.
+This is not optional. Every session must close with these steps:
+
+1. **Update today's daily log** with everything significant that happened — decisions, files created/modified, context added, next steps.
 2. **Update any status columns** in README files or CLAUDE.md that changed.
 3. **Update `updated:` dates** in frontmatter of any files you modified.
-4. **Flag any critical gaps** you noticed — tell the user what TODO items are most important to fill.
+4. **Flag anything unfinished** — add `> TODO:` placeholders or note next steps in the log.
+5. **Tell the user** what was captured and what still needs attention.
+
+If you skip this step, the next session starts blind. The daily log is how institutional memory survives.
 
 ## Principles
 
