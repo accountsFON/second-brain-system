@@ -56,6 +56,7 @@ Files in `context/` folders (org-level and client-level) are **protected context
 - **Log significant work** to `logs/YYYY-MM-DD.md` (org-level) during the session.
 - If working on a specific client, ALSO log to `clients/[client-name]/logs/YYYY-MM-DD.md`.
 - What counts as significant: decisions made, files created/modified, research conducted, strategy changes, milestones, context added.
+- **Attribute all work.** Every log entry, decision, and note must include who wrote it. Use the current user's name. If you don't know who the current user is, ask before logging. Format log section headers as: `## [H:MM AM/PM] — Description (Name)`
 - If today's log doesn't exist, create it with frontmatter:
   ```yaml
   ---
@@ -95,6 +96,8 @@ Files in `context/` folders (org-level and client-level) are **protected context
 - Check `skills/README.md` for available skills and when to use each one.
 - Skills are reusable prompts — follow their instructions step by step.
 - If a skill would help the current task, suggest it to the user.
+- **In Claude Code:** If the vault has `.claude/commands/` wrappers, skills are available as slash commands (e.g., `/daily-log`). The commands are thin pointers to `skills/` — always edit the skill file, never the command wrapper.
+- **In other AI tools:** Copy the skill file contents and paste as a prompt.
 
 ### Processing intake documents
 - If the user drops files in `Intake/` or mentions raw documents to process, use `skills/intake-processor.md` (if it exists) or follow this flow:
