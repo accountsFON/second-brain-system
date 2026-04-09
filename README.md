@@ -117,6 +117,15 @@ Read and execute the skill instructions in skills/[name].md
 Do exactly what the skill file says. Do not summarize the skill — run it.
 ```
 
+### MCP Servers (optional, for technical teams)
+
+If your team uses external tools (ad platforms, CRMs, project management APIs), you can connect them to Claude Code via MCP servers. A good pattern:
+
+1. **Code on GitHub** (private repos) — each MCP server is its own repo
+2. **Docs in the vault** — `resources/mcp-servers/` with setup guides per server
+3. **Credentials inline** — pass API keys directly as `env` vars in `~/.mcp.json`, NOT via `.env` files. Claude Code does not reliably set `cwd` for MCP processes, so `dotenv` won't find `.env` at the project root.
+4. **Setup skill** — a `skills/mcp-setup.md` that walks team members through installation
+
 ## Design principles
 
 1. **CLAUDE.md is the brain** — concise navigation file, links to everything
