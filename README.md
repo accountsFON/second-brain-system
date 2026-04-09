@@ -123,8 +123,9 @@ If your team uses external tools (ad platforms, CRMs, project management APIs), 
 
 1. **Code on GitHub** (private repos) — each MCP server is its own repo
 2. **Docs in the vault** — `resources/mcp-servers/` with setup guides per server
-3. **Credentials inline** — pass API keys directly as `env` vars in `~/.mcp.json`, NOT via `.env` files. Claude Code does not reliably set `cwd` for MCP processes, so `dotenv` won't find `.env` at the project root.
-4. **Setup skill** — a `skills/mcp-setup.md` that walks team members through installation
+3. **Use a `start.sh` wrapper** — Claude Code does not reliably pass `env` vars or `cwd` to MCP processes. Create a `start.sh` in each MCP project that `cd`s to the project root, sources `.env` (using `set -a`), and runs the server. Point `.mcp.json` at the script instead of the node/python binary directly.
+4. **Credentials in `.env`** — each team member manages their own `.env` in the cloned project (never committed). The `start.sh` wrapper handles loading them.
+5. **Setup skill** — a `skills/mcp-setup.md` that walks team members through installation
 
 ## Design principles
 
