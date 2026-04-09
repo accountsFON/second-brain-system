@@ -37,6 +37,7 @@ your-vault/
 ├── CLAUDE.md                  # The brain — navigation, rules, org identity
 ├── context/                   # Org-level knowledge (team, services, brand, voice, tools)
 ├── skills/                    # Shared AI prompts the whole team can use
+├── .claude/commands/          # Claude Code slash commands (thin wrappers → skills/)
 ├── clients/                   # One folder per client (copied from template)
 ├── projects/                  # Internal projects (non-client work)
 ├── _client-template/          # Copy into clients/ for each new client
@@ -105,16 +106,28 @@ Obsidian is free, works on Mac/Windows/Linux/mobile, and syncs via any cloud dri
 
 **To get started:** Download [Obsidian](https://obsidian.md), click "Open folder as vault", and point it at your vault folder. That's it.
 
+## Claude Code Integration
+
+If your team uses Claude Code, the vault automatically provides slash commands for every skill. Type `/daily-log`, `/brain-check`, `/intake-processor`, etc. — the commands in `.claude/commands/` are thin one-line wrappers that point to the skill files in `skills/`. One source of truth, no duplication.
+
+**Adding a new skill:** Create the `.md` file in `skills/`, then add a wrapper in `.claude/commands/` with:
+```
+Read and execute the skill instructions in skills/[name].md
+
+Do exactly what the skill file says. Do not summarize the skill — run it.
+```
+
 ## Design principles
 
 1. **CLAUDE.md is the brain** — concise navigation file, links to everything
 2. **One truth per file** — no mega-docs, everything cross-referenced
 3. **Context is layered** — org-level at root, client/project folders inherit and override
-4. **Daily logs with timestamps** — institutional memory that survives across sessions and people
+4. **Daily logs with timestamps and attribution** — institutional memory that survives across sessions, people, and tools
 5. **Sessions are active, not passive** — mandatory protocol: read context first, route knowledge to files during, log everything at the end
 6. **Context is protected** — approved content can't be casually overwritten. Contradictions require confirmation.
-7. **Start minimal** — only create files you have content for, grow organically
-8. **Works everywhere** — plain markdown, no tool lock-in
+7. **Skills are shared, not duplicated** — one source of truth in `skills/`, slash commands just point to them
+8. **Start minimal** — only create files you have content for, grow organically
+9. **Works everywhere** — plain markdown, no tool lock-in
 
 ---
 

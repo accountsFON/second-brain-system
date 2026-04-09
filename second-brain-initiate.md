@@ -88,7 +88,7 @@ This is the most important file. Include:
 - **Org identity** — 3-5 line summary from my answers
 - **Folder structure** — documented table showing every top-level folder and its purpose
 - **Navigation table** — maps "what info do I need?" to "which file has it?"
-- **Rules** — daily logging, cross-referencing, intake processing, how to add new clients/projects, timestamps on all log entries
+- **Rules** — daily logging, cross-referencing, intake processing, how to add new clients/projects, timestamps on all log entries, user attribution (every log entry must include who wrote it)
 - **Context protection rule** — context files are protected. Add to them, never overwrite. If new info contradicts existing content, stop and ask the user before changing. No bulk rewrites. Log every change.
 - **Mandatory session protocol** — three phases every AI session must follow:
   - **Session start:** Read CLAUDE.md, read latest daily log, read client context if applicable. Verify context is loaded before producing any work.
@@ -133,6 +133,22 @@ Each skill file should contain:
 
 Adapt skill names and add more based on the org's actual work (e.g., a "campaign-brief" skill for a marketing org, a "sprint-planning" skill for a dev shop, a "client-report" skill for a consulting firm).
 
+#### 3b. `.claude/commands/` — Slash commands for Claude Code users (optional but recommended)
+
+If the team uses Claude Code, create a `.claude/commands/` folder at the vault root with a thin wrapper file for each skill. This makes skills available as slash commands (e.g., `/daily-log`, `/brain-check`) automatically for anyone who opens the vault.
+
+**Important:** Command files should NOT duplicate skill content. Each command file is just a one-line pointer:
+
+```
+Read and execute the skill instructions in skills/[skill-name].md
+
+Do exactly what the skill file says. Do not summarize the skill — run it.
+```
+
+This ensures `skills/` is always the single source of truth. When a skill gets updated, the slash command picks up the change automatically. No duplication, no drift.
+
+Create one wrapper file per skill (e.g., `.claude/commands/daily-log.md`, `.claude/commands/brain-check.md`).
+
 #### 4. `clients/` and/or `projects/` — Top-level grouping
 
 Based on my questionnaire answers, create the appropriate grouping folders:
@@ -154,13 +170,16 @@ _client-template/
 │   ├── brand.md           (their brand specifics)
 │   ├── messaging.md       (their messaging, value props, positioning)
 │   ├── audience.md        (their target audience, personas, ICP)
-│   └── competitors.md     (competitive landscape)
+│   ├── competitors.md     (competitive landscape)
+│   └── content-library.md (project portfolio, photo/video assets, content resources)
 ├── campaigns/
 │   └── _template.md       (campaign/sprint/project brief template)
 ├── creative/
 │   └── _template.md       (creative/design asset template)
 ├── deliverables/
 │   └── _template.md       (reports, presentations, final outputs template)
+├── reports/
+│   └── _template.md       (audit reports, performance reports, analysis)
 ├── logs/
 │   └── .gitkeep           (daily logs go here — YYYY-MM-DD.md)
 └── ops/
