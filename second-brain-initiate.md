@@ -88,7 +88,7 @@ This is the most important file. Include:
 - **Org identity** — 3-5 line summary from my answers
 - **Folder structure** — documented table showing every top-level folder and its purpose
 - **Navigation table** — maps "what info do I need?" to "which file has it?"
-- **Rules** — daily logging, cross-referencing, intake processing, how to add new clients/projects, timestamps on all log entries, user attribution (every log entry must include who wrote it)
+- **Rules** — daily logging, cross-referencing, intake processing (define an SLA — e.g., process any file in `Intake/` within 3 days), how to add new clients/projects, timestamps on all log entries, user attribution (every log entry must include who wrote it), quarterly roster review (if the org serves clients)
 - **Context protection rule** — context files are protected. Add to them, never overwrite. If new info contradicts existing content, stop and ask the user before changing. No bulk rewrites. Log every change.
 - **Mandatory session protocol** — three phases every AI session must follow:
   - **Session start:** Read CLAUDE.md, read latest daily log, read client context if applicable. Verify context is loaded before producing any work.
@@ -107,8 +107,12 @@ This is the most important file. Include:
 | `brand.md` | Visual identity — colors, fonts, logo rules |
 | `voice.md` | Writing style, tone, vocabulary, messaging guidelines |
 | `processes.md` | How we work — SOPs, standards, workflows |
+| `client-roster.md` | (If org serves clients) Canonical list of ALL clients with scope, contacts, spend, status. Single source of truth — CLAUDE.md links here instead of embedding the full list. Optional: tiers (e.g., full-service / retainer / project / past) |
+| `vault-isolation-rules.md` | (If user has multiple vaults) Rules preventing cross-contamination between this vault and others |
 
 Only create files I gave you content for. The rest get created later as context arrives.
+
+**Keep CLAUDE.md lean.** If a section grows long (client list, isolation rules, MCP registry, etc.), extract it to its own file in `context/` and link to it from CLAUDE.md. Target CLAUDE.md under 180 lines — it's an index, not a doc.
 
 #### 3. `skills/` — Shared AI skills and prompts for the whole team
 
@@ -122,8 +126,8 @@ Create these starter skills based on my answers:
 | `context-loader.md` | "Read all org context files and summarize what you know before starting work" — the universal session-start skill |
 | `intake-processor.md` | "Process a raw document from Intake/ — extract key info and route it to the correct context files" |
 | `daily-log.md` | "Create or update today's daily log — summarize significant work, decisions, and context shared this session" |
-| `new-client-setup.md` | "Set up a new client/project folder — copy the template, ask the setup questions, populate initial files" |
-| `brain-check.md` | "Audit the vault — check for orphaned files, stale dates, empty TODO placeholders, broken links, missing cross-references" |
+| `new-client-setup.md` | "Set up a new client/project folder — copy the template, ask the setup questions (including tier/service level if the org uses tiers), populate initial files, and register the new client in `context/client-roster.md` + CLAUDE.md" |
+| `brain-check.md` | "Audit the vault — check for orphaned files, stale dates, empty TODO placeholders, broken links, missing cross-references, roster integrity (every client folder appears in `context/client-roster.md` and vice versa), and intake age (files sitting in `Intake/` longer than the SLA)" |
 
 Each skill file should contain:
 - **What it does** (one paragraph)
@@ -221,6 +225,8 @@ Intake/
 #### 10. `logs/` — Org-level daily logs
 
 Create today's log (`logs/YYYY-MM-DD.md`) documenting the vault creation — what was built, what context was captured, what's still TODO.
+
+**Meeting index pattern:** If the org records meetings, create `logs/meeting-index.md` as a chronological + by-client index of meeting notes. Each meeting gets its own log file (`YYYY-MM-DD_meeting-[topic].md`) and a one-line entry in the index. This keeps transcripts discoverable as the log folder grows.
 
 ### Phase 3: Verify and orient
 

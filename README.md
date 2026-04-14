@@ -34,8 +34,8 @@ It works with **any AI tool** — Claude, ChatGPT, Gemini, Cursor, Copilot, or a
 
 ```
 your-vault/
-├── CLAUDE.md                  # The brain — navigation, rules, org identity
-├── context/                   # Org-level knowledge (team, services, brand, voice, tools)
+├── CLAUDE.md                  # The brain — navigation, rules, org identity (kept under ~180 lines)
+├── context/                   # Org-level knowledge (team, services, brand, voice, tools, client-roster)
 ├── skills/                    # Shared AI prompts the whole team can use
 ├── .claude/commands/          # Claude Code slash commands (thin wrappers → skills/)
 ├── clients/                   # One folder per client (copied from template)
@@ -44,7 +44,7 @@ your-vault/
 ├── templates/                 # Meeting notes, decision records, campaign briefs
 ├── resources/                 # Shared assets and archive
 ├── Intake/                    # Drop raw docs here for AI processing
-└── logs/                      # Daily logs — institutional memory
+└── logs/                      # Daily logs + meeting-index.md — institutional memory
 ```
 
 ## The two files
@@ -129,10 +129,10 @@ If your team uses external tools (ad platforms, CRMs, project management APIs), 
 
 ## Design principles
 
-1. **CLAUDE.md is the brain** — concise navigation file, links to everything
-2. **One truth per file** — no mega-docs, everything cross-referenced
+1. **CLAUDE.md is the brain** — concise navigation file, links to everything. When a section grows long, extract it to its own `context/` file and link back. CLAUDE.md stays an index, not a doc.
+2. **One truth per file** — no mega-docs, everything cross-referenced. A client roster, an isolation ruleset, a meeting index — each gets its own file.
 3. **Context is layered** — org-level at root, client/project folders inherit and override
-4. **Daily logs with timestamps and attribution** — institutional memory that survives across sessions, people, and tools
+4. **Daily logs with timestamps and attribution** — institutional memory that survives across sessions, people, and tools. A `logs/meeting-index.md` keeps transcripts discoverable.
 5. **Sessions are active, not passive** — mandatory protocol: read context first, route knowledge to files during, log everything at the end
 6. **Context is protected** — approved content can't be casually overwritten. Contradictions require confirmation.
 7. **Skills are shared, not duplicated** — one source of truth in `skills/`, slash commands just point to them

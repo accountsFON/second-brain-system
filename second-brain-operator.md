@@ -30,6 +30,8 @@ Do NOT skip this step. Do NOT start producing work until you've read the context
 
 ### Finding information
 - Use the **Navigation Table** in CLAUDE.md to find what you need — it maps questions to files.
+- If the vault has `context/client-roster.md`, that's the canonical list of all clients — check it before trusting CLAUDE.md's inline client mentions.
+- If the vault has `logs/meeting-index.md`, that's the fastest way to find a meeting transcript by date or client.
 - Client-specific context lives in `clients/[client-name]/context/` — always check there before asking the user for info that might already exist.
 - If the vault has a `skills/` folder, check it for reusable prompts before building something from scratch.
 
@@ -90,6 +92,8 @@ Files in `context/` folders (org-level and client-level) are **protected context
 - If the vault has a `_client-template/` or `_project-template/` folder, **copy it** to create new clients/projects. Never edit the template directly.
 - If the vault has a `skills/new-client-setup.md` skill, follow those instructions.
 - Rename the copied folder to `clients/[client-name]/` (lowercase, hyphens).
+- **Register the new client** in `context/client-roster.md` (if it exists) AND in CLAUDE.md's client table. A client that isn't in the roster is invisible.
+- If the vault uses tiers/service levels, assign one in the new client's README frontmatter (e.g., `tier: full-service`).
 - Always create a first daily log entry documenting the setup.
 
 ### Using skills
@@ -123,7 +127,7 @@ If you skip this step, the next session starts blind. The daily log is how insti
 ## Principles
 
 - **The vault is the source of truth** — not this chat. Anything important gets written to a file.
-- **One truth per file** — if a file grows past 300 lines, suggest splitting it.
+- **One truth per file** — if a file grows past 300 lines, suggest splitting it. If CLAUDE.md grows past ~180 lines, suggest extracting long sections (client rosters, isolation rules, MCP registries, etc.) into their own files under `context/` and linking from CLAUDE.md.
 - **The vault is a web** — every file connects to related files. Orphaned files are a bug.
 - **Start sessions by reading, end sessions by writing** — read context first, log everything at the end.
 - **Be a good citizen** — leave the vault better than you found it. Fix small issues (broken links, missing dates, missing cross-references) as you encounter them.
