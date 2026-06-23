@@ -81,25 +81,44 @@ Based on my answers, **create all folders and files directly in the current work
 
 Create this structure:
 
-#### 1. `CLAUDE.md` — The master file (under 120 lines)
+#### 1. `CLAUDE.md` — The master file (under 180 lines)
 
 This is the most important file. Include:
 - **Vault purpose** — what this vault is and who it's for
 - **Org identity** — 3-5 line summary from my answers
 - **Folder structure** — documented table showing every top-level folder and its purpose
 - **Navigation table** — maps "what info do I need?" to "which file has it?"
-- **Rules** — daily logging, cross-referencing, intake processing (define an SLA — e.g., process any file in `Intake/` within 3 days), how to add new clients/projects, timestamps on all log entries, user attribution (every log entry must include who wrote it), quarterly roster review (if the org serves clients)
+- **Rules** — daily logging, cross-referencing, intake processing (define an SLA, e.g., process any file in `Intake/` within 7 days), how to add new clients/projects, timestamps on all log entries, user attribution (every log entry must include who wrote it, resolved via `skills/identify-user.md` for multi-person vaults), quarterly roster review (if the org serves clients)
 - **Context protection rule** — context files are protected. Add to them, never overwrite. If new info contradicts existing content, stop and ask the user before changing. No bulk rewrites. Log every change.
 - **Mandatory session protocol** — three phases every AI session must follow:
   - **Session start:** Read CLAUDE.md, read latest daily log, read client context if applicable. Verify context is loaded before producing any work.
   - **During session:** Route new context to files, cross-reference, don't let knowledge live only in chat.
   - **Session end:** Update daily log with timestamped entries, update status columns, flag unfinished work with TODOs.
 - **Wiring rule** — every new `.md` file must include `**Related Files:**` links near the top
+- **Manifest rule** — any new folder under `clients/`, `projects/`, or any new file in `context/`, `skills/`, `resources/`, or `templates/` must be registered in `context/vault-manifest.md` in the same session
+- **Two-output rule** — every significant finding, decision, or lesson must be routed to the relevant vault file, not just the daily log. Knowledge that lives only in logs decays. Knowledge routed to source-of-truth files compounds.
+
+#### 1b. Cross-tool bootstrap files (always create these)
+
+These ensure every AI tool lands in the same brain, regardless of which tool opens the vault:
+
+**`AGENTS.md`** — Auto-loaded by Codex, GitHub Copilot, and Cursor. Contains:
+- One-line redirect to CLAUDE.md ("The full operating context lives in CLAUDE.md. Read that first.")
+- Quick links to key files (brain, manifest, org profile, learned rules, skills, client roster)
+- Hard rules summary (read CLAUDE.md first, never modify without confirmation, attribute logs, use YYYY-MM-DD dates)
+- One-paragraph description of what the vault is
+
+**`GEMINI.md`** — Auto-loaded by Gemini CLI. Same structure as AGENTS.md, cross-references it.
+
+**`README.md`** — Human-readable tour for team members opening the vault folder. Not an AI bootstrap file, but completes the four-file set so every visitor (human or AI) has an entry point.
+
+All three files point to CLAUDE.md as the single source of truth. Keep them under 40 lines each. They are shims, not duplicates.
 
 #### 2. `context/` — Org-level context (only files I provided content for)
 
 | File | Purpose |
 |------|---------|
+| `soul.md` | **Always create.** Identity, voice, and values in one place. Who the org is and how it sounds. Populate from questionnaire answers about brand, voice, and mission. This is the file every AI reads to understand who it is working for. Include sections: Who we are, What we value, How we sound (with examples of good and bad writing for the org), Words we use/avoid, Who reads our work. |
 | `org-profile.md` | Who we are, what we do, mission, history |
 | `team.md` | Team members, roles, responsibilities, contact info |
 | `services.md` | What we offer — services, products, capabilities |
@@ -108,9 +127,11 @@ This is the most important file. Include:
 | `voice.md` | Writing style, tone, vocabulary, messaging guidelines |
 | `processes.md` | How we work — SOPs, standards, workflows |
 | `client-roster.md` | (If org serves clients) Canonical list of ALL clients with scope, contacts, spend, status. Single source of truth — CLAUDE.md links here instead of embedding the full list. Optional: tiers (e.g., full-service / retainer / project / past) |
+| `vault-manifest.md` | **Always create.** Master index of every file and folder in the vault. Register every top-level folder, every context file, every skill. This is the L0 entrypoint for discovery. If something is not in the manifest, future sessions will not find it. |
+| `learned-rules.md` | **Always create (starts mostly empty).** Cross-platform mirror of corrections and rules learned during work. Every AI agent reads this. Organized by category: hard rules, writing discipline, tool gotchas, process rules. Populated over time as the team discovers preferences and mistakes. |
 | `vault-isolation-rules.md` | (If user has multiple vaults) Rules preventing cross-contamination between this vault and others |
 
-Only create files I gave you content for. The rest get created later as context arrives.
+Only create files I gave you content for, except for the three marked "Always create." The rest get created later as context arrives.
 
 **Keep CLAUDE.md lean.** If a section grows long (client list, isolation rules, MCP registry, etc.), extract it to its own file in `context/` and link to it from CLAUDE.md. Target CLAUDE.md under 180 lines — it's an index, not a doc.
 
@@ -127,7 +148,8 @@ Create these starter skills based on my answers:
 | `intake-processor.md` | "Process a raw document from Intake/ — extract key info and route it to the correct context files" |
 | `daily-log.md` | "Create or update today's daily log — summarize significant work, decisions, and context shared this session" |
 | `new-client-setup.md` | "Set up a new client/project folder — copy the template, ask the setup questions (including tier/service level if the org uses tiers), populate initial files, and register the new client in `context/client-roster.md` + CLAUDE.md" |
-| `brain-check.md` | "Audit the vault — check for orphaned files, stale dates, empty TODO placeholders, broken links, missing cross-references, roster integrity (every client folder appears in `context/client-roster.md` and vice versa), and intake age (files sitting in `Intake/` longer than the SLA)" |
+| `brain-check.md` | "Audit the vault — check for orphaned files, stale dates, empty TODO placeholders, broken links, missing cross-references, manifest drift (files on disk not in vault-manifest.md), roster integrity (every client folder appears in `context/client-roster.md` and vice versa), intake age (files in `Intake/` longer than the SLA), and learned-rules sync (memories that should be promoted to context/learned-rules.md)" |
+| `identify-user.md` | "Resolve who is operating this session for log attribution. Match on (hostname + OS username) against records in `resources/machines/`. If no match, onboard a new record by asking the operator. Never guess identity." Required for multi-person or multi-machine vaults. See the template file for the full spec. |
 
 Each skill file should contain:
 - **What it does** (one paragraph)
@@ -211,9 +233,24 @@ resources/
 ├── README.md              (what goes here — frameworks, guides, reference docs)
 ├── assets/                (logos, brand files, shared creative — add files as needed)
 │   └── README.md          (asset inventory and naming conventions)
+├── machines/              (operator-machine identity registry for log attribution)
+│   └── README.md          (explains the registry — one file per person per machine)
 └── archive/               (completed projects, old campaigns — move here, don't delete)
-    └── README.md          (archive policy)
+    ├── README.md          (archive policy)
+    └── intake-processed/  (processed Intake files land here with date prefix)
 ```
+
+#### 8b. `.claude/memory/` — Persistent memory system (for Claude Code users)
+
+Create `.claude/memory/MEMORY.md` as the memory index. This gives Claude Code persistent memory across sessions. Corrections, preferences, and project context are saved as individual files in this directory and indexed in MEMORY.md.
+
+Memory types:
+- **user** — who the user is, role, preferences, expertise
+- **feedback** — corrections and confirmed approaches (what to do / not do, and why)
+- **project** — ongoing work, goals, decisions, deadlines
+- **reference** — pointers to where information lives in external systems
+
+Universal rules discovered through memory should be promoted to `context/learned-rules.md` so non-Claude tools inherit them too.
 
 #### 9. `Intake/` — Raw document drop zone
 
