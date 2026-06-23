@@ -19,12 +19,13 @@ This vault is an org-wide shared knowledge system — a structured folder of int
 Before doing ANY work, read these files in order:
 
 1. **`CLAUDE.md`** — The master file at the vault root. This is the brain. It tells you the org identity, folder structure, navigation map, and all the rules. Read it completely.
-2. **The most recent file in `logs/`** — This is the org-level daily log. It tells you what happened most recently and what's in progress.
-3. **If working on a specific client/project:** Read `clients/[client-name]/README.md` and their most recent log in `clients/[client-name]/logs/`.
+2. **`context/learned-rules.md`** — Cross-platform rules learned during work. Every AI agent must follow these regardless of which tool is running.
+3. **The most recent file in `logs/`** — This is the org-level daily log. It tells you what happened most recently and what's in progress.
+4. **If working on a specific client/project:** Read `clients/[client-name]/README.md` and their most recent log in `clients/[client-name]/logs/`.
 
 Do NOT skip this step. Do NOT start producing work until you've read the context.
 
-**Confirm context is loaded** — before producing any work, verify you know: who the org is, what it does, who it serves, and what happened recently. If you don't, read more context files until you do.
+**Confirm context is loaded** — before producing any work, verify you know: who the org is, what it does, who it serves, what rules apply, and what happened recently. If you don't, read more context files until you do.
 
 ## Step 2: Follow these rules for the entire session
 
@@ -58,7 +59,17 @@ Files in `context/` folders (org-level and client-level) are **protected context
 - **Log significant work** to `logs/YYYY-MM-DD.md` (org-level) during the session.
 - If working on a specific client, ALSO log to `clients/[client-name]/logs/YYYY-MM-DD.md`.
 - What counts as significant: decisions made, files created/modified, research conducted, strategy changes, milestones, context added.
-- **Attribute all work.** Every log entry, decision, and note must include who wrote it. Use the current user's name. If you don't know who the current user is, ask before logging. Format log section headers as: `## [H:MM AM/PM] — Description (Name)`
+- **Attribute all work.** Every log entry, decision, and note must include who wrote it. If the vault has multiple operators, resolve identity via `skills/identify-user.md` (matches hostname + OS username against `resources/machines/`). If single-operator, use their name from CLAUDE.md. If you don't know who the current user is, ask before logging. Format log section headers as: `## [H:MM AM/PM] - Description (Name)`
+
+### Learning from corrections
+- When the user corrects your approach or confirms a non-obvious approach worked, that is a learned rule.
+- If your AI tool has persistent memory (Claude's `.claude/memory/`), save the correction there.
+- If the rule applies to all tools (not just the current one), also add it to `context/learned-rules.md` under the appropriate category.
+- The two-output rule applies to corrections too: memory captures them for one tool, learned-rules distributes them to every tool.
+
+### Manifest discipline
+- Any new folder under `clients/`, `projects/`, or any new file in `context/`, `skills/`, `resources/`, or `templates/` must be registered in `context/vault-manifest.md` in the same session it is created.
+- If the manifest does not exist yet, create it. It is the L0 entrypoint: if something is not there, future sessions will not find it.
 - If today's log doesn't exist, create it with frontmatter:
   ```yaml
   ---
