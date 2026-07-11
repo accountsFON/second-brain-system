@@ -115,14 +115,12 @@ Files in `context/` folders (org-level and client-level) are **protected context
 - **In Codex:** Use `.agents/skills/vault-bridge/SKILL.md` as the project bridge back to the canonical `skills/` library.
 - **In other AI tools:** Point the tool to the canonical skill file. Use a thin adapter when the tool supports a native skill folder. Do not copy full workflow bodies into several platform folders.
 
-### Automation credentials
-- Keep raw credentials out of the synced vault.
-- When several machines call the same automation, give each machine a separate credential instead of copying one operator's token.
-- Store raw values in an operating system credential store or approved password manager. Store only a high entropy hash centrally when the service needs authentication.
-- Bind each credential to the registered person and machine, support individual revocation, and prove that one credential cannot submit for another identity before live use.
-- Treat MCP configuration as client specific. Verify Claude and Codex separately instead of copying one private config into the other.
-- Never inventory MCP servers by printing full configuration or using a command that can echo stored arguments and headers. Use a redacted audit that reports placement without values.
-- Prefer hosted OAuth. When a static credential is required, retrieve it from the operating system credential store at process start and pass it through the child environment, not a command argument.
+### Shared learning and connectors
+- Private model memory is not shared. After user approval, put universal corrections in `context/learned-rules.md`, workflow improvements in the canonical skill, and client or project learning in its context file.
+- Keep raw credentials and OAuth sessions out of the synced vault.
+- Prefer an official provider hosted MCP. Use a company hosted MCP for custom shared workflows and a local MCP when local access is required.
+- Treat Claude and Codex as separate connector clients. Share one setup guide, then authenticate each authorized person and tool as needed.
+- Never inventory MCP servers by printing full configuration or a command that may echo stored values. Use a redacted audit.
 
 ### Processing intake documents
 - If the user drops files in `Intake/` or mentions raw documents to process, use `skills/intake-processor.md` (if it exists) or follow this flow:
