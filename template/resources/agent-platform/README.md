@@ -44,6 +44,14 @@ Private model memory is not shared. After user approval:
 3. Put client or project learning in its context file.
 4. Record significant work in the attributed daily log.
 
+## Live vault transport
+
+Choose one document system as the live source of truth. Human computers can use its desktop client. Servers can use a supported direct mount or sync client for the same folder.
+
+Keep Git outside every cloud synced folder. If versioned recovery is useful, use a separate checkout that receives one way snapshots from the live vault. Never copy Git back into the live vault, and never run two bidirectional sync engines against the same files.
+
+Before automated writers use the vault, verify both directions, create, edit, rename, delete, restart, cached write recovery, and same file collision behavior. Use the evidence to define a safe writer policy.
+
 ## MCP connections
 
 The vault shares the setup guide. Prefer an official provider hosted MCP, use a company hosted MCP for custom shared workflows, and use a local MCP when local access is required.

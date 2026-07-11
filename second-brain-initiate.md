@@ -10,7 +10,7 @@ The result: a structured folder of plain `.md` (markdown) files that becomes the
 
 ## How to use this file
 
-1. **Create an empty folder** anywhere your team can access (Google Drive, Dropbox, OneDrive, a shared server, a git repo — anywhere).
+1. **Create an empty folder** in the document system your team will use live, such as Google Drive, Dropbox, OneDrive, or a shared server. Do not place a Git checkout inside a cloud synced folder.
 2. **Open an AI assistant** (Claude Code, Claude.ai, ChatGPT, Cursor, etc.) and point it at that empty folder as its working directory.
 3. **Paste everything below the line** into the AI chat.
 4. **Answer the questionnaire** it gives you.
@@ -123,6 +123,8 @@ Always create:
 - `resources/agent-platform/README.md` defining shared knowledge and local configuration boundaries
 
 Cloud synced vaults are not Git repositories. Document that every Codex user must add `.codex` to `project_root_markers` in their local `~/.codex/config.toml`. Do not place personal paths, credentials, permissions, or notifications in the shared project config.
+
+Document one live transport for the vault. Human computers may use the provider desktop client while servers use a supported direct mount or sync client for the same folder. If the team also wants GitHub history, put the Git checkout outside the cloud folder and feed it with a one way snapshot. Never copy Git back into the live vault and never run two bidirectional sync engines against the same files.
 
 The vault is the shared knowledge layer. Running services, credentials, personal permissions, notifications, absolute paths, and session state remain outside it.
 
