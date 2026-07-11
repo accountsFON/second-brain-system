@@ -23,6 +23,8 @@ This is the master inventory. Every top-level folder and key file is registered 
 | `AGENTS.md` | Bootstrap shim for Codex, Copilot, Cursor. Points to CLAUDE.md. |
 | `GEMINI.md` | Bootstrap shim for Gemini CLI. Points to CLAUDE.md. |
 | `README.md` | Human-readable tour of the vault. |
+| `.codex/config.toml` | Portable, nonsecret Codex project settings. |
+| `.agents/skills/vault-bridge/SKILL.md` | Thin Codex router to canonical workflows in `skills/`. |
 
 ## Folders
 
@@ -35,6 +37,7 @@ This is the master inventory. Every top-level folder and key file is registered 
 | `_client-template/` | Copy this to create a new client. Never edit directly. |
 | `templates/` | Reusable document templates (meeting notes, decision records, briefs) |
 | `resources/` | Shared assets, archive, reference material |
+| `resources/agent-platform/` | Shared, generated, and machine local platform boundaries |
 | `Intake/` | Raw document drop zone. Process with intake-processor skill. |
 | `logs/` | Daily logs and meeting transcripts |
 

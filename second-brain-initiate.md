@@ -114,6 +114,16 @@ These ensure every AI tool lands in the same brain, regardless of which tool ope
 
 All three files point to CLAUDE.md as the single source of truth. Keep them under 40 lines each. They are shims, not duplicates.
 
+#### 1c. Codex project root and skill bridge
+
+Always create:
+
+- `.codex/config.toml` with portable, nonsecret project settings only
+- `.agents/skills/vault-bridge/SKILL.md` as a thin router back to `skills/`
+- `resources/agent-platform/README.md` defining shared, generated, and machine local boundaries
+
+Cloud synced vaults are not Git repositories. Document that every Codex user must add `.codex` to `project_root_markers` in their local `~/.codex/config.toml`. Do not place personal paths, credentials, permissions, or notifications in the shared project config.
+
 #### 2. `context/` — Org-level context (only files I provided content for)
 
 | File | Purpose |
@@ -128,7 +138,7 @@ All three files point to CLAUDE.md as the single source of truth. Keep them unde
 | `processes.md` | How we work — SOPs, standards, workflows |
 | `client-roster.md` | (If org serves clients) Canonical list of ALL clients with scope, contacts, spend, status. Single source of truth — CLAUDE.md links here instead of embedding the full list. Optional: tiers (e.g., full-service / retainer / project / past) |
 | `vault-manifest.md` | **Always create.** Master index of every file and folder in the vault. Register every top-level folder, every context file, every skill. This is the L0 entrypoint for discovery. If something is not in the manifest, future sessions will not find it. |
-| `learned-rules.md` | **Always create (starts mostly empty).** Cross-platform mirror of corrections and rules learned during work. Every AI agent reads this. Organized by category: hard rules, writing discipline, tool gotchas, process rules. Populated over time as the team discovers preferences and mistakes. |
+| `learned-rules.md` | **Always create (starts mostly empty).** Canonical shared corrections and rules. Every AI agent reads this. Local model memory may propose observations but cannot silently override this file. |
 | `vault-isolation-rules.md` | (If user has multiple vaults) Rules preventing cross-contamination between this vault and others |
 
 Only create files I gave you content for, except for the three marked "Always create." The rest get created later as context arrives.
@@ -174,6 +184,8 @@ Do exactly what the skill file says. Do not summarize the skill — run it.
 This ensures `skills/` is always the single source of truth. When a skill gets updated, the slash command picks up the change automatically. No duplication, no drift.
 
 Create one wrapper file per skill (e.g., `.claude/commands/daily-log.md`, `.claude/commands/brain-check.md`).
+
+Do not use symbolic links for skill distribution inside Google Drive, Dropbox, OneDrive, or similar sync folders. Use deterministic thin adapter files or install universal skills on each machine from a version locked catalog.
 
 #### 4. `clients/` and/or `projects/` — Top-level grouping
 
@@ -242,7 +254,7 @@ resources/
 
 #### 8b. `.claude/memory/` — Persistent memory system (for Claude Code users)
 
-Create `.claude/memory/MEMORY.md` as the memory index. This gives Claude Code persistent memory across sessions. Corrections, preferences, and project context are saved as individual files in this directory and indexed in MEMORY.md.
+Create `.claude/memory/MEMORY.md` as an optional local observation index for Claude Code users. Corrections, preferences, and project context may be saved as individual files and indexed in MEMORY.md.
 
 Memory types:
 - **user** — who the user is, role, preferences, expertise
@@ -250,7 +262,7 @@ Memory types:
 - **project** — ongoing work, goals, decisions, deadlines
 - **reference** — pointers to where information lives in external systems
 
-Universal rules discovered through memory should be promoted to `context/learned-rules.md` so non-Claude tools inherit them too.
+Universal rules discovered through memory must be reviewed before promotion to `context/learned-rules.md`. The shared file is canonical across tools.
 
 #### 9. `Intake/` — Raw document drop zone
 
@@ -273,8 +285,9 @@ After building everything, give me:
 2. **CLAUDE.md walkthrough** — highlight each section and what it does
 3. **"Add a new client/project" instructions** — exact steps
 4. **"Share with the team" guide** — what to tell team members, where they start, the 2-minute orientation
-5. **Priority list** — what to fill in next for maximum value (ranked)
-6. **Skills inventory** — list every skill created and when to use each one
+5. **Cross tool clean session checks** — verify Claude and Codex from the root and one nested client or project folder. Record the instruction chain and skill bridge each tool loaded.
+6. **Priority list** — what to fill in next for maximum value (ranked)
+7. **Skills inventory** — list every skill created and when to use each one
 
 ## File conventions (enforce these in CLAUDE.md)
 

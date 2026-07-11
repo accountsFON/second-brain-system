@@ -63,9 +63,9 @@ Files in `context/` folders (org-level and client-level) are **protected context
 
 ### Learning from corrections
 - When the user corrects your approach or confirms a non-obvious approach worked, that is a learned rule.
-- If your AI tool has persistent memory (Claude's `.claude/memory/`), save the correction there.
-- If the rule applies to all tools (not just the current one), also add it to `context/learned-rules.md` under the appropriate category.
-- The two-output rule applies to corrections too: memory captures them for one tool, learned-rules distributes them to every tool.
+- If your AI tool has persistent memory, save the observation there when appropriate.
+- If the rule applies to all tools, promote it through a reviewed update to `context/learned-rules.md`.
+- Shared learned rules are canonical. Local memory cannot silently override team policy.
 
 ### Manifest discipline
 - Any new folder under `clients/`, `projects/`, or any new file in `context/`, `skills/`, `resources/`, or `templates/` must be registered in `context/vault-manifest.md` in the same session it is created.
@@ -112,7 +112,8 @@ Files in `context/` folders (org-level and client-level) are **protected context
 - Skills are reusable prompts — follow their instructions step by step.
 - If a skill would help the current task, suggest it to the user.
 - **In Claude Code:** If the vault has `.claude/commands/` wrappers, skills are available as slash commands (e.g., `/daily-log`). The commands are thin pointers to `skills/` — always edit the skill file, never the command wrapper.
-- **In other AI tools:** Copy the skill file contents and paste as a prompt.
+- **In Codex:** Use `.agents/skills/vault-bridge/SKILL.md` as the project bridge back to the canonical `skills/` library.
+- **In other AI tools:** Point the tool to the canonical skill file. Use a thin adapter when the tool supports a native skill folder. Do not copy full workflow bodies into several platform folders.
 
 ### Processing intake documents
 - If the user drops files in `Intake/` or mentions raw documents to process, use `skills/intake-processor.md` (if it exists) or follow this flow:
