@@ -152,6 +152,7 @@ If you skip this step, the next session starts blind. The daily log is how insti
 - **The vault is a web** — every file connects to related files. Orphaned files are a bug.
 - **Start sessions by reading, end sessions by writing** — read context first, log everything at the end.
 - **Be a good citizen** — leave the vault better than you found it. Fix small issues (broken links, missing dates, missing cross-references) as you encounter them.
+- **Certify migrations from complete evidence** — track every required capability and operator machine. Missing or indirect evidence stays pending. Do not call a migration complete because one audit or one machine passes.
 
 ## Obsidian compatibility (optional enhancement)
 
