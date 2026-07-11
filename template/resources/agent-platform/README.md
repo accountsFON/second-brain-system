@@ -34,8 +34,9 @@ Lifecycle hooks are platform adapters, not the source of truth. When a team adds
 3. On the first observed event, record the current log baseline before looking for additions. Do this even when the platform missed its normal session start event.
 4. Build a deterministic event identifier from stable content such as vault identifier, log path, section anchor, and content hash.
 5. Commit local state and release local locks before any network request.
-6. Keep tokens in an environment variable, operating system credential store, or managed remote secret.
-7. Use a central idempotency store before several machines can deliver the same notification.
-8. Start in shadow mode with no production destination configured.
+6. Give each machine a separate credential. Keep the raw value in an operating system credential store or approved password manager.
+7. When central authentication is required, store only a high entropy token hash, bind it to the registered person and machine, and support individual revocation.
+8. Use a central idempotency store before several machines can deliver the same notification.
+9. Start in shadow mode with no production destination configured.
 
-Before live delivery, prove that a large historical log emits zero new events, one new section emits once, an identical retry emits none, and concurrent copies produce one central record.
+Before live delivery, prove that a large historical log emits zero new events, one new section emits once, an identical retry emits none, concurrent copies produce one central record, and one machine credential cannot submit for another identity.

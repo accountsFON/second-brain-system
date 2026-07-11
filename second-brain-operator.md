@@ -115,6 +115,12 @@ Files in `context/` folders (org-level and client-level) are **protected context
 - **In Codex:** Use `.agents/skills/vault-bridge/SKILL.md` as the project bridge back to the canonical `skills/` library.
 - **In other AI tools:** Point the tool to the canonical skill file. Use a thin adapter when the tool supports a native skill folder. Do not copy full workflow bodies into several platform folders.
 
+### Automation credentials
+- Keep raw credentials out of the synced vault.
+- When several machines call the same automation, give each machine a separate credential instead of copying one operator's token.
+- Store raw values in an operating system credential store or approved password manager. Store only a high entropy hash centrally when the service needs authentication.
+- Bind each credential to the registered person and machine, support individual revocation, and prove that one credential cannot submit for another identity before live use.
+
 ### Processing intake documents
 - If the user drops files in `Intake/` or mentions raw documents to process, use `skills/intake-processor.md` (if it exists) or follow this flow:
   1. Read the raw document
