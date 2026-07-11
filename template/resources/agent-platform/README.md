@@ -25,6 +25,15 @@ Generated files use one approved writer. Do not rebuild shared adapters in the b
 
 Do not use symbolic links as a distribution method inside a cloud synced vault.
 
+## MCP configuration
+
+- Treat every AI client as a separate configuration target. Claude private configuration does not automatically transfer to Codex.
+- Keep shared MCP files portable and free of literal credentials.
+- Prefer hosted OAuth when supported.
+- Retrieve static credentials from an operating system credential store at process start and pass them through the child environment.
+- Never place a raw credential in a command argument.
+- Inventory with a redacted audit that prints names, scopes, field names, and placement counts, never commands, arguments, headers, or values.
+
 ## Optional lifecycle adapters
 
 Lifecycle hooks are platform adapters, not the source of truth. When a team adds logging or notification automation:

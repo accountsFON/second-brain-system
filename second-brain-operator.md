@@ -120,6 +120,9 @@ Files in `context/` folders (org-level and client-level) are **protected context
 - When several machines call the same automation, give each machine a separate credential instead of copying one operator's token.
 - Store raw values in an operating system credential store or approved password manager. Store only a high entropy hash centrally when the service needs authentication.
 - Bind each credential to the registered person and machine, support individual revocation, and prove that one credential cannot submit for another identity before live use.
+- Treat MCP configuration as client specific. Verify Claude and Codex separately instead of copying one private config into the other.
+- Never inventory MCP servers by printing full configuration or using a command that can echo stored arguments and headers. Use a redacted audit that reports placement without values.
+- Prefer hosted OAuth. When a static credential is required, retrieve it from the operating system credential store at process start and pass it through the child environment, not a command argument.
 
 ### Processing intake documents
 - If the user drops files in `Intake/` or mentions raw documents to process, use `skills/intake-processor.md` (if it exists) or follow this flow:
