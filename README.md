@@ -200,7 +200,7 @@ project_root_markers = [".git", ".codex"]
 
 Keep personal configuration at home. Shared `.codex/config.toml` must not contain credentials, absolute paths, permissions, native notifications, or telemetry commands.
 
-Lifecycle hooks are optional. If you add automated logging or notifications, treat hooks as thin platform adapters. Keep state local, seed the current log baseline on the first observed event even when session start was missed, use deterministic event identifiers, and release local locks before network calls. Start with no live destination and prove historical replay, retry, and concurrent duplicate safety first. The generic checklist lives in [`template/resources/agent-platform/README.md`](template/resources/agent-platform/README.md).
+Lifecycle hooks are optional. If you add automated logging or notifications, treat hooks as thin platform adapters. Keep state local, seed the current log baseline on the first observed event even when session start was missed, use deterministic event identifiers, and release local locks before network calls. Give each machine a separate credential, store only its hash centrally, bind it to the registered identity, and support individual revocation. Start with no live destination and prove historical replay, retry, concurrent duplicate, and identity safety first. The generic checklist lives in [`template/resources/agent-platform/README.md`](template/resources/agent-platform/README.md).
 
 ### MCP Servers (optional, for technical teams)
 
