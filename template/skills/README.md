@@ -13,7 +13,11 @@ Reusable AI prompts and workflows the whole team can use. Each skill is a `.md` 
 
 **In Claude Code:** Type `/skill-name` as a slash command. The `.claude/commands/` folder has thin wrappers pointing here.
 
-**In any other AI tool:** Copy the skill file contents and paste as a prompt, or say "read and follow `skills/skill-name.md`."
+**In Codex:** Name the skill, invoke the vault bridge, or describe the workflow naturally. The bridge reads the matching canonical file here.
+
+**In any other AI tool:** Point the tool to `skills/skill-name.md`.
+
+When a workflow improves, update the canonical skill after user approval. Do not teach only one wrapper or rely on private model memory.
 
 ## Available skills
 

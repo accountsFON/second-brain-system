@@ -200,19 +200,15 @@ project_root_markers = [".git", ".codex"]
 
 Keep personal configuration at home. Shared `.codex/config.toml` must not contain credentials, absolute paths, permissions, native notifications, or telemetry commands.
 
-Lifecycle hooks are optional. If you add automated logging or notifications, treat hooks as thin platform adapters. Keep state local, seed the current log baseline on the first observed event even when session start was missed, use deterministic event identifiers, and release local locks before network calls. Give each machine a separate credential, store only its hash centrally, bind it to the registered identity, and support individual revocation. Start with no live destination and prove historical replay, retry, concurrent duplicate, and identity safety first. The generic checklist lives in [`template/resources/agent-platform/README.md`](template/resources/agent-platform/README.md).
+The vault is the shared knowledge layer, not a required automation platform. Running services, credentials, personal permissions, notifications, and session state stay outside it.
 
 ### MCP Servers (optional, for technical teams)
 
-If your team uses external tools (ad platforms, CRMs, project management APIs), you can connect them to Claude Code via MCP servers. A good pattern:
+If your team uses external tools, the vault should share what each connector does, who owns it, how each tool connects, how an authorized person signs in, and how to verify it.
 
-1. **Code on GitHub** (private repos): each MCP server is its own repo
-2. **Docs in the vault**: `resources/mcp-servers/` with setup guides per server
-3. **Keep shared definitions nonsecret**: store commands, URLs, and environment variable names in the vault.
-4. **Credentials stay local**: each team member uses OAuth, Keychain, or a team password manager.
-5. **Setup skill**: a `skills/mcp-setup.md` that walks team members through installation
+Prefer an official provider hosted MCP. Use a company hosted MCP for custom shared workflows. Use a local MCP when it needs that computer's files or applications. Claude and Codex may require separate one time setup, but the same vault guide can cover both.
 
-Claude, Codex, and other clients keep separate private MCP configuration. One tool's local setup does not automatically transfer to another. Prefer hosted OAuth. For static credentials, use a machine local launcher that reads Keychain and exports the value to the child process. Never store a raw credential in a shared file or command argument.
+Credentials and OAuth sessions stay outside the vault. Never store a raw credential in a shared file or command argument.
 
 Inventory must be redacted by design. Do not tell an agent to print a complete MCP config or run a list command that may echo stored arguments and headers. A safe audit reports only server names, scopes, field names, and placement counts.
 

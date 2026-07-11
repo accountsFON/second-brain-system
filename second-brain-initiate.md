@@ -120,15 +120,13 @@ Always create:
 
 - `.codex/config.toml` with portable, nonsecret project settings only
 - `.agents/skills/vault-bridge/SKILL.md` as a thin router back to `skills/`
-- `resources/agent-platform/README.md` defining shared, generated, and machine local boundaries
+- `resources/agent-platform/README.md` defining shared knowledge and local configuration boundaries
 
 Cloud synced vaults are not Git repositories. Document that every Codex user must add `.codex` to `project_root_markers` in their local `~/.codex/config.toml`. Do not place personal paths, credentials, permissions, or notifications in the shared project config.
 
-Lifecycle hooks are optional. If the organization requests automated logging or notifications, document the neutral event contract in `resources/agent-platform/README.md` and begin in shadow mode. Machine state stays outside the synced vault. The first observed event must seed the current log baseline even if the normal session start event was missed. Use deterministic event identifiers and central idempotency before several machines can deliver notifications. Give each machine a separate credential, keep the raw value in its operating system credential store or approved password manager, store only a high entropy hash centrally, bind it to the registered person and machine, and support individual revocation. Release local state locks before network calls. Do not configure a live destination until historical replay, identical retry, concurrent duplicate, and identity mismatch tests pass.
+The vault is the shared knowledge layer. Running services, credentials, personal permissions, notifications, absolute paths, and session state remain outside it.
 
-MCP configuration is client specific. Claude private configuration does not automatically transfer to Codex or another client. Shared MCP files may contain only portable definitions with no literal credential. Prefer hosted OAuth. For static credentials, use a machine local launcher that reads the operating system credential store and exports values to the child process. Never place a raw credential in a command argument. Provide a redacted audit that reports names, scopes, field names, and placement counts without printing commands, arguments, headers, or values.
-
-For any cross tool or team migration, create an evidence ledger with every required capability and every operator machine. Use `pass`, `pending`, and `blocked` states. The final completion audit must combine the ledger with mechanical evidence for settings boundaries, credential placement, rollback, repositories, live services, and current logs. Missing or indirect evidence remains pending. Never declare completion from one narrower green test.
+MCP setup is tool specific. The vault shares the setup guide. Prefer an official provider hosted MCP, use a company hosted MCP for custom shared workflows, and use a local MCP only when local access is required. Claude and Codex may each need a connector definition and user login. Never place a raw credential in the vault or a command argument. Use a redacted inventory when auditing configuration.
 
 #### 2. `context/` — Org-level context (only files I provided content for)
 
