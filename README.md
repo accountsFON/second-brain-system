@@ -175,6 +175,12 @@ Obsidian is free, works on Mac/Windows/Linux/mobile, and syncs via any cloud dri
 
 **To get started:** Download [Obsidian](https://obsidian.md), click "Open folder as vault", and point it at your vault folder.
 
+### Live sync for humans and server agents
+
+Choose one document system as the live source of truth. Human computers can use the provider desktop client. An always on server can use a supported direct mount or sync client for that same folder. Both sides then read and write the same live documents.
+
+Keep Git outside every cloud synced vault. If you want version history in GitHub, copy the live vault into a separate checkout with a one way snapshot job. Never copy that checkout back into the live vault, never place `.git` inside a cloud folder, and never run two bidirectional sync engines against the same files.
+
 ## Claude Code Integration
 
 If your team uses Claude Code, the vault automatically provides slash commands for every skill. Type `/daily-log`, `/brain-check`, `/intake-processor`, etc. The commands in `.claude/commands/` are thin one-line wrappers that point to the skill files in `skills/`. One source of truth, no duplication.
@@ -227,6 +233,7 @@ Inventory must be redacted by design. Do not tell an agent to print a complete M
 11. **Works everywhere**: plain markdown, no tool lock-in.
 12. **Shared and local stay separate**: knowledge and portable adapters are shared. Credentials, paths, permissions, notifications, and caches are machine local.
 13. **Completion is evidence based**: every capability and operator machine gets an explicit pass gate. Missing evidence stays pending, and a narrow green test never certifies the full migration.
+14. **One live document transport**: humans and agents share one live vault through supported clients or mounts. Git may receive a one way recovery snapshot but never competes as a second writable source.
 
 ---
 

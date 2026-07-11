@@ -122,6 +122,13 @@ Files in `context/` folders (org-level and client-level) are **protected context
 - Treat Claude and Codex as separate connector clients. Share one setup guide, then authenticate each authorized person and tool as needed.
 - Never inventory MCP servers by printing full configuration or a command that may echo stored values. Use a redacted audit.
 
+### Live vault transport
+- Use one document system as the live source of truth for humans and agents.
+- Human computers may use the provider desktop client. Servers may use a supported direct mount or sync client for the same folder.
+- Keep Git outside cloud synced folders. A separate Git checkout may receive one way recovery snapshots, but it must never write back into the live vault.
+- Never run two bidirectional sync engines against the same vault.
+- Test both directions, create, edit, rename, delete, restart, cached write recovery, and same file collision behavior before allowing automated writers.
+
 ### Processing intake documents
 - If the user drops files in `Intake/` or mentions raw documents to process, use `skills/intake-processor.md` (if it exists) or follow this flow:
   1. Read the raw document
