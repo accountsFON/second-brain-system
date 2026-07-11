@@ -126,6 +126,8 @@ Cloud synced vaults are not Git repositories. Document that every Codex user mus
 
 Lifecycle hooks are optional. If the organization requests automated logging or notifications, document the neutral event contract in `resources/agent-platform/README.md` and begin in shadow mode. Machine state stays outside the synced vault. The first observed event must seed the current log baseline even if the normal session start event was missed. Use deterministic event identifiers and central idempotency before several machines can deliver notifications. Give each machine a separate credential, keep the raw value in its operating system credential store or approved password manager, store only a high entropy hash centrally, bind it to the registered person and machine, and support individual revocation. Release local state locks before network calls. Do not configure a live destination until historical replay, identical retry, concurrent duplicate, and identity mismatch tests pass.
 
+MCP configuration is client specific. Claude private configuration does not automatically transfer to Codex or another client. Shared MCP files may contain only portable definitions with no literal credential. Prefer hosted OAuth. For static credentials, use a machine local launcher that reads the operating system credential store and exports values to the child process. Never place a raw credential in a command argument. Provide a redacted audit that reports names, scopes, field names, and placement counts without printing commands, arguments, headers, or values.
+
 #### 2. `context/` — Org-level context (only files I provided content for)
 
 | File | Purpose |

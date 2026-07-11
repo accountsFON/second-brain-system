@@ -209,8 +209,12 @@ If your team uses external tools (ad platforms, CRMs, project management APIs), 
 1. **Code on GitHub** (private repos): each MCP server is its own repo
 2. **Docs in the vault**: `resources/mcp-servers/` with setup guides per server
 3. **Keep shared definitions nonsecret**: store commands, URLs, and environment variable names in the vault.
-4. **Credentials stay local**: each team member uses environment variables, Keychain, or a team password manager.
+4. **Credentials stay local**: each team member uses OAuth, Keychain, or a team password manager.
 5. **Setup skill**: a `skills/mcp-setup.md` that walks team members through installation
+
+Claude, Codex, and other clients keep separate private MCP configuration. One tool's local setup does not automatically transfer to another. Prefer hosted OAuth. For static credentials, use a machine local launcher that reads Keychain and exports the value to the child process. Never store a raw credential in a shared file or command argument.
+
+Inventory must be redacted by design. Do not tell an agent to print a complete MCP config or run a list command that may echo stored arguments and headers. A safe audit reports only server names, scopes, field names, and placement counts.
 
 ## Design principles
 
