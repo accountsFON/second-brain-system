@@ -1,6 +1,6 @@
 ---
 name: learned-rules
-description: Cross-platform mirror of corrections and rules learned during work. Every AI agent must follow these.
+description: Canonical shared corrections and rules every AI agent must follow.
 type: context
 updated: YYYY-MM-DD
 ---
@@ -9,9 +9,9 @@ updated: YYYY-MM-DD
 
 # Learned Rules
 
-These rules are captured over time as the team works with AI tools. They are stored here so every agent (Claude, Codex, Gemini, Cursor, Copilot, ChatGPT, others) inherits the same operating discipline regardless of which tool is running.
+These rules are captured over time as the team works with AI tools. This file is the canonical shared policy so every agent inherits the same operating discipline regardless of which tool is running.
 
-If your AI tool has a persistent memory system (like Claude's auto-memory), that memory is the live source. This file is the cross-platform snapshot so non-memory tools stay in sync.
+Local model memory may capture observations and propose corrections, but it does not silently override this file. Promote universal corrections here through a reviewed update.
 
 **Update this file** whenever a correction or preference crosses the bar of "applies to all tools, not just the one that learned it."
 

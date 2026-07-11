@@ -15,12 +15,18 @@ You are reading a shared context vault. This file is the entry point for Codex, 
 
 ## Hard rules every agent must follow
 
-1. **Read CLAUDE.md before doing any work.** Then read the most recent daily log in `logs/`.
+1. **Read CLAUDE.md before doing any work.** Then read `context/learned-rules.md` and the most recent daily log in `logs/`.
 2. **Never modify vault data without explicit user confirmation.** Tell the user exactly what you plan to change. Wait for a clear yes. Add, do not replace.
 3. **Attribute every log entry.** Include who wrote it. If unsure who the current user is, ask before logging.
 4. **Use absolute dates (YYYY-MM-DD).** Convert any relative date in user messages before writing.
 5. **Log significant work** to today's daily log at session end.
 6. **Follow any additional rules in CLAUDE.md.** The rules there override default model behavior.
+
+## Skills and machine setup
+
+Canonical workflows live in `skills/`. Codex uses `.agents/skills/vault-bridge/SKILL.md` to route named workflows back to that library.
+
+Shared project configuration may contain only portable, nonsecret settings. Credentials, absolute paths, permissions, and personal notifications belong in each operator's home configuration. In a cloud synced vault, configure Codex locally to recognize `.codex` as a project root marker.
 
 ## What this vault is
 

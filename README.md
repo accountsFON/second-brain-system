@@ -39,8 +39,8 @@ One master file that every tool reads first. `AGENTS.md`, `GEMINI.md`, and `READ
 ### 2. Persistent Memory (learns across sessions)
 
 Two layers working together:
-- **Auto-memory** (tool-specific): Claude's `.claude/memory/`, or equivalent in other tools. Captures corrections in real time.
-- **Learned rules** (`context/learned-rules.md`): human-curated, tool-agnostic mirror. Every AI reads it. Corrections compound across the whole team regardless of which tool learned them.
+- **Local memory** (tool specific): captures observations and proposes corrections for review.
+- **Learned rules** (`context/learned-rules.md`): canonical shared policy. Every AI reads it, and local memory cannot silently override it.
 
 ### 3. Executable Skills (the vault does things)
 
@@ -53,6 +53,8 @@ your-vault/
 ├── CLAUDE.md                  # The brain: navigation, rules, org identity
 ├── AGENTS.md                  # Cross-tool shim for Codex/Copilot/Cursor
 ├── GEMINI.md                  # Cross-tool shim for Gemini CLI
+├── .codex/config.toml         # Portable Codex project settings
+├── .agents/skills/            # Thin Codex bridge to canonical skills
 ├── README.md                  # Human-readable tour
 ├── context/
 │   ├── soul.md                # Identity, voice, values (who the org IS)
@@ -177,14 +179,26 @@ Obsidian is free, works on Mac/Windows/Linux/mobile, and syncs via any cloud dri
 
 If your team uses Claude Code, the vault automatically provides slash commands for every skill. Type `/daily-log`, `/brain-check`, `/intake-processor`, etc. The commands in `.claude/commands/` are thin one-line wrappers that point to the skill files in `skills/`. One source of truth, no duplication.
 
-The `.claude/memory/` directory gives Claude persistent memory across sessions. Corrections and preferences are saved automatically and loaded at the start of every conversation. Universal rules should also be promoted to `context/learned-rules.md` so other tools inherit them.
+The `.claude/memory/` directory can hold Claude observations across sessions. Universal rules are reviewed before promotion to canonical `context/learned-rules.md` so other tools inherit approved policy.
 
 **Adding a new skill:** Create the `.md` file in `skills/`, then add a wrapper in `.claude/commands/` with:
 ```
 Read and execute the skill instructions in skills/[name].md
 
-Do exactly what the skill file says. Do not summarize the skill — run it.
+Do exactly what the skill file says. Do not summarize the skill. Run it.
 ```
+
+## Codex Integration
+
+Codex reads `AGENTS.md` for durable instructions and `.agents/skills/vault-bridge/SKILL.md` for shared workflows. The bridge points back to `skills/`, so Claude and Codex execute the same canonical instructions.
+
+For a cloud synced vault, each operator adds this to their local `~/.codex/config.toml` and restarts Codex:
+
+```toml
+project_root_markers = [".git", ".codex"]
+```
+
+Keep personal configuration at home. Shared `.codex/config.toml` must not contain credentials, absolute paths, permissions, native notifications, or telemetry commands.
 
 ### MCP Servers (optional, for technical teams)
 
@@ -192,8 +206,8 @@ If your team uses external tools (ad platforms, CRMs, project management APIs), 
 
 1. **Code on GitHub** (private repos): each MCP server is its own repo
 2. **Docs in the vault**: `resources/mcp-servers/` with setup guides per server
-3. **Use a `start.sh` wrapper**: Claude Code does not reliably pass `env` vars to MCP processes. Create a `start.sh` that `cd`s to the project root, sources `.env`, and runs the server. Point `.mcp.json` at the script.
-4. **Credentials in `.env`**: each team member manages their own `.env` (never committed)
+3. **Keep shared definitions nonsecret**: store commands, URLs, and environment variable names in the vault.
+4. **Credentials stay local**: each team member uses environment variables, Keychain, or a team password manager.
 5. **Setup skill**: a `skills/mcp-setup.md` that walks team members through installation
 
 ## Design principles
@@ -202,13 +216,14 @@ If your team uses external tools (ad platforms, CRMs, project management APIs), 
 2. **One truth per file**: no mega-docs, everything cross-referenced.
 3. **Context is layered**: org-level at root, client/project folders inherit and override.
 4. **Four-file bootstrap**: CLAUDE.md + AGENTS.md + GEMINI.md + README.md. Every tool lands in the same brain.
-5. **Memory that learns**: corrections compound via auto-memory + learned-rules. The vault gets smarter.
+5. **Memory that learns**: local observations propose corrections, and reviewed learned rules distribute approved policy.
 6. **Skills are executable**: not documentation, workflows. The vault does things, not just stores things.
 7. **Daily logs with timestamps and attribution**: institutional memory that survives across sessions, people, and tools.
 8. **Sessions are active, not passive**: mandatory protocol. Read context first, route knowledge during, log everything at the end.
 9. **Context is protected**: approved content cannot be casually overwritten. Contradictions require confirmation.
 10. **Start minimal**: only create files you have content for. Grow organically.
 11. **Works everywhere**: plain markdown, no tool lock-in.
+12. **Shared and local stay separate**: knowledge and portable adapters are shared. Credentials, paths, permissions, notifications, and caches are machine local.
 
 ---
 
