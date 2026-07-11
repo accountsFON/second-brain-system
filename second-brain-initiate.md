@@ -128,6 +128,8 @@ Lifecycle hooks are optional. If the organization requests automated logging or 
 
 MCP configuration is client specific. Claude private configuration does not automatically transfer to Codex or another client. Shared MCP files may contain only portable definitions with no literal credential. Prefer hosted OAuth. For static credentials, use a machine local launcher that reads the operating system credential store and exports values to the child process. Never place a raw credential in a command argument. Provide a redacted audit that reports names, scopes, field names, and placement counts without printing commands, arguments, headers, or values.
 
+For any cross tool or team migration, create an evidence ledger with every required capability and every operator machine. Use `pass`, `pending`, and `blocked` states. The final completion audit must combine the ledger with mechanical evidence for settings boundaries, credential placement, rollback, repositories, live services, and current logs. Missing or indirect evidence remains pending. Never declare completion from one narrower green test.
+
 #### 2. `context/` — Org-level context (only files I provided content for)
 
 | File | Purpose |

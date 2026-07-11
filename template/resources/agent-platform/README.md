@@ -49,3 +49,9 @@ Lifecycle hooks are platform adapters, not the source of truth. When a team adds
 9. Start in shadow mode with no production destination configured.
 
 Before live delivery, prove that a large historical log emits zero new events, one new section emits once, an identical retry emits none, concurrent copies produce one central record, and one machine credential cannot submit for another identity.
+
+## Completion certification
+
+Track every required capability and every operator machine in an evidence ledger with `pass`, `pending`, or `blocked` status. A completion audit should combine that human evidence with mechanical checks for credential placement, synchronized settings, repository state, rollback copies, current logs, and live service state.
+
+Missing or indirect evidence stays pending. A clean narrow test does not prove the full migration. Close the migration only when every required row passes, no integrity failure remains, and the final audit exits successfully.

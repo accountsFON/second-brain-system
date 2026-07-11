@@ -230,6 +230,7 @@ Inventory must be redacted by design. Do not tell an agent to print a complete M
 10. **Start minimal**: only create files you have content for. Grow organically.
 11. **Works everywhere**: plain markdown, no tool lock-in.
 12. **Shared and local stay separate**: knowledge and portable adapters are shared. Credentials, paths, permissions, notifications, and caches are machine local.
+13. **Completion is evidence based**: every capability and operator machine gets an explicit pass gate. Missing evidence stays pending, and a narrow green test never certifies the full migration.
 
 ---
 
