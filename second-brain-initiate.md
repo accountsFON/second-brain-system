@@ -124,6 +124,8 @@ Always create:
 
 Cloud synced vaults are not Git repositories. Document that every Codex user must add `.codex` to `project_root_markers` in their local `~/.codex/config.toml`. Do not place personal paths, credentials, permissions, or notifications in the shared project config.
 
+Lifecycle hooks are optional. If the organization requests automated logging or notifications, document the neutral event contract in `resources/agent-platform/README.md` and begin in shadow mode. Machine state stays outside the synced vault. The first observed event must seed the current log baseline even if the normal session start event was missed. Use deterministic event identifiers and central idempotency before several machines can deliver notifications. Release local state locks before network calls. Do not configure a live destination until historical replay, identical retry, and concurrent duplicate tests pass.
+
 #### 2. `context/` — Org-level context (only files I provided content for)
 
 | File | Purpose |

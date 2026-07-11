@@ -1,33 +1,31 @@
 # AGENTS.md
 
-You are reading a shared context vault. This file is the entry point for Codex, GitHub Copilot, Cursor agents, and any tool that auto-loads `AGENTS.md`.
+You are working in the source repository for the Second Brain System. This repository publishes a generic vault builder, operator guide, and starter templates. It is not itself a generated organization vault.
 
-**The full operating context lives in [CLAUDE.md](./CLAUDE.md).** Read that file first, every session, before doing any work. The name is historical; the contents are tool-agnostic.
+Read [README.md](./README.md), then inspect [second-brain-initiate.md](./second-brain-initiate.md), [second-brain-operator.md](./second-brain-operator.md), and only the relevant files under [template/](./template/).
 
 ## Quick links for any agent
 
-- **Brain entrypoint:** [CLAUDE.md](./CLAUDE.md)
-- **Vault map:** [context/vault-manifest.md](./context/vault-manifest.md)
-- **Org identity:** [context/org-profile.md](./context/org-profile.md)
-- **Learned rules (must follow):** [context/learned-rules.md](./context/learned-rules.md)
-- **Skills library:** [skills/README.md](./skills/README.md)
-- **Human-readable tour:** [README.md](./README.md)
+- **Repository tour:** [README.md](./README.md)
+- **Vault builder:** [second-brain-initiate.md](./second-brain-initiate.md)
+- **Agent operator guide:** [second-brain-operator.md](./second-brain-operator.md)
+- **Starter templates:** [template/](./template/)
+- **Platform boundary template:** [template/resources/agent-platform/README.md](./template/resources/agent-platform/README.md)
 
 ## Hard rules every agent must follow
 
-1. **Read CLAUDE.md before doing any work.** Then read `context/learned-rules.md` and the most recent daily log in `logs/`.
-2. **Never modify vault data without explicit user confirmation.** Tell the user exactly what you plan to change. Wait for a clear yes. Add, do not replace.
-3. **Attribute every log entry.** Include who wrote it. If unsure who the current user is, ask before logging.
-4. **Use absolute dates (YYYY-MM-DD).** Convert any relative date in user messages before writing.
-5. **Log significant work** to today's daily log at session end.
-6. **Follow any additional rules in CLAUDE.md.** The rules there override default model behavior.
+1. Keep every published pattern organization neutral. Never commit customer data, credentials, private endpoints, or operator paths.
+2. Preserve one canonical workflow source. Platform adapters remain thin.
+3. Keep shared project files portable and nonsecret. Machine state and credentials stay local.
+4. Update the builder prompt, operator guide, README, and templates together when their contract changes.
+5. Verify links, diffs, and secret patterns before release.
 
 ## Skills and machine setup
 
-Canonical workflows live in `skills/`. Codex uses `.agents/skills/vault-bridge/SKILL.md` to route named workflows back to that library.
+Generated vaults keep canonical workflows in `skills/`. Codex uses `.agents/skills/vault-bridge/SKILL.md` to route named workflows back to that library.
 
 Shared project configuration may contain only portable, nonsecret settings. Credentials, absolute paths, permissions, and personal notifications belong in each operator's home configuration. In a cloud synced vault, configure Codex locally to recognize `.codex` as a project root marker.
 
 ## What this vault is
 
-This is an org-wide shared second brain. Every team member and every AI tool reads from it before doing work, so every session starts with full organizational context. If you cannot see `CLAUDE.md`, ask the user where the working directory is. Do not invent context.
+The generated vault, not this source repository, contains the organization specific `CLAUDE.md`, context, and daily logs. Do not invent organization content in this repository.
