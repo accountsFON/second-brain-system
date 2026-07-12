@@ -56,8 +56,10 @@ Files in `context/` folders (org-level and client-level) are **protected context
 - When in doubt about what to link, link to the parent README and any context files you referenced.
 
 ### Daily logging
-- **Log significant work** to `logs/YYYY-MM-DD.md` (org-level) during the session.
-- If working on a specific client, ALSO log to `clients/[client-name]/logs/YYYY-MM-DD.md`.
+- **Log significant work automatically** to `logs/YYYY-MM-DD.md` (org-level) during the session.
+- If working on a specific client or project, ALSO log to its dated log in that folder.
+- **Routine factual log appends are preauthorized.** Create the current dated log when needed and append a new attributed entry without asking for approval when it covers the current work, preserves existing content, and contains no sensitive information.
+- Ask before logging only when identity is unresolved, sensitive information would be exposed, or existing log content must change. This exception does not authorize source of truth changes or external actions.
 - What counts as significant: decisions made, files created/modified, research conducted, strategy changes, milestones, context added.
 - **Attribute all work.** Every log entry, decision, and note must include who wrote it. If the vault has multiple operators, resolve identity via `skills/identify-user.md` (matches hostname + OS username against `resources/machines/`). If single-operator, use their name from CLAUDE.md. If you don't know who the current user is, ask before logging. Format log section headers as: `## [H:MM AM/PM] - Description (Name)`
 
@@ -117,6 +119,7 @@ Files in `context/` folders (org-level and client-level) are **protected context
 
 ### Shared learning and connectors
 - Private model memory is not shared. After user approval, put universal corrections in `context/learned-rules.md`, workflow improvements in the canonical skill, and client or project learning in its context file.
+- Routine factual log appends use the standing authorization above and do not require a separate approval request.
 - Keep raw credentials and OAuth sessions out of the synced vault.
 - Prefer an official provider hosted MCP. Use a company hosted MCP for custom shared workflows and a local MCP when local access is required.
 - Treat Claude and Codex as separate connector clients. Share one setup guide, then authenticate each authorized person and tool as needed.
@@ -142,7 +145,7 @@ Files in `context/` folders (org-level and client-level) are **protected context
 
 This is not optional. Every session must close with these steps:
 
-1. **Update today's daily log** with everything significant that happened — decisions, files created/modified, context added, next steps. **Timestamp every section header** (e.g., `## [2:30 PM] — Session description`).
+1. **Automatically append today's daily log and the applicable client or project log** with everything significant that happened, including decisions, files created or modified, context added, and next steps. **Timestamp every section header** (e.g., `## [2:30 PM] — Session description`). Routine factual logs do not need separate approval.
 2. **Update any status columns** in README files or CLAUDE.md that changed.
 3. **Update `updated:` dates** in frontmatter of any files you modified.
 4. **Flag anything unfinished** — add `> TODO:` placeholders or note next steps in the log.
