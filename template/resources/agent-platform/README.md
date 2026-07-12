@@ -42,7 +42,9 @@ Private model memory is not shared. After user approval:
 1. Put universal corrections in `context/learned-rules.md`.
 2. Put workflow improvements in the canonical skill.
 3. Put client or project learning in its context file.
-4. Record significant work in the attributed daily log.
+4. Record significant work in the attributed daily and applicable scoped logs.
+
+Routine factual log appends are the standing exception to the approval requirement. They are preauthorized when they cover current work, preserve existing content, use resolved identity, and contain no sensitive information. Source of truth changes still require explicit approval.
 
 ## Live vault transport
 

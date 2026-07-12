@@ -1,6 +1,6 @@
 ---
 name: daily-log
-description: Mandatory session-end logging. Creates or updates today's daily log with timestamped, attributed entries.
+description: Automatic routine logging. Appends today's daily and applicable scoped logs with timestamped, attributed entries.
 type: skill
 updated: YYYY-MM-DD
 ---
@@ -9,7 +9,13 @@ updated: YYYY-MM-DD
 
 # Daily Log
 
-Update today's daily log with everything significant from this session.
+Update today's daily and applicable client or project logs with everything significant from this session.
+
+## Standing authorization
+
+Routine factual logging is preauthorized. Create the current dated log when it is missing and append new attributed entries without asking for approval when they cover the current session, leave existing content untouched, and contain no sensitive information.
+
+Ask before logging only when identity is unresolved, sensitive information would be exposed, or existing log content must change. This authorization does not cover source of truth changes or external actions.
 
 ## When to use
 
@@ -56,11 +62,15 @@ updated: YYYY-MM-DD
 - What is next (TODOs, blockers, follow-ups)
 ```
 
-### 5. Update frontmatter dates
+### 5. Append the applicable scoped log
+
+If the work belongs to a client or project, append the same factual outcome to its dated log. Follow the folder's existing log naming convention.
+
+### 6. Update frontmatter dates
 
 Update the `updated:` field in frontmatter of any files modified during the session.
 
-### 6. Flag unfinished work
+### 7. Flag unfinished work
 
 Add `> TODO:` placeholders for anything incomplete. Note next steps clearly so the next session can pick up without guessing.
 
@@ -83,4 +93,4 @@ Add `> TODO:` placeholders for anything incomplete. Note next steps clearly so t
 
 ## Output
 
-One updated log file at `logs/YYYY-MM-DD.md` with a timestamped, attributed section.
+The updated daily log at `logs/YYYY-MM-DD.md` and, when applicable, the matching client or project log, each with a timestamped, attributed section.

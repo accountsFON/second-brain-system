@@ -121,6 +121,7 @@ Load as your first message in any AI session. It teaches the AI to:
 - Route new information to the correct files (not buried in chat)
 - Cross-reference every file to related docs
 - **Mandatory session end**: update daily logs with timestamped entries, flag unfinished work
+- **Automatic routine logging**: factual additions to the current daily and applicable client or project logs need no separate approval
 
 ### Cross-tool shims — Automatic
 
@@ -135,7 +136,7 @@ The `template/` folder contains starter versions of the key files the initiate p
 | Skill | What it does |
 |-------|-------------|
 | **context-loader** | Reads the brain file, latest log, and client context. Session-start bootstrap. |
-| **daily-log** | Creates or updates today's log with timestamped, attributed entries. Mandatory at session end. |
+| **daily-log** | Automatically appends today's daily and applicable scoped logs with timestamped, attributed entries. Mandatory at session end. |
 | **brain-check** | Audits the vault: staleness, broken links, manifest drift, orphaned files, intake backlog. |
 | **intake-processor** | Reads a raw doc from Intake/, extracts key info, routes it to the right vault files, archives the original. |
 | **identify-user** | Resolves who is operating the current session by matching hostname + OS username against a registry. For multi-person or multi-machine vaults. |
@@ -232,8 +233,9 @@ Inventory must be redacted by design. Do not tell an agent to print a complete M
 10. **Start minimal**: only create files you have content for. Grow organically.
 11. **Works everywhere**: plain markdown, no tool lock-in.
 12. **Shared and local stay separate**: knowledge and portable adapters are shared. Credentials, paths, permissions, notifications, and caches are machine local.
-13. **Completion is evidence based**: every capability and operator machine gets an explicit pass gate. Missing evidence stays pending, and a narrow green test never certifies the full migration.
-14. **One live document transport**: humans and agents share one live vault through supported clients or mounts. Git may receive a one way recovery snapshot but never competes as a second writable source.
+13. **Routine logging is preauthorized**: agents append factual current work to daily and applicable scoped logs automatically. Sensitive content, edits to existing entries, and source of truth changes still require approval.
+14. **Completion is evidence based**: every capability and operator machine gets an explicit pass gate. Missing evidence stays pending, and a narrow green test never certifies the full migration.
+15. **One live document transport**: humans and agents share one live vault through supported clients or mounts. Git may receive a one way recovery snapshot but never competes as a second writable source.
 
 ---
 
