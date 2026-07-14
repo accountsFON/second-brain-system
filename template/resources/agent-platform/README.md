@@ -16,7 +16,7 @@ The vault is one shared brain, not a required automation platform.
 - Organization, client, and project knowledge
 - Canonical policy and learned rules
 - Canonical workflows in `skills/`
-- Noncanonical candidate reports and human approved rubrics or exemplars in `resources/learning-library/`
+- Noncanonical candidate reports and rubrics or exemplars promoted through the complete schema version 2 approval contract in `resources/learning-library/`
 - Thin tool adapters
 - MCP descriptions and setup instructions
 - Attributed logs
@@ -34,13 +34,13 @@ The vault is one shared brain, not a required automation platform.
 
 Keep each workflow body once in `skills/`. Claude wrappers and the Codex bridge point back to that canonical file.
 
-When a workflow improves, update the canonical skill after user approval. Do not teach only one adapter.
+When a workflow improves, route the evidence through Pattern Review. Update the canonical skill only after an immutable exact proposal, bound human `approve-exact` decision, one use execution, and passing live validation have completed. Do not teach only one adapter.
 
 ## Shared learning
 
 Private model memory is not shared. Proposed reusable learning first enters `skills/pattern-review.md` as noncanonical evidence. Candidate reports never override shared policy.
 
-After a separate human promotion decision:
+After the complete schema version 2 promotion chain resolves, including an exact `FPRP`, bound human `FPRD`, consumed `FPRE`, and passing `FPRV`:
 
 1. Put universal corrections in `context/learned-rules.md`.
 2. Put workflow improvements in the canonical skill.

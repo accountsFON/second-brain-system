@@ -75,13 +75,20 @@ This is the master inventory. Every top-level folder and key file is registered 
 
 | File | Purpose |
 |------|---------|
-| `resources/learning-library/README.md` | Authority, writer, shadow mode, cadence, and promotion contract |
+| `resources/learning-library/README.md` | Authority, writer, shadow mode, cadence, and learning library map |
+| `resources/learning-library/approval-contract.md` | Portable exact proposal, authorization, execution, and validation contract |
 | `resources/learning-library/candidate-report-template.md` | Noncanonical recurring discovery report template |
-| `resources/learning-library/decision-template.md` | Human decision and promotion authorization template |
+| `resources/learning-library/proposal-template.md` | Immutable content addressed exact proposal template |
+| `resources/learning-library/decision-template.md` | Append only human decision and exact authorization template |
+| `resources/learning-library/execution-receipt-template.md` | Terminal attempt and one use authorization receipt template |
+| `resources/learning-library/validation-receipt-template.md` | Trusted validator and live hash receipt template |
+| `resources/learning-library/validate-pattern-review.py` | Dependency free structural and digest validator for schema version 2 records |
+| `resources/learning-library/pattern_review_core.py` | Shared canonical JSON, digest, and identifier implementation |
+| `resources/learning-library/pattern-review-records.py` | Deterministic explicit record envelope creation and verification CLI |
 | `resources/learning-library/exemplar-template.md` | Approved annotated example template |
 | `resources/learning-library/rubric-template.md` | Approved scoped quality rubric template |
 
-Create and register `candidates/`, `decisions/`, `exemplars/`, and `rubrics/` when their first files are added. Candidate reports remain noncanonical.
+Create and register `candidates/`, `proposals/`, `decisions/`, `executions/`, `validations/`, `exemplars/`, and `rubrics/` when their first files are added. Candidate reports and exact proposals remain noncanonical.
 
 ## Clients
 

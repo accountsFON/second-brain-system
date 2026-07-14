@@ -69,7 +69,7 @@ Files in `context/` folders (org-level and client-level) are **protected context
 - When the user corrects an approach or confirms that a non-obvious approach worked, capture it as evidence. It is not automatically a universal rule.
 - If your AI tool has persistent memory, save the observation there when appropriate.
 - Route possible reusable learning through `skills/pattern-review.md` as a noncanonical candidate.
-- Promote it only after a named human records an explicit decision with a scope, destination, validation plan, and review date.
+- Promote it only through the schema version 2 approval contract: immutable exact proposal, bound human decision, one use execution, and passing validation receipt.
 - Shared learned rules are canonical. Local memory and candidate reports cannot silently override team policy.
 
 ### Governed Pattern Review
@@ -77,12 +77,23 @@ Files in `context/` folders (org-level and client-level) are **protected context
 If the vault contains `resources/learning-library/`:
 
 - Candidate reports in `resources/learning-library/candidates/` are not instructions and must not be loaded as examples to imitate.
+- A candidate ID is never an approval object. Human approval accepts only an immutable `FPRP` proposal ID.
 - Only the designated recurring writer named in the library README may create scheduled Pattern Review reports.
 - The first 28 days are shadow mode. Scheduled runs may write candidate reports, but no candidate may change a rule, skill, rubric, exemplar, template, verifier, or scoped context file.
-- After shadow mode, promotion still requires a separate human decision record and one exact canonical destination.
+- After shadow mode, create a fully enumerated exact proposal with source candidate IDs, report paths, anchors, and fingerprints that resolve to actual candidate report entries, plus before and after hashes, full content only, prohibited expansion, and trusted validator identifiers. Verify each after hash against the exact UTF 8 content bytes.
+- Before recording approval, resolve the `FPRP` ID, recompute its full canonical JSON digest, and verify the ID suffix. The human does not need to type the digest.
+- Record each human disposition as an immutable append only `FPRD` event. Only `approve-exact` with exact execution authority and a valid authorization digest permits execution.
+- Before every attempt, recheck the proposal, exact equality with the decision proposal ID, decision time, revocation chain, expiration, all before hashes, and prior consumption. Execution cannot start before approval. At most one `FPRE` receipt may consume an authorization digest.
+- A blocked attempt has no changed paths and does not consume authority. Any retry gets a new attempt sequence and repeats every preflight check.
+- Derive execution record dates from completion time. Record before, expected after, and observed after hashes, preserve nondecreasing attempt times, and prove rollback by restoration to before hashes.
+- Do not call a promotion complete until a final passing `FPRV` receipt follows execution completion and covers every trusted validator and reported live hash. On later audits, keep historical receipts structural, enforce continuous successful before to after history for every path, and compare current bytes only with the latest successful validated state.
+- Reject any `FPRP`, `FPRD`, `FPRE`, or `FPRV` record reached through a symlink component or outside the vault root.
 - Use hard rules for nonnegotiable boundaries, rubrics for contextual judgment, exemplars for calibration, skills for workflows, verifiers for testable behavior, and project or client context for local learning.
 - Repeated output from one agent, prompt, artifact, or project iteration counts as one evidence family.
 - Scheduler configuration, credentials, and machine state stay outside the shared vault.
+- Use `python3 resources/learning-library/pattern-review-records.py` to create or verify canonical record envelopes. Do not hand calculate IDs or digests. Writes require an explicit `--output` path and never overwrite.
+- Treat record envelope attempt and sequence fields as JSON integers. Never coerce booleans, strings, nulls, arrays, or objects.
+- Run `python3 resources/learning-library/validate-pattern-review.py --vault .` after adding or applying schema version 2 records.
 
 ### Manifest discipline
 - Any new folder under `clients/`, `projects/`, or any new file in `context/`, `skills/`, `resources/`, or `templates/` must be registered in `context/vault-manifest.md` in the same session it is created.
@@ -103,7 +114,7 @@ If the vault contains `resources/learning-library/`:
   ---
   name: descriptive-name
   description: One-line description
-  type: context | campaign | creative | ops | log | reference | skill | template | learning-candidate-report | learning-decision | learning-exemplar | learning-rubric
+  type: context | campaign | creative | ops | log | reference | skill | template | learning-candidate-report | learning-proposal | learning-decision | learning-execution | learning-validation | learning-exemplar | learning-rubric
   updated: YYYY-MM-DD
   ---
   ```
@@ -133,7 +144,7 @@ If the vault contains `resources/learning-library/`:
 - **In other AI tools:** Point the tool to the canonical skill file. Use a thin adapter when the tool supports a native skill folder. Do not copy full workflow bodies into several platform folders.
 
 ### Shared learning and connectors
-- Private model memory is not shared. Route proposed reusable learning through `skills/pattern-review.md`. After a recorded human decision, put universal corrections in `context/learned-rules.md`, workflow improvements in the canonical skill, approved quality guidance in the scoped rubric or exemplar library, and client or project learning in its context file.
+- Private model memory is not shared. Route proposed reusable learning through `skills/pattern-review.md`. After the exact approval, execution, and validation contract passes, put universal corrections in `context/learned-rules.md`, workflow improvements in the canonical skill, approved quality guidance in the scoped rubric or exemplar library, and client or project learning in its context file.
 - Routine factual log appends use the standing authorization above and do not require a separate approval request.
 - Keep raw credentials and OAuth sessions out of the synced vault.
 - Prefer an official provider hosted MCP. Use a company hosted MCP for custom shared workflows and a local MCP when local access is required.
@@ -156,7 +167,7 @@ If the vault contains `resources/learning-library/`:
   5. Move the original to `resources/archive/intake-processed/` with date prefix
   6. Log what was processed
 
-If the intake is a strong example, failed example, or ready made rubric, preserve its source and use `skills/pattern-review.md`. Extract the reusable decisions and the details that should not be copied. Keep the result noncanonical until a human promotion decision exists.
+If the intake is a strong example, failed example, or ready made rubric, preserve its source and use `skills/pattern-review.md`. Extract the reusable decisions and the details that should not be copied. Keep the result noncanonical until the complete schema version 2 promotion chain resolves: immutable exact proposal, bound human `approve-exact` decision, one use execution, and final passing validation of the live result.
 
 ## Step 3: Before ending the session (MANDATORY)
 
@@ -178,7 +189,7 @@ If you skip this step, the next session starts blind. The daily log is how insti
 - **Start sessions by reading, end sessions by writing** — read context first, log everything at the end.
 - **Be a good citizen** — leave the vault better than you found it. Fix small issues (broken links, missing dates, missing cross-references) as you encounter them.
 - **Certify migrations from complete evidence** — track every required capability and operator machine. Missing or indirect evidence stays pending. Do not call a migration complete because one audit or one machine passes.
-- **Let evidence propose and humans promote.** Recurring review discovers candidates. It never grants itself authority to change canonical guidance.
+- **Let evidence propose and humans authorize exact changes.** Recurring review discovers candidates. Candidates never become approval objects, and execution is not complete without bound validation proof.
 
 ## Obsidian compatibility (optional enhancement)
 

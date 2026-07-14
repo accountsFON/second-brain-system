@@ -48,7 +48,7 @@ This is not a wiki you read once. It's a **living operational context layer** �
 7. **Start minimal, grow organically** — Only create files we have content for now. The structure expands as context arrives.
 8. **Works everywhere** — Plain markdown only. Obsidian wikilinks or other tool-specific syntax are optional enhancements, never required.
 9. **Anyone can contribute** — The rules are simple enough that any team member or AI agent can follow them without training.
-10. **Learning is governed.** Recurring scans create noncanonical candidates. A named human must approve promotion into a rule, rubric, exemplar, skill, verifier, or scoped context file.
+10. **Learning is governed.** Recurring scans create noncanonical candidates. Candidates are never approved directly. A named human may approve only an immutable exact proposal, and the system must preserve the bound decision, execution, and validation receipts.
 
 ## Your task
 
@@ -98,7 +98,7 @@ This is the most important file. Include:
 - **Wiring rule** — every new `.md` file must include `**Related Files:**` links near the top
 - **Manifest rule** — any new folder under `clients/`, `projects/`, or any new file in `context/`, `skills/`, `resources/`, or `templates/` must be registered in `context/vault-manifest.md` in the same session
 - **Two-output rule** — every significant finding, decision, or lesson must be routed to the relevant vault file, not just the daily log. Knowledge that lives only in logs decays. Knowledge routed to source-of-truth files compounds.
-- **Learning promotion rule.** Pattern Review candidates are noncanonical and must never be loaded as instructions. The recurring scan uses one designated writer and starts with a 28 day report only shadow period. Promotion always requires a separate human decision naming one canonical destination.
+- **Learning promotion rule.** Pattern Review candidates are noncanonical and must never be loaded as instructions. The recurring scan uses one designated writer and starts with a 28 day report only shadow period. Promotion requires an immutable content addressed proposal, an append only human decision bound to its full digest, one use execution authority, a terminal execution receipt, and a passing validation receipt.
 
 #### 1b. Cross-tool bootstrap files (always create these)
 
@@ -167,7 +167,7 @@ Create these starter skills based on my answers:
 | `daily-log.md` | "Automatically append today's daily and applicable scoped logs with concise verified outcomes, why they matter, current status, next steps, and direct links to live deliverables or other useful results. Routine factual log additions are preauthorized." |
 | `new-client-setup.md` | "Set up a new client/project folder — copy the template, ask the setup questions (including tier/service level if the org uses tiers), populate initial files, and register the new client in `context/client-roster.md` + CLAUDE.md" |
 | `brain-check.md` | "Audit the vault for orphaned files, stale dates, empty TODO placeholders, broken links, missing cross references, manifest drift, roster integrity, intake age, and learning library governance. It flags issues but does not promote learning." |
-| `pattern-review.md` | "Discover recurring positive and negative patterns, write noncanonical evidence reports, support human review, and apply only explicitly approved promotions to one canonical destination." |
+| `pattern-review.md` | "Discover recurring positive and negative patterns, write noncanonical evidence reports, prepare immutable exact proposals, and apply only proposals with bound human authority and passing validation proof." |
 | `identify-user.md` | "Resolve who is operating this session for log attribution. Match on (hostname + OS username) against records in `resources/machines/`. If no match, onboard a new record by asking the operator. Never guess identity." Required for multi-person or multi-machine vaults. See the template file for the full spec. |
 
 Each skill file should contain:
@@ -261,13 +261,22 @@ resources/
 │   └── intake-processed/  (processed Intake files land here with date prefix)
 └── learning-library/      (governed reusable learning, always create)
     ├── README.md          (authority, one writer, four week shadow mode, cadence)
+    ├── approval-contract.md
     ├── candidate-report-template.md
+    ├── proposal-template.md
     ├── decision-template.md
+    ├── execution-receipt-template.md
+    ├── validation-receipt-template.md
     ├── exemplar-template.md
-    └── rubric-template.md
+    ├── rubric-template.md
+    ├── pattern_review_core.py
+    ├── pattern-review-records.py
+    └── validate-pattern-review.py
 ```
 
-Initialize the learning library in `shadow` mode. Fill its designated recurring writer from question 11. If no writer was named, leave a TODO and do not configure a scheduled write. Set the shadow start to the vault creation date and the earliest promotion date to 28 days later. Candidate, decision, exemplar, and rubric folders are created only when their first real files exist.
+Initialize the learning library in `shadow` mode. Fill its designated recurring writer from question 11. If no writer was named, leave a TODO and do not configure a scheduled write. Set the shadow start to the vault creation date and the earliest promotion date to 28 days later. Candidate, proposal, decision, execution, validation, exemplar, and rubric folders are created only when their first real files exist.
+
+Copy the learning library templates, shared canonical JSON module, deterministic record CLI, and dependency free validator from this repository. Preserve the schema version 2 record IDs and canonical JSON digest rules exactly. The generated vault must be able to run `python3 resources/learning-library/pattern-review-records.py --help` and `python3 resources/learning-library/validate-pattern-review.py --vault .`.
 
 #### 8b. `.claude/memory/` — Persistent memory system (for Claude Code users)
 
@@ -305,7 +314,7 @@ After building everything, give me:
 5. **Cross tool clean session checks** — verify Claude and Codex from the root and one nested client or project folder. Record the instruction chain and skill bridge each tool loaded.
 6. **Priority list** — what to fill in next for maximum value (ranked)
 7. **Skills inventory** — list every skill created and when to use each one
-8. **Pattern Review setup.** Confirm the designated recurring writer, shadow dates, review owners, and that no promotion can occur during the first 28 days.
+8. **Pattern Review setup.** Confirm the designated recurring writer, shadow dates, review owners, and that no promotion can occur during the first 28 days. Verify that candidates cannot be approved directly and that the validator recognizes `FPRP`, `FPRD`, `FPRE`, and `FPRV` records.
 
 ## File conventions (enforce these in CLAUDE.md)
 
@@ -314,7 +323,7 @@ After building everything, give me:
   ---
   name: descriptive-name
   description: One-line description of what this file contains
-  type: context | campaign | creative | ops | log | reference | skill | template | learning-candidate-report | learning-decision | learning-exemplar | learning-rubric
+  type: context | campaign | creative | ops | log | reference | skill | template | learning-candidate-report | learning-proposal | learning-decision | learning-execution | learning-validation | learning-exemplar | learning-rubric
   updated: YYYY-MM-DD
   ---
   ```
@@ -332,7 +341,7 @@ After building everything, give me:
 
 ## What makes this system work
 
-The power is in the **rules**, not any single file. When every file links to related files, every session starts by reading CLAUDE.md, every decision gets logged, and new context gets routed to the right file instead of buried in chat, the vault becomes a shared memory that compounds over time. Pattern Review adds a safe learning loop: evidence first, noncanonical candidates second, human promotion last.
+The power is in the **rules**, not any single file. When every file links to related files, every session starts by reading CLAUDE.md, every decision gets logged, and new context gets routed to the right file instead of buried in chat, the vault becomes a shared memory that compounds over time. Pattern Review adds a safe learning loop: evidence first, noncanonical candidates second, exact proposal and human authority third, execution and validation proof last.
 
 The more the team uses it, the smarter every future session becomes. For any person. With any tool.
 

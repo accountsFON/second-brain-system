@@ -12,20 +12,23 @@ scope: TODO
 review-on: YYYY-MM-DD
 ---
 
-**Related Files:** [README.md](README.md) · [decision-template.md](decision-template.md) · [rubric-template.md](rubric-template.md) · [../../skills/pattern-review.md](../../skills/pattern-review.md)
+**Related Files:** [README.md](README.md) · [approval-contract.md](approval-contract.md) · [proposal-template.md](proposal-template.md) · [decision-template.md](decision-template.md) · [execution-receipt-template.md](execution-receipt-template.md) · [validation-receipt-template.md](validation-receipt-template.md) · [rubric-template.md](rubric-template.md) · [../../skills/pattern-review.md](../../skills/pattern-review.md)
 
 > Template note: After saving an exemplar under `exemplars/`, update these links for the new folder depth.
 
 # Exemplar: [Name]
 
-> TEMPLATE SAFETY: Keep `status: draft`, `canonical: false`, and `authority: none` until a separate human decision authorizes this exact exemplar, scope, and destination. When applying that decision, change them to `status: approved`, `canonical: true`, and `authority: human-approved`.
+> TEMPLATE SAFETY: Keep `status: draft`, `canonical: false`, and `authority: none` until the full schema version 2 contract completes for these exact bytes and destination: immutable `FPRP` proposal, bound human `approve-exact` `FPRD` decision, one use `FPRE` execution, and final passing `FPRV` validation of the live file. A decision alone does not make this exemplar approved.
 
 > APPROVED CONTEXTUAL REFERENCE: Use this example only within its stated scope and only when a relevant skill or rubric links to it. Do not copy it literally.
 
 ## Approval record
 
 - Source candidate: TODO
-- Decision record: TODO
+- Exact proposal record: TODO
+- Bound decision record: TODO
+- Consumed execution receipt: TODO
+- Passing validation receipt: TODO
 - Approved by: TODO
 - Approved on: YYYY-MM-DD
 
