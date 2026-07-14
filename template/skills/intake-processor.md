@@ -57,7 +57,7 @@ For a supplied learning example, also capture:
 - Details that should not be copied
 - Comparison artifacts, if available
 
-Create a noncanonical candidate report from the Pattern Review template after approval. During shadow mode, stop there.
+After the user confirms the intake routing, create a noncanonical candidate report from the Pattern Review template. During shadow mode, stop there. Outside shadow mode, the report still cannot change a canonical file without the complete schema version 2 proposal, decision, execution, and validation chain.
 
 ### 4. Confirm with the user
 
@@ -65,7 +65,7 @@ Before writing, tell the user:
 - What you found in the document
 - Where you plan to route each piece
 - Any ambiguities or conflicts with existing content
-- Whether any proposed learning will remain a noncanonical candidate or has a separate human promotion decision
+- Whether proposed learning will remain a noncanonical candidate or already has a complete schema version 2 promotion chain with an exact proposal, bound human decision, consumed execution, and passing live validation
 
 Wait for approval before writing.
 

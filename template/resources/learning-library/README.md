@@ -1,11 +1,11 @@
 ---
 name: learning-library
-description: Governed library for noncanonical pattern candidates, human decisions, approved exemplars, and approved rubrics.
+description: Governed library for noncanonical candidates, exact proposals, human decisions, execution proof, approved exemplars, and approved rubrics.
 type: reference
 updated: YYYY-MM-DD
 ---
 
-**Related Files:** [../../skills/pattern-review.md](../../skills/pattern-review.md) · [../../skills/brain-check.md](../../skills/brain-check.md) · [../../skills/intake-processor.md](../../skills/intake-processor.md) · [../../context/learned-rules.md](../../context/learned-rules.md) · [../../context/vault-manifest.md](../../context/vault-manifest.md)
+**Related Files:** [approval-contract.md](approval-contract.md) · [proposal-template.md](proposal-template.md) · [decision-template.md](decision-template.md) · [execution-receipt-template.md](execution-receipt-template.md) · [validation-receipt-template.md](validation-receipt-template.md) · [../../skills/pattern-review.md](../../skills/pattern-review.md) · [../../skills/brain-check.md](../../skills/brain-check.md) · [../../skills/intake-processor.md](../../skills/intake-processor.md) · [../../context/learned-rules.md](../../context/learned-rules.md) · [../../context/vault-manifest.md](../../context/vault-manifest.md)
 
 # Learning Library
 
@@ -38,12 +38,22 @@ Create these folders as they become necessary:
 ```text
 resources/learning-library/
 ├── README.md
+├── approval-contract.md
 ├── candidate-report-template.md
+├── proposal-template.md
 ├── decision-template.md
+├── execution-receipt-template.md
+├── validation-receipt-template.md
 ├── exemplar-template.md
 ├── rubric-template.md
+├── pattern_review_core.py
+├── pattern-review-records.py
+├── validate-pattern-review.py
 ├── candidates/       # Noncanonical discovery reports
-├── decisions/        # Human review and promotion records
+├── proposals/        # Immutable exact change proposals with no authority
+├── decisions/        # Append only human review and authorization records
+├── executions/       # Immutable terminal attempt receipts with one use enforcement
+├── validations/      # Immutable execution, readback, validator, and rollback results
 ├── exemplars/        # Approved, annotated examples
 └── rubrics/          # Approved, scoped quality rubrics
 ```
@@ -55,7 +65,10 @@ Do not create empty folders merely to complete the tree. Register each folder in
 | Location | Authority |
 |---------|-----------|
 | `candidates/` | Noncanonical. Never use as instructions or examples to imitate. |
-| `decisions/` | Governance record. A decision authorizes a named destination but is not itself the destination. |
+| `proposals/` | Noncanonical exact payload. Immutable after issuance, content addressed by its full canonical JSON digest, and has no authority by itself. |
+| `decisions/` | Append only human events. Only `approve-exact` with exact execution authority grants one use authority bound to an exact proposal digest. |
+| `executions/` | Immutable terminal attempt receipts. Blocked attempts do not consume authority; at most one receipt may consume an authorization digest. |
+| `validations/` | Immutable validator and live hash receipts bound to an execution receipt digest. |
 | `exemplars/` | Approved contextual reference. Load only when a relevant skill links to it. |
 | `rubrics/` | Approved quality guidance. Load only within its stated scope. |
 | `context/learned-rules.md` | Canonical universal policy. Reserved for approved nonnegotiable rules. |
@@ -67,13 +80,48 @@ An approved item's source candidate fingerprint remains reserved. Future scans l
 
 No candidate becomes guidance because an agent scored it highly or saw it repeatedly.
 
-Promotion requires:
+Promotion completion requires:
 
 1. A candidate report with linked evidence and counterevidence.
-2. A separate decision record naming the human reviewer.
-3. Explicit authorization, approved scope, and one canonical destination.
-4. A validation plan and future review date.
-5. A normal vault log entry after the approved change is applied.
+2. An immutable `FPRP` exact proposal whose candidate IDs, report paths, anchors, and fingerprints resolve to real candidate report entries, with fully enumerated operations, before and after hashes, exact content, trusted validators, and prohibited expansion.
+3. A separate append only `FPRD` decision naming the human reviewer and binding the immutable proposal ID and its independently recomputed full digest.
+4. Disposition `approve-exact`, `execution-authority: exact`, an unexpired authorization digest, and no later revoke event. Every other disposition has no execution authority.
+5. An immutable `FPRE` terminal receipt. Blocked attempts have no changed paths and do not consume authority; at most one receipt may consume an authorization digest.
+6. A passing `FPRV` receipt whose timestamp follows execution completion, whose ID binds the execution receipt digest, and whose validator coverage and receipt hashes match the proposal.
+7. A continuous successful validated history for every changed path, with independently computed current bytes matching only the latest successful state.
+8. A normal vault log entry after the approved change is applied.
+
+A candidate can be triaged, held, rejected, or narrowed, but it can never be approved directly. A human may approve an immutable `FPRP` ID without typing its digest, but the system must resolve and recompute the full digest before creating the decision. Any change to an issued proposal creates a new content addressed proposal and requires a new human decision.
+
+The full portable contract is in [approval-contract.md](approval-contract.md). It governs proposal digesting, append only decisions, one use authorization, terminal execution receipts, validation receipts, retries, and failure handling.
+
+## Deterministic record tools
+
+Use the supplied command line tools instead of calculating identifiers or digests by hand:
+
+```bash
+python3 resources/learning-library/pattern-review-records.py create proposal --payload proposal.json --created-date YYYY-MM-DD
+python3 resources/learning-library/pattern-review-records.py create decision --payload decision.json --nonce 1234abcd
+python3 resources/learning-library/pattern-review-records.py create execution --payload execution.json --attempt 1
+python3 resources/learning-library/pattern-review-records.py create validation --payload validation.json --execution-receipt-digest sha256:[64 lowercase hex] --sequence 1
+python3 resources/learning-library/pattern-review-records.py verify --record record-envelope.json
+python3 resources/learning-library/validate-pattern-review.py --vault /path/to/vault
+```
+
+Creation prints a deterministic JSON envelope by default. Add `--output path.json` for an explicit atomic create. The output parent must already exist, and the tool refuses to overwrite any file. Decision creation requires an explicit nonce, and execution and validation creation require explicit sequence numbers. There are no random or implicit write defaults.
+
+Envelope attempt and sequence fields are JSON integers. Boolean, string, null, array, and object values are rejected without coercion.
+
+Map each verified envelope into its immutable markdown record:
+
+| Envelope kind | `record_id` destination | `record_digest` destination | Additional bound value |
+|---------------|-------------------------|-----------------------------|------------------------|
+| `proposal` | `proposal-id` | `proposal-digest` | `created_date` |
+| `decision` | `decision-id` | `decision-digest` | `authorization_digest` and `execution_authority` |
+| `execution` | `execution-id` | `receipt-digest` | `attempt` |
+| `validation` | `validation-id` | `validation-digest` | `execution_receipt_digest` and `sequence` |
+
+Copy the envelope payload without changing it. Run the vault validator after the markdown record is created. If any payload value changes, discard the stale envelope and create a new one.
 
 The standard broad promotion threshold is three independent occurrences across at least two projects or contexts. Repeated output from one agent, prompt, artifact, or iteration counts as one evidence family. A human may approve a documented exception.
 

@@ -75,12 +75,42 @@ If `resources/learning-library/` exists:
 - Flag duplicate fingerprints or substantively identical claims across candidate reports
 - Confirm candidates are not linked from session bootstrap files as instructions
 - Confirm each promoted rubric or exemplar links to a human decision record
-- Confirm every promotion decision names a reviewer, approval date, scope, destination, and next review date
+- Confirm candidates were never approved directly
+- Confirm every issued proposal has a valid canonical JSON digest and matching `FPRP` ID, fully enumerated operations, before and after hashes, exact content, trusted validators, and prohibited expansion
+- Confirm every proposal source candidate resolves to a real candidate report entry with matching path, anchor, and fingerprint
+- Confirm candidate shaped headings that do not exactly match the candidate heading contract are reported as malformed
+- Confirm schema version 2 proposals use full content only and each after hash matches the exact UTF 8 content bytes
+- Confirm proposal actions are only create or replace, with absent before state for create and a full digest for replace
+- Confirm proposal and execution targets remain within the vault after resolving existing symlinks
+- Confirm every `FPRD` decision is append only, uses a UTC timestamp plus eight character nonce ID, has a valid decision digest, and names a human reviewer and date
+- Confirm only `approve-exact` decisions have exact execution authority and a valid authorization digest bound to the verified `FPRP` and decision digests
+- Confirm every execution proposal ID exactly equals its decision proposal ID, independently of digest equality
+- Confirm all other decision dispositions have no execution authority and `authorization-digest: none`
+- Confirm decision event chains follow the allowed root and transition table, replacement proposal rules, and expiry rules, and that a revoke blocks unused authority
+- Confirm no more than one `FPRE` receipt consumes each authorization digest
+- Confirm every blocked receipt has `approval_consumed: false` and no changed paths
+- Confirm every attempt ID uses the authorization digest prefix and a unique two digit sequence
+- Confirm the execution ID date, `executed-date`, and parent month match `completed_at`
+- Confirm every retry repeated proposal, decision, decision time, revocation, expiration, before hash, and prior consumption checks
+- Confirm attempt times are nondecreasing and do not overlap
+- Confirm changed paths use before, expected after, and observed after hashes with correct executed, partial, and rolled back semantics
+- Confirm every completed promotion has a passing `FPRV` receipt whose ID binds the execution receipt digest and whose validator coverage and live hashes match the proposal
+- Confirm validation never predates execution completion, successful path histories are continuous, and current live bytes match only the latest successful validated state for each path
+- Confirm validation times are nondecreasing and any passing receipt is final
+- Confirm every `FPRP`, `FPRD`, `FPRE`, and `FPRV` record file is contained by the vault and has no symlink component
 - Flag candidate reports past their `review-by` date
 - Flag approved rubrics or exemplars past their `review-on` date
 - Confirm the recurring Pattern Review has one designated writer
 - During shadow mode, flag any canonical change attributed to a recurring candidate scan
 - Flag duplicate or conflicting guidance across learned rules, skills, rubrics, and exemplars
+
+When the repository validator is available, run:
+
+```bash
+python3 resources/learning-library/validate-pattern-review.py --vault /path/to/vault
+```
+
+Treat validator failure as an integrity finding. It does not replace human review of the pattern itself.
 
 This is an integrity check only. Use `skills/pattern-review.md` for discovery and promotion review.
 

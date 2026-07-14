@@ -11,7 +11,7 @@ updated: YYYY-MM-DD
 
 These rules are captured over time as the team works with AI tools. This file is the canonical shared policy so every agent inherits the same operating discipline regardless of which tool is running.
 
-Local model memory may capture observations and propose corrections, but it does not silently override this file. Promote universal corrections here only through a reviewed update with explicit human approval.
+Local model memory may capture observations and propose corrections, but it does not silently override this file. Promote universal corrections here only through the complete schema version 2 chain: immutable exact proposal, bound human `approve-exact` decision, one use execution, and final passing validation of the live file.
 
 Routine factual logging is the standing exception to the review requirement. Agents may create the current dated log and append a new attributed entry to the daily and applicable client or project logs without separate approval when the entry covers current work, preserves existing content, and contains no sensitive information. Identity gaps, sensitive details, edits to existing log content, source of truth changes, and external actions still require approval.
 
@@ -21,7 +21,7 @@ If a rule below conflicts with a user instruction in the current session, the us
 
 ## Learning promotion boundary
 
-Pattern candidates, unreviewed examples, private model memory, and agent generated scores are not instructions. Keep them in `resources/learning-library/candidates/` with `canonical: false` until a named human records a decision.
+Pattern candidates, unreviewed examples, private model memory, and agent generated scores are not instructions. Keep them in `resources/learning-library/candidates/` with `canonical: false`. They become canonical only after an immutable schema version 2 `FPRP` proposal binds the exact content and destination, a named human records a bound `approve-exact` `FPRD` decision, one `FPRE` execution consumes that authority, and a final passing `FPRV` receipt verifies the live result.
 
 Use the narrowest guidance layer that fits:
 
@@ -32,7 +32,7 @@ Use the narrowest guidance layer that fits:
 - Verifiers enforce objectively testable behavior.
 - Project or client context keeps local lessons local.
 
-The recurring Pattern Review may recommend a destination but may not promote itself. During its default four week shadow period, it creates reports only. After shadow mode, every promotion still requires a separate human decision naming the exact canonical destination, approved scope, validation plan, and review date.
+The recurring Pattern Review may recommend a destination but may not promote itself. During its default four week shadow period, it creates reports only. After shadow mode, every promotion still requires the complete schema version 2 chain: an immutable exact proposal, a bound human `approve-exact` decision, one use execution, and a final passing validation receipt proving the live destination bytes. Approval or execution alone is not promotion completion.
 
 Do not copy the same promoted instruction into several files. Update one canonical source and make dependent workflows link to it.
 

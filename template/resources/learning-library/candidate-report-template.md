@@ -14,13 +14,15 @@ duplicate-count: 0
 review-by: YYYY-MM-DD
 ---
 
-**Related Files:** [README.md](README.md) · [decision-template.md](decision-template.md) · [../../skills/pattern-review.md](../../skills/pattern-review.md)
+**Related Files:** [README.md](README.md) · [proposal-template.md](proposal-template.md) · [approval-contract.md](approval-contract.md) · [../../skills/pattern-review.md](../../skills/pattern-review.md)
 
 > Template note: After saving a report under `candidates/`, update these links for the new folder depth.
 
 # Pattern Review Candidate Report
 
 > NONCANONICAL: This report contains observations for human review. Do not load it as policy, a rubric, a skill, or an example to imitate. No source of truth changes because this report exists.
+
+Every candidate section heading must exactly match `## Candidate PR-YYYY-MM-DD-NN: Nonempty title`. Candidate like malformed headings are invalid and must be reported, not ignored.
 
 ## Run record
 
@@ -135,7 +137,7 @@ List context specific choices, accidental details, and unsupported generalizatio
 - [ ] Canonical destination is named
 - [ ] Validation and review dates are defined
 
-**Recommendation:** Reject | Hold | Merge | Narrow | Consider promotion after shadow mode
+**Recommendation:** Reject | Hold | Merge | Narrow | Consider drafting an exact `FPRP` proposal after shadow mode
 
 ## Previously known patterns
 

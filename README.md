@@ -48,7 +48,7 @@ Plain markdown files in `skills/` that encode repeatable workflows. Not document
 
 ### 4. Governed Pattern Review (learns without self promotion)
 
-A recurring scan finds positive and negative patterns across finished work, but writes them only as noncanonical candidates. One designated writer runs the recurring report. The first four weeks are shadow mode, and every promotion into a rule, rubric, exemplar, skill, verifier, or scoped context file requires an explicit human decision.
+A recurring scan finds positive and negative patterns across finished work, but writes them only as noncanonical candidates. One designated writer runs the recurring report. The first four weeks are shadow mode. Candidates can never be approved directly. Promotion uses an immutable exact proposal, an append only human decision bound to its digest, one use execution authority, and a passing validation receipt.
 
 ## What you get
 
@@ -144,7 +144,7 @@ The `template/` folder contains starter versions of the key files the initiate p
 | **context-loader** | Reads the brain file, latest log, and client context. Session-start bootstrap. |
 | **daily-log** | Automatically appends today's daily and applicable scoped logs with concise verified outcomes, current status, next steps, and useful result links. Mandatory at session end. |
 | **brain-check** | Audits structure, staleness, broken links, manifest drift, intake backlog, and learning governance. |
-| **pattern-review** | Finds recurring positive and negative patterns, writes noncanonical candidate reports, and applies only human approved promotions. |
+| **pattern-review** | Finds recurring positive and negative patterns, writes noncanonical candidates, and governs exact proposals, human decisions, executions, and validation proof. |
 | **intake-processor** | Reads a raw doc from Intake/, extracts key info, routes it to the right vault files, archives the original. |
 | **identify-user** | Resolves who is operating the current session by matching hostname + OS username against a registry. For multi-person or multi-machine vaults. |
 | **new-client-setup** | Copies the client template, asks setup questions, populates initial files, registers in the roster. |
@@ -162,7 +162,22 @@ Weekly discovery reports include evidence, counterexamples, source independence,
 
 Broad promotion normally requires three independent occurrences across at least two projects or contexts. A human can approve a documented exception, but the recurring scan never approves itself.
 
-The first 28 days are report only shadow mode. After that period, a named human still records a separate decision before any canonical source changes. Scheduled reports use one designated writer to prevent duplicate reports and write collisions. Scheduler credentials and machine configuration stay outside the vault.
+The first 28 days are report only shadow mode. After that period, a named human can approve only an immutable `FPRP` exact proposal, never a candidate. The system resolves the proposal ID, recomputes its full canonical JSON digest, and records a bound `FPRD` decision. The human does not need to type the digest.
+
+An `approve-exact` decision creates one use authority. Each terminal attempt gets an immutable `FPRE` receipt. Blocked attempts can retry only when no write occurred and all proposal, exact decision binding, revocation, expiration, before hash, and prior consumption checks run again. At most one execution may consume the authorization. A passing `FPRV` receipt must follow execution completion and cover every trusted validator and reported hash. Later audits preserve historical receipts as structural evidence, enforce continuous successful path history, and compare current bytes only with the latest successful validated state.
+
+The public templates define the vendor neutral schema and include a dependency free validator:
+
+```bash
+python3 template/resources/learning-library/pattern-review-records.py --help
+python3 template/resources/learning-library/validate-pattern-review.py --templates .
+python3 resources/learning-library/validate-pattern-review.py --vault /path/to/vault
+python3 -m unittest discover -s tests -v
+```
+
+The record CLI deterministically creates or verifies proposal, decision, execution, and validation envelopes. It prints without writing by default. An explicit `--output` uses atomic create and refuses to overwrite, so different agents can share one implementation instead of hand calculating hashes. Attempt and sequence fields must be JSON integers and are never coerced from other types.
+
+Scheduled reports still use one designated writer to prevent duplicate reports and write collisions. Scheduler credentials and machine configuration stay outside the vault.
 
 ## Why it works
 
@@ -208,7 +223,7 @@ Keep Git outside every cloud synced vault. If you want version history in GitHub
 
 If your team uses Claude Code, the vault automatically provides slash commands for every skill. Type `/daily-log`, `/brain-check`, `/pattern-review`, `/intake-processor`, etc. The commands in `.claude/commands/` are thin one-line wrappers that point to the skill files in `skills/`. One source of truth, no duplication.
 
-The `.claude/memory/` directory can hold Claude observations across sessions. Proposed reusable learning enters Pattern Review as noncanonical evidence. Universal rules reach `context/learned-rules.md` only after explicit human promotion so other tools inherit approved policy.
+The `.claude/memory/` directory can hold Claude observations across sessions. Proposed reusable learning enters Pattern Review as noncanonical evidence. Universal rules reach `context/learned-rules.md` only after the full chain completes: immutable exact proposal, bound human `approve-exact` decision, one use execution, and passing live validation. Other tools then inherit verified policy.
 
 **Adding a new skill:** Create the `.md` file in `skills/`, then add a wrapper in `.claude/commands/` with:
 ```
@@ -258,7 +273,7 @@ Inventory must be redacted by design. Do not tell an agent to print a complete M
 13. **Routine logging is preauthorized**: agents append factual current work to daily and applicable scoped logs automatically. Sensitive content, edits to existing entries, and source of truth changes still require approval.
 14. **Completion is evidence based**: every capability and operator machine gets an explicit pass gate. Missing evidence stays pending, and a narrow green test never certifies the full migration.
 15. **One live document transport**: humans and agents share one live vault through supported clients or mounts. Git may receive a one way recovery snapshot but never competes as a second writable source.
-16. **Evidence proposes, humans promote**: recurring Pattern Review reports are noncanonical, use one designated writer, begin with four weeks of shadow mode, and never grant themselves authority.
+16. **Evidence proposes, humans authorize exact changes**: recurring Pattern Review reports are noncanonical, use one designated writer, begin with four weeks of shadow mode, never allow candidate approval, and require bound execution and validation proof.
 
 ---
 
