@@ -54,12 +54,15 @@ updated: YYYY-MM-DD
 
 ### 4. Add a timestamped entry
 
+Keep the entry concise but complete. State what changed, the verified result, why it matters, current status, and the next step or blocker when one exists. Include direct links to any live deliverable, preview, report, dashboard, task, pull request, or other useful result. A deployed deliverable is not fully logged until its live URL appears in both the daily log and applicable scoped log.
+
 ```markdown
 ## [H:MM AM/PM] - Description (Name)
 
-- What was done (decisions, files created/modified, research, context added)
-- What changed (status updates, strategy shifts, milestones)
-- What is next (TODOs, blockers, follow-ups)
+- What changed and the verified result
+- Why it matters
+- Current status and what is next
+- Live result: [Open the deliverable](https://example.com/result)
 ```
 
 ### 5. Append the applicable scoped log
@@ -81,6 +84,7 @@ Add `> TODO:` placeholders for anything incomplete. Note next steps clearly so t
 - Research conducted and key findings
 - Strategy changes or pivots
 - Client/project milestones
+- Direct links to live deliverables and other useful results
 - Context added to the vault
 - Blockers encountered
 - Next steps

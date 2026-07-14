@@ -89,12 +89,12 @@ This is the most important file. Include:
 - **Org identity** — 3-5 line summary from my answers
 - **Folder structure** — documented table showing every top-level folder and its purpose
 - **Navigation table** — maps "what info do I need?" to "which file has it?"
-- **Rules** — automatic daily and applicable scoped logging, cross-referencing, intake processing (define an SLA, e.g., process any file in `Intake/` within 7 days), how to add new clients/projects, timestamps on all log entries, user attribution (every log entry must include who wrote it, resolved via `skills/identify-user.md` for multi-person vaults), quarterly roster review (if the org serves clients). State that routine factual log appends are preauthorized when identity is resolved, existing content is preserved, and no sensitive information is included.
+- **Rules:** automatic daily and applicable scoped logging, cross referencing, intake processing (define an SLA, e.g., process any file in `Intake/` within 7 days), how to add new clients/projects, timestamps on all log entries, user attribution (every log entry must include who wrote it, resolved via `skills/identify-user.md` for vaults with several operators), quarterly roster review (if the org serves clients). State that routine factual log appends are preauthorized when identity is resolved, existing content is preserved, and no sensitive information is included. Require each milestone entry to state what changed, the verified result, why it matters, current status, next step or blocker, and direct links to live deliverables or other useful results.
 - **Context protection rule** — context files are protected. Add to them, never overwrite. If new info contradicts existing content, stop and ask the user before changing. No bulk rewrites. Log every change.
 - **Mandatory session protocol** — three phases every AI session must follow:
   - **Session start:** Read CLAUDE.md, read latest daily log, read client context if applicable. Verify context is loaded before producing any work.
   - **During session:** Route new context to files, cross-reference, don't let knowledge live only in chat.
-  - **Session end:** Automatically append the daily log and applicable client or project log with timestamped entries, update status columns, flag unfinished work with TODOs. Do not ask for separate approval for routine factual logs.
+  - **Session end:** Automatically append the daily log and applicable client or project log with timestamped entries that include concise outcomes and useful result links, update status columns, and flag unfinished work with TODOs. Do not ask for separate approval for routine factual logs.
 - **Wiring rule** — every new `.md` file must include `**Related Files:**` links near the top
 - **Manifest rule** — any new folder under `clients/`, `projects/`, or any new file in `context/`, `skills/`, `resources/`, or `templates/` must be registered in `context/vault-manifest.md` in the same session
 - **Two-output rule** — every significant finding, decision, or lesson must be routed to the relevant vault file, not just the daily log. Knowledge that lives only in logs decays. Knowledge routed to source-of-truth files compounds.
@@ -164,7 +164,7 @@ Create these starter skills based on my answers:
 | `README.md` | How to use skills — explains the folder, how to invoke them, how to add new ones |
 | `context-loader.md` | "Read all org context files and summarize what you know before starting work" — the universal session-start skill |
 | `intake-processor.md` | "Process a raw document from Intake/ — extract key info and route it to the correct context files" |
-| `daily-log.md` | "Automatically append today's daily and applicable scoped logs with significant work, decisions, and context shared this session. Routine factual log additions are preauthorized." |
+| `daily-log.md` | "Automatically append today's daily and applicable scoped logs with concise verified outcomes, why they matter, current status, next steps, and direct links to live deliverables or other useful results. Routine factual log additions are preauthorized." |
 | `new-client-setup.md` | "Set up a new client/project folder — copy the template, ask the setup questions (including tier/service level if the org uses tiers), populate initial files, and register the new client in `context/client-roster.md` + CLAUDE.md" |
 | `brain-check.md` | "Audit the vault for orphaned files, stale dates, empty TODO placeholders, broken links, missing cross references, manifest drift, roster integrity, intake age, and learning library governance. It flags issues but does not promote learning." |
 | `pattern-review.md` | "Discover recurring positive and negative patterns, write noncanonical evidence reports, support human review, and apply only explicitly approved promotions to one canonical destination." |
@@ -324,7 +324,7 @@ After building everything, give me:
 - **Links:** relative paths from CLAUDE.md (e.g., `[Team](context/team.md)`)
 - **Cross-references:** `**Related Files:** [file-a](path/to/file-a.md) · [file-b](path/to/file-b.md)` near the top of every file
 - **Missing info:** `> TODO: [describe what's needed]` — never invent or assume
-- **Daily logs:** `logs/YYYY-MM-DD.md` — log significant work, decisions, context shared
+- **Daily logs:** `logs/YYYY-MM-DD.md`, log significant work with a concise verified result, why it matters, current status, next step or blocker, and direct links to live deliverables or other useful results
 - **Timestamps in logs:** Every log section header gets a timestamp. Format: `## [HH:MM] — [Description]`
 - **Navigation tables:** Use markdown tables in CLAUDE.md and README files to map files to purpose and status
 - **No empty files:** If you don't have content for a file, don't create it. Use the template to show what WILL exist.

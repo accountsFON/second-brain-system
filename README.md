@@ -126,7 +126,7 @@ Load as your first message in any AI session. It teaches the AI to:
 - **Context protection**: never overwrite protected files, contradictions require confirmation
 - Route new information to the correct files (not buried in chat)
 - Cross-reference every file to related docs
-- **Mandatory session end**: update daily logs with timestamped entries, flag unfinished work
+- **Mandatory session end**: update daily logs with timestamped outcomes, useful result links, and unfinished work
 - **Automatic routine logging**: factual additions to the current daily and applicable client or project logs need no separate approval
 
 ### Cross-tool shims — Automatic
@@ -142,7 +142,7 @@ The `template/` folder contains starter versions of the key files the initiate p
 | Skill | What it does |
 |-------|-------------|
 | **context-loader** | Reads the brain file, latest log, and client context. Session-start bootstrap. |
-| **daily-log** | Automatically appends today's daily and applicable scoped logs with timestamped, attributed entries. Mandatory at session end. |
+| **daily-log** | Automatically appends today's daily and applicable scoped logs with concise verified outcomes, current status, next steps, and useful result links. Mandatory at session end. |
 | **brain-check** | Audits structure, staleness, broken links, manifest drift, intake backlog, and learning governance. |
 | **pattern-review** | Finds recurring positive and negative patterns, writes noncanonical candidate reports, and applies only human approved promotions. |
 | **intake-processor** | Reads a raw doc from Intake/, extracts key info, routes it to the right vault files, archives the original. |
@@ -249,7 +249,7 @@ Inventory must be redacted by design. Do not tell an agent to print a complete M
 4. **Four-file bootstrap**: CLAUDE.md + AGENTS.md + GEMINI.md + README.md. Every tool lands in the same brain.
 5. **Memory that learns**: local observations propose corrections, and reviewed learned rules distribute approved policy.
 6. **Skills are executable**: not documentation, workflows. The vault does things, not just stores things.
-7. **Daily logs with timestamps and attribution**: institutional memory that survives across sessions, people, and tools.
+7. **Daily logs with timestamps, attribution, outcomes, and useful links**: institutional memory that survives across sessions, people, and tools.
 8. **Sessions are active, not passive**: mandatory protocol. Read context first, route knowledge during, log everything at the end.
 9. **Context is protected**: approved content cannot be casually overwritten. Contradictions require confirmation.
 10. **Start minimal**: only create files you have content for. Grow organically.
