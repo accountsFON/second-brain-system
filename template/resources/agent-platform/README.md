@@ -16,6 +16,7 @@ The vault is one shared brain, not a required automation platform.
 - Organization, client, and project knowledge
 - Canonical policy and learned rules
 - Canonical workflows in `skills/`
+- Noncanonical candidate reports and human approved rubrics or exemplars in `resources/learning-library/`
 - Thin tool adapters
 - MCP descriptions and setup instructions
 - Attributed logs
@@ -37,12 +38,16 @@ When a workflow improves, update the canonical skill after user approval. Do not
 
 ## Shared learning
 
-Private model memory is not shared. After user approval:
+Private model memory is not shared. Proposed reusable learning first enters `skills/pattern-review.md` as noncanonical evidence. Candidate reports never override shared policy.
+
+After a separate human promotion decision:
 
 1. Put universal corrections in `context/learned-rules.md`.
 2. Put workflow improvements in the canonical skill.
 3. Put client or project learning in its context file.
 4. Record significant work in the attributed daily and applicable scoped logs.
+
+Use one designated writer for recurring Pattern Review reports, with a four week shadow period before any promotion is eligible. Scheduler configuration and credentials remain outside the vault.
 
 Routine factual log appends are the standing exception to the approval requirement. They are preauthorized when they cover current work, preserve existing content, use resolved identity, and contain no sensitive information. Source of truth changes still require explicit approval.
 

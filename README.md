@@ -30,7 +30,7 @@ A structured folder of interconnected `.md` files that becomes your organization
 
 It works with **any AI tool** and any text editor. No proprietary formats. No subscriptions. Just markdown files and folder structure.
 
-## The three pillars
+## The four pillars
 
 ### 1. The Brain (CLAUDE.md + cross-tool shims)
 
@@ -44,7 +44,11 @@ Two layers working together:
 
 ### 3. Executable Skills (the vault does things)
 
-Plain markdown files in `skills/` that encode repeatable workflows. Not documentation, execution. `daily-log`, `brain-check`, `intake-processor`, `identify-user`. The vault maintains itself.
+Plain markdown files in `skills/` that encode repeatable workflows. Not documentation, execution. `daily-log`, `brain-check`, `pattern-review`, `intake-processor`, `identify-user`. The vault maintains itself.
+
+### 4. Governed Pattern Review (learns without self promotion)
+
+A recurring scan finds positive and negative patterns across finished work, but writes them only as noncanonical candidates. One designated writer runs the recurring report. The first four weeks are shadow mode, and every promotion into a rule, rubric, exemplar, skill, verifier, or scoped context file requires an explicit human decision.
 
 ## What you get
 
@@ -74,6 +78,7 @@ your-vault/
 │   ├── context-loader.md      # Session-start bootstrap
 │   ├── daily-log.md           # Session-end logging
 │   ├── brain-check.md         # Vault self-audit
+│   ├── pattern-review.md      # Governed pattern discovery and promotion
 │   ├── intake-processor.md    # Process raw docs from Intake/
 │   ├── identify-user.md       # Resolve operator for log attribution
 │   └── new-client-setup.md    # Set up a new client folder
@@ -88,7 +93,8 @@ your-vault/
 ├── resources/
 │   ├── assets/                # Logos, brand files
 │   ├── machines/              # Operator-machine identity registry
-│   └── archive/               # Completed work, processed intake
+│   ├── archive/               # Completed work, processed intake
+│   └── learning-library/      # Candidates, decisions, exemplars, rubrics
 ├── Intake/                    # Drop raw docs here for AI processing
 └── logs/                      # Daily logs + meeting index
 ```
@@ -137,10 +143,26 @@ The `template/` folder contains starter versions of the key files the initiate p
 |-------|-------------|
 | **context-loader** | Reads the brain file, latest log, and client context. Session-start bootstrap. |
 | **daily-log** | Automatically appends today's daily and applicable scoped logs with timestamped, attributed entries. Mandatory at session end. |
-| **brain-check** | Audits the vault: staleness, broken links, manifest drift, orphaned files, intake backlog. |
+| **brain-check** | Audits structure, staleness, broken links, manifest drift, intake backlog, and learning governance. |
+| **pattern-review** | Finds recurring positive and negative patterns, writes noncanonical candidate reports, and applies only human approved promotions. |
 | **intake-processor** | Reads a raw doc from Intake/, extracts key info, routes it to the right vault files, archives the original. |
 | **identify-user** | Resolves who is operating the current session by matching hostname + OS username against a registry. For multi-person or multi-machine vaults. |
 | **new-client-setup** | Copies the client template, asks setup questions, populates initial files, registers in the roster. |
+
+## Pattern Review: safe reusable learning
+
+The learning library separates four kinds of guidance:
+
+- **Hard rules** protect nonnegotiable boundaries and deterministic failures.
+- **Rubrics** guide context dependent quality decisions.
+- **Approved exemplars** calibrate judgment with annotated examples and clear limits.
+- **Candidate patterns** hold unapproved observations for review.
+
+Weekly discovery reports include evidence, counterexamples, source independence, outcome signals, confidence, scope, and a proposed destination. Repeated output from the same agent, prompt, artifact, or project iteration counts as one evidence family.
+
+Broad promotion normally requires three independent occurrences across at least two projects or contexts. A human can approve a documented exception, but the recurring scan never approves itself.
+
+The first 28 days are report only shadow mode. After that period, a named human still records a separate decision before any canonical source changes. Scheduled reports use one designated writer to prevent duplicate reports and write collisions. Scheduler credentials and machine configuration stay outside the vault.
 
 ## Why it works
 
@@ -150,7 +172,7 @@ Most organizational knowledge dies in chat threads, email chains, and someone's 
 - **Do the work**: AI routes new knowledge to the right files, not just the chat
 - **End the session**: daily log captures what happened for whoever comes next
 - **Switch tools**: AGENTS.md and GEMINI.md ensure the new tool picks up where the old one left off
-- **Learn from mistakes**: corrections saved in memory and learned-rules compound across every future session
+- **Learn safely**: corrections and outcomes become candidates first, then humans promote the useful ones into the right canonical layer
 
 The vault compounds. Every session makes the next one smarter.
 
@@ -184,9 +206,9 @@ Keep Git outside every cloud synced vault. If you want version history in GitHub
 
 ## Claude Code Integration
 
-If your team uses Claude Code, the vault automatically provides slash commands for every skill. Type `/daily-log`, `/brain-check`, `/intake-processor`, etc. The commands in `.claude/commands/` are thin one-line wrappers that point to the skill files in `skills/`. One source of truth, no duplication.
+If your team uses Claude Code, the vault automatically provides slash commands for every skill. Type `/daily-log`, `/brain-check`, `/pattern-review`, `/intake-processor`, etc. The commands in `.claude/commands/` are thin one-line wrappers that point to the skill files in `skills/`. One source of truth, no duplication.
 
-The `.claude/memory/` directory can hold Claude observations across sessions. Universal rules are reviewed before promotion to canonical `context/learned-rules.md` so other tools inherit approved policy.
+The `.claude/memory/` directory can hold Claude observations across sessions. Proposed reusable learning enters Pattern Review as noncanonical evidence. Universal rules reach `context/learned-rules.md` only after explicit human promotion so other tools inherit approved policy.
 
 **Adding a new skill:** Create the `.md` file in `skills/`, then add a wrapper in `.claude/commands/` with:
 ```
@@ -236,6 +258,7 @@ Inventory must be redacted by design. Do not tell an agent to print a complete M
 13. **Routine logging is preauthorized**: agents append factual current work to daily and applicable scoped logs automatically. Sensitive content, edits to existing entries, and source of truth changes still require approval.
 14. **Completion is evidence based**: every capability and operator machine gets an explicit pass gate. Missing evidence stays pending, and a narrow green test never certifies the full migration.
 15. **One live document transport**: humans and agents share one live vault through supported clients or mounts. Git may receive a one way recovery snapshot but never competes as a second writable source.
+16. **Evidence proposes, humans promote**: recurring Pattern Review reports are noncanonical, use one designated writer, begin with four weeks of shadow mode, and never grant themselves authority.
 
 ---
 

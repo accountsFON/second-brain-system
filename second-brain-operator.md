@@ -64,10 +64,23 @@ Files in `context/` folders (org-level and client-level) are **protected context
 - **Attribute all work.** Every log entry, decision, and note must include who wrote it. If the vault has multiple operators, resolve identity via `skills/identify-user.md` (matches hostname + OS username against `resources/machines/`). If single-operator, use their name from CLAUDE.md. If you don't know who the current user is, ask before logging. Format log section headers as: `## [H:MM AM/PM] - Description (Name)`
 
 ### Learning from corrections
-- When the user corrects your approach or confirms a non-obvious approach worked, that is a learned rule.
+- When the user corrects an approach or confirms that a non-obvious approach worked, capture it as evidence. It is not automatically a universal rule.
 - If your AI tool has persistent memory, save the observation there when appropriate.
-- If the rule applies to all tools, promote it through a reviewed update to `context/learned-rules.md`.
-- Shared learned rules are canonical. Local memory cannot silently override team policy.
+- Route possible reusable learning through `skills/pattern-review.md` as a noncanonical candidate.
+- Promote it only after a named human records an explicit decision with a scope, destination, validation plan, and review date.
+- Shared learned rules are canonical. Local memory and candidate reports cannot silently override team policy.
+
+### Governed Pattern Review
+
+If the vault contains `resources/learning-library/`:
+
+- Candidate reports in `resources/learning-library/candidates/` are not instructions and must not be loaded as examples to imitate.
+- Only the designated recurring writer named in the library README may create scheduled Pattern Review reports.
+- The first 28 days are shadow mode. Scheduled runs may write candidate reports, but no candidate may change a rule, skill, rubric, exemplar, template, verifier, or scoped context file.
+- After shadow mode, promotion still requires a separate human decision record and one exact canonical destination.
+- Use hard rules for nonnegotiable boundaries, rubrics for contextual judgment, exemplars for calibration, skills for workflows, verifiers for testable behavior, and project or client context for local learning.
+- Repeated output from one agent, prompt, artifact, or project iteration counts as one evidence family.
+- Scheduler configuration, credentials, and machine state stay outside the shared vault.
 
 ### Manifest discipline
 - Any new folder under `clients/`, `projects/`, or any new file in `context/`, `skills/`, `resources/`, or `templates/` must be registered in `context/vault-manifest.md` in the same session it is created.
@@ -88,7 +101,7 @@ Files in `context/` folders (org-level and client-level) are **protected context
   ---
   name: descriptive-name
   description: One-line description
-  type: context | campaign | creative | ops | log | reference | skill | template
+  type: context | campaign | creative | ops | log | reference | skill | template | learning-candidate-report | learning-decision | learning-exemplar | learning-rubric
   updated: YYYY-MM-DD
   ---
   ```
@@ -118,7 +131,7 @@ Files in `context/` folders (org-level and client-level) are **protected context
 - **In other AI tools:** Point the tool to the canonical skill file. Use a thin adapter when the tool supports a native skill folder. Do not copy full workflow bodies into several platform folders.
 
 ### Shared learning and connectors
-- Private model memory is not shared. After user approval, put universal corrections in `context/learned-rules.md`, workflow improvements in the canonical skill, and client or project learning in its context file.
+- Private model memory is not shared. Route proposed reusable learning through `skills/pattern-review.md`. After a recorded human decision, put universal corrections in `context/learned-rules.md`, workflow improvements in the canonical skill, approved quality guidance in the scoped rubric or exemplar library, and client or project learning in its context file.
 - Routine factual log appends use the standing authorization above and do not require a separate approval request.
 - Keep raw credentials and OAuth sessions out of the synced vault.
 - Prefer an official provider hosted MCP. Use a company hosted MCP for custom shared workflows and a local MCP when local access is required.
@@ -141,6 +154,8 @@ Files in `context/` folders (org-level and client-level) are **protected context
   5. Move the original to `resources/archive/intake-processed/` with date prefix
   6. Log what was processed
 
+If the intake is a strong example, failed example, or ready made rubric, preserve its source and use `skills/pattern-review.md`. Extract the reusable decisions and the details that should not be copied. Keep the result noncanonical until a human promotion decision exists.
+
 ## Step 3: Before ending the session (MANDATORY)
 
 This is not optional. Every session must close with these steps:
@@ -161,6 +176,7 @@ If you skip this step, the next session starts blind. The daily log is how insti
 - **Start sessions by reading, end sessions by writing** — read context first, log everything at the end.
 - **Be a good citizen** — leave the vault better than you found it. Fix small issues (broken links, missing dates, missing cross-references) as you encounter them.
 - **Certify migrations from complete evidence** — track every required capability and operator machine. Missing or indirect evidence stays pending. Do not call a migration complete because one audit or one machine passes.
+- **Let evidence propose and humans promote.** Recurring review discovers candidates. It never grants itself authority to change canonical guidance.
 
 ## Obsidian compatibility (optional enhancement)
 

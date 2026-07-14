@@ -5,7 +5,7 @@ type: skill
 updated: YYYY-MM-DD
 ---
 
-**Related Files:** [README.md](README.md) · [../CLAUDE.md](../CLAUDE.md) · [../context/vault-manifest.md](../context/vault-manifest.md)
+**Related Files:** [README.md](README.md) · [pattern-review.md](pattern-review.md) · [../CLAUDE.md](../CLAUDE.md) · [../context/vault-manifest.md](../context/vault-manifest.md) · [../resources/learning-library/README.md](../resources/learning-library/README.md)
 
 # Intake Processor
 
@@ -28,6 +28,7 @@ Read the file in `Intake/`. Identify what type of information it contains:
 - Asset inventory or content library
 - Process documentation
 - Reference material
+- Strong project example, finished artifact, existing rubric, or failure example offered for reusable learning
 
 ### 2. Identify the destination
 
@@ -37,6 +38,7 @@ Based on the content type, determine where the extracted info belongs:
 - Meeting transcript? Route to `logs/` and update `logs/meeting-index.md`
 - Reference material? Route to `resources/`
 - Template or process? Route to `templates/` or `context/processes.md`
+- Supplied example or rubric? Preserve the source, then route the proposed learning through `skills/pattern-review.md`. Do not place it directly in approved rubrics, exemplars, skills, or learned rules.
 
 ### 3. Extract and merge
 
@@ -46,12 +48,24 @@ Pull the key information from the document and add it to the destination files.
 - **Use TODO placeholders** for anything unclear or incomplete
 - **Cross-reference** the new content with related files
 
+For a supplied learning example, also capture:
+
+- Why the user considers it strong or weak
+- Audience, constraints, and date
+- Verified outcome or feedback
+- Reusable decisions
+- Details that should not be copied
+- Comparison artifacts, if available
+
+Create a noncanonical candidate report from the Pattern Review template after approval. During shadow mode, stop there.
+
 ### 4. Confirm with the user
 
 Before writing, tell the user:
 - What you found in the document
 - Where you plan to route each piece
 - Any ambiguities or conflicts with existing content
+- Whether any proposed learning will remain a noncanonical candidate or has a separate human promotion decision
 
 Wait for approval before writing.
 
@@ -70,5 +84,6 @@ Add an entry to today's daily log:
 ## Output
 
 - Updated vault files with the extracted content merged in
+- A noncanonical Pattern Review candidate when the intake contains a supplied example, rubric, or reusable lesson
 - Original file archived
 - Daily log entry documenting what was processed

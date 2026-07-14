@@ -48,6 +48,7 @@ This is not a wiki you read once. It's a **living operational context layer** �
 7. **Start minimal, grow organically** — Only create files we have content for now. The structure expands as context arrives.
 8. **Works everywhere** — Plain markdown only. Obsidian wikilinks or other tool-specific syntax are optional enhancements, never required.
 9. **Anyone can contribute** — The rules are simple enough that any team member or AI agent can follow them without training.
+10. **Learning is governed.** Recurring scans create noncanonical candidates. A named human must approve promotion into a rule, rubric, exemplar, skill, verifier, or scoped context file.
 
 ## Your task
 
@@ -70,7 +71,7 @@ Before building anything, ask me a focused questionnaire. I want to start fast �
 10. Which one should we build out first as the template?
 
 **Section 3: Workflow (4 questions)**
-11. Who will use this vault? (list roles — e.g., "3 strategists, 1 designer, 2 devs, 1 ops person")
+11. Who will use this vault, and who should be the sole recurring Pattern Review writer? (list roles, then name one person or agent identity for scheduled candidate reports)
 12. What types of work happen most often? (campaigns, development, design, reporting, strategy, sales, support, etc.)
 13. What information do you wish you had at the start of every work session?
 14. What falls through the cracks today? (lost context, undocumented decisions, tribal knowledge, handoff gaps, etc.)
@@ -97,6 +98,7 @@ This is the most important file. Include:
 - **Wiring rule** — every new `.md` file must include `**Related Files:**` links near the top
 - **Manifest rule** — any new folder under `clients/`, `projects/`, or any new file in `context/`, `skills/`, `resources/`, or `templates/` must be registered in `context/vault-manifest.md` in the same session
 - **Two-output rule** — every significant finding, decision, or lesson must be routed to the relevant vault file, not just the daily log. Knowledge that lives only in logs decays. Knowledge routed to source-of-truth files compounds.
+- **Learning promotion rule.** Pattern Review candidates are noncanonical and must never be loaded as instructions. The recurring scan uses one designated writer and starts with a 28 day report only shadow period. Promotion always requires a separate human decision naming one canonical destination.
 
 #### 1b. Cross-tool bootstrap files (always create these)
 
@@ -144,7 +146,7 @@ MCP setup is tool specific. The vault shares the setup guide. Prefer an official
 | `processes.md` | How we work — SOPs, standards, workflows |
 | `client-roster.md` | (If org serves clients) Canonical list of ALL clients with scope, contacts, spend, status. Single source of truth — CLAUDE.md links here instead of embedding the full list. Optional: tiers (e.g., full-service / retainer / project / past) |
 | `vault-manifest.md` | **Always create.** Master index of every file and folder in the vault. Register every top-level folder, every context file, every skill. This is the L0 entrypoint for discovery. If something is not in the manifest, future sessions will not find it. |
-| `learned-rules.md` | **Always create (starts mostly empty).** Canonical shared corrections and rules. Every AI agent reads this. Local model memory may propose observations but cannot silently override this file. |
+| `learned-rules.md` | **Always create (starts mostly empty).** Canonical shared corrections and rules. Every AI agent reads this. Local memory and Pattern Review candidates may propose observations but cannot silently override this file. |
 | `vault-isolation-rules.md` | (If user has multiple vaults) Rules preventing cross-contamination between this vault and others |
 
 Only create files I gave you content for, except for the three marked "Always create." The rest get created later as context arrives.
@@ -164,7 +166,8 @@ Create these starter skills based on my answers:
 | `intake-processor.md` | "Process a raw document from Intake/ — extract key info and route it to the correct context files" |
 | `daily-log.md` | "Automatically append today's daily and applicable scoped logs with significant work, decisions, and context shared this session. Routine factual log additions are preauthorized." |
 | `new-client-setup.md` | "Set up a new client/project folder — copy the template, ask the setup questions (including tier/service level if the org uses tiers), populate initial files, and register the new client in `context/client-roster.md` + CLAUDE.md" |
-| `brain-check.md` | "Audit the vault — check for orphaned files, stale dates, empty TODO placeholders, broken links, missing cross-references, manifest drift (files on disk not in vault-manifest.md), roster integrity (every client folder appears in `context/client-roster.md` and vice versa), intake age (files in `Intake/` longer than the SLA), and learned-rules sync (memories that should be promoted to context/learned-rules.md)" |
+| `brain-check.md` | "Audit the vault for orphaned files, stale dates, empty TODO placeholders, broken links, missing cross references, manifest drift, roster integrity, intake age, and learning library governance. It flags issues but does not promote learning." |
+| `pattern-review.md` | "Discover recurring positive and negative patterns, write noncanonical evidence reports, support human review, and apply only explicitly approved promotions to one canonical destination." |
 | `identify-user.md` | "Resolve who is operating this session for log attribution. Match on (hostname + OS username) against records in `resources/machines/`. If no match, onboard a new record by asking the operator. Never guess identity." Required for multi-person or multi-machine vaults. See the template file for the full spec. |
 
 Each skill file should contain:
@@ -253,10 +256,18 @@ resources/
 │   └── README.md          (asset inventory and naming conventions)
 ├── machines/              (operator-machine identity registry for log attribution)
 │   └── README.md          (explains the registry — one file per person per machine)
-└── archive/               (completed projects, old campaigns — move here, don't delete)
-    ├── README.md          (archive policy)
-    └── intake-processed/  (processed Intake files land here with date prefix)
+├── archive/               (completed projects and old campaigns, move here, do not delete)
+│   ├── README.md          (archive policy)
+│   └── intake-processed/  (processed Intake files land here with date prefix)
+└── learning-library/      (governed reusable learning, always create)
+    ├── README.md          (authority, one writer, four week shadow mode, cadence)
+    ├── candidate-report-template.md
+    ├── decision-template.md
+    ├── exemplar-template.md
+    └── rubric-template.md
 ```
+
+Initialize the learning library in `shadow` mode. Fill its designated recurring writer from question 11. If no writer was named, leave a TODO and do not configure a scheduled write. Set the shadow start to the vault creation date and the earliest promotion date to 28 days later. Candidate, decision, exemplar, and rubric folders are created only when their first real files exist.
 
 #### 8b. `.claude/memory/` — Persistent memory system (for Claude Code users)
 
@@ -268,7 +279,7 @@ Memory types:
 - **project** — ongoing work, goals, decisions, deadlines
 - **reference** — pointers to where information lives in external systems
 
-Universal rules discovered through memory must be reviewed before promotion to `context/learned-rules.md`. The shared file is canonical across tools.
+Universal rules discovered through memory must enter `skills/pattern-review.md` as noncanonical evidence and receive explicit human approval before promotion to `context/learned-rules.md`. The shared file is canonical across tools.
 
 #### 9. `Intake/` — Raw document drop zone
 
@@ -294,6 +305,7 @@ After building everything, give me:
 5. **Cross tool clean session checks** — verify Claude and Codex from the root and one nested client or project folder. Record the instruction chain and skill bridge each tool loaded.
 6. **Priority list** — what to fill in next for maximum value (ranked)
 7. **Skills inventory** — list every skill created and when to use each one
+8. **Pattern Review setup.** Confirm the designated recurring writer, shadow dates, review owners, and that no promotion can occur during the first 28 days.
 
 ## File conventions (enforce these in CLAUDE.md)
 
@@ -302,7 +314,7 @@ After building everything, give me:
   ---
   name: descriptive-name
   description: One-line description of what this file contains
-  type: context | campaign | creative | ops | log | reference | skill | template
+  type: context | campaign | creative | ops | log | reference | skill | template | learning-candidate-report | learning-decision | learning-exemplar | learning-rubric
   updated: YYYY-MM-DD
   ---
   ```
@@ -320,7 +332,7 @@ After building everything, give me:
 
 ## What makes this system work
 
-The power is in the **rules**, not any single file. When every file links to related files, when every session starts by reading CLAUDE.md, when every decision gets logged, when new context gets routed to the right file instead of buried in a chat thread — the vault becomes a shared memory that compounds over time.
+The power is in the **rules**, not any single file. When every file links to related files, every session starts by reading CLAUDE.md, every decision gets logged, and new context gets routed to the right file instead of buried in chat, the vault becomes a shared memory that compounds over time. Pattern Review adds a safe learning loop: evidence first, noncanonical candidates second, human promotion last.
 
 The more the team uses it, the smarter every future session becomes. For any person. With any tool.
 

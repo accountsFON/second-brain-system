@@ -1,11 +1,11 @@
 ---
 name: brain-check
-description: Vault self-audit. Checks for staleness, broken cross-references, manifest drift, orphaned files, and intake backlog.
+description: Vault self-audit. Checks structure, staleness, cross-references, learning governance, and intake backlog.
 type: skill
 updated: YYYY-MM-DD
 ---
 
-**Related Files:** [README.md](README.md) · [../context/vault-manifest.md](../context/vault-manifest.md) · [../CLAUDE.md](../CLAUDE.md)
+**Related Files:** [README.md](README.md) · [pattern-review.md](pattern-review.md) · [../context/vault-manifest.md](../context/vault-manifest.md) · [../resources/learning-library/README.md](../resources/learning-library/README.md) · [../CLAUDE.md](../CLAUDE.md)
 
 # Brain Check
 
@@ -65,7 +65,24 @@ If the vault has `context/client-roster.md`:
 
 ### 8. Learned rules sync (if applicable)
 
-If the AI tool has a persistent memory system, compare it against `context/learned-rules.md`. Flag rules that exist in memory but not in learned-rules (candidates for promotion) and rules in learned-rules that seem outdated.
+If the AI tool has a persistent memory system, compare it against `context/learned-rules.md`. Route possible differences to `skills/pattern-review.md` as noncanonical candidates. Do not treat private memory as evidence that a shared rule has changed.
+
+### 9. Learning library integrity
+
+If `resources/learning-library/` exists:
+
+- Confirm every candidate report says `canonical: false` and `authority: none`
+- Flag duplicate fingerprints or substantively identical claims across candidate reports
+- Confirm candidates are not linked from session bootstrap files as instructions
+- Confirm each promoted rubric or exemplar links to a human decision record
+- Confirm every promotion decision names a reviewer, approval date, scope, destination, and next review date
+- Flag candidate reports past their `review-by` date
+- Flag approved rubrics or exemplars past their `review-on` date
+- Confirm the recurring Pattern Review has one designated writer
+- During shadow mode, flag any canonical change attributed to a recurring candidate scan
+- Flag duplicate or conflicting guidance across learned rules, skills, rubrics, and exemplars
+
+This is an integrity check only. Use `skills/pattern-review.md` for discovery and promotion review.
 
 ## Output
 
