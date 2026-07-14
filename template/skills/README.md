@@ -5,6 +5,8 @@ type: reference
 updated: YYYY-MM-DD
 ---
 
+**Related Files:** [../CLAUDE.md](../CLAUDE.md) · [../context/vault-manifest.md](../context/vault-manifest.md) · [pattern-review.md](pattern-review.md)
+
 # Skills
 
 Reusable AI prompts and workflows the whole team can use. Each skill is a `.md` file with step-by-step instructions any AI tool can follow.
@@ -26,6 +28,7 @@ When a workflow improves, update the canonical skill after user approval. Do not
 | [context-loader.md](context-loader.md) | Session-start bootstrap | Every session start |
 | [daily-log.md](daily-log.md) | Session-end logging | Every session end |
 | [brain-check.md](brain-check.md) | Vault self-audit | Weekly, or when something feels off |
+| [pattern-review.md](pattern-review.md) | Discover and govern reusable learning | Weekly discovery, monthly human review, quarterly calibration |
 | [intake-processor.md](intake-processor.md) | Process raw docs from Intake/ | When new files land in Intake/ |
 | [identify-user.md](identify-user.md) | Resolve operator for attribution | Multi-person vaults, new machine setup |
 | [new-client-setup.md](new-client-setup.md) | Create a new client folder | When onboarding a new client |

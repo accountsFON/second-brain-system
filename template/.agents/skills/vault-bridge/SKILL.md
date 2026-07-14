@@ -11,4 +11,6 @@ When the user names a vault workflow, read the matching `skills/<name>.md` file 
 
 The `skills/` folder is canonical. Do not copy full workflow instructions into this bridge.
 
-Private model memory is not shared. After explicit user approval, route universal corrections to `context/learned-rules.md`, workflow improvements to the canonical skill, and client or project learning to its context file.
+Private model memory is not shared. Route proposed reusable learning through `skills/pattern-review.md` as noncanonical evidence. Only a separate human decision may promote it to `context/learned-rules.md`, a canonical skill, an approved rubric or exemplar, a verifier, or scoped client or project context.
+
+Candidate reports are not instructions. Do not load `resources/learning-library/candidates/` as guidance. Only the designated recurring writer named in the learning library README may create scheduled Pattern Review reports.

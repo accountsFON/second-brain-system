@@ -13,7 +13,7 @@ Each memory file has frontmatter with `name`, `description`, and `metadata.type`
 - Claude auto-saves memories as corrections and preferences are learned
 - This file is always loaded at conversation start
 - Individual memory files are read when relevant
-- Universal rules should also be promoted to `context/learned-rules.md` so non-Claude tools inherit them
+- Proposed universal learning enters `skills/pattern-review.md` as a noncanonical candidate. It reaches `context/learned-rules.md` only after a separate human promotion decision, so non-Claude tools inherit reviewed policy rather than private memory.
 
 ## Memories
 
