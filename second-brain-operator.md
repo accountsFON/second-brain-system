@@ -61,6 +61,8 @@ Files in `context/` folders (org-level and client-level) are **protected context
 - **Routine factual log appends are preauthorized.** Create the current dated log when needed and append a new attributed entry without asking for approval when it covers the current work, preserves existing content, and contains no sensitive information.
 - Ask before logging only when identity is unresolved, sensitive information would be exposed, or existing log content must change. This exception does not authorize source of truth changes or external actions.
 - What counts as significant: decisions made, files created/modified, research conducted, strategy changes, milestones, context added.
+- Keep each entry concise but complete: what changed, the verified result, why it matters, current status, and the next step or blocker when one exists.
+- Include direct links to any live deliverable, preview, report, dashboard, task, pull request, or other result. A deployed deliverable is not fully logged until its live URL appears in both the daily log and applicable scoped log.
 - **Attribute all work.** Every log entry, decision, and note must include who wrote it. If the vault has multiple operators, resolve identity via `skills/identify-user.md` (matches hostname + OS username against `resources/machines/`). If single-operator, use their name from CLAUDE.md. If you don't know who the current user is, ask before logging. Format log section headers as: `## [H:MM AM/PM] - Description (Name)`
 
 ### Learning from corrections
@@ -160,7 +162,7 @@ If the intake is a strong example, failed example, or ready made rubric, preserv
 
 This is not optional. Every session must close with these steps:
 
-1. **Automatically append today's daily log and the applicable client or project log** with everything significant that happened, including decisions, files created or modified, context added, and next steps. **Timestamp every section header** (e.g., `## [2:30 PM] — Session description`). Routine factual logs do not need separate approval.
+1. **Automatically append today's daily log and the applicable client or project log** with everything significant that happened, including the verified result, why it matters, current status, useful links, and next steps. **Timestamp every section header** (e.g., `## [2:30 PM] - Session description`). Routine factual logs do not need separate approval.
 2. **Update any status columns** in README files or CLAUDE.md that changed.
 3. **Update `updated:` dates** in frontmatter of any files you modified.
 4. **Flag anything unfinished** — add `> TODO:` placeholders or note next steps in the log.
