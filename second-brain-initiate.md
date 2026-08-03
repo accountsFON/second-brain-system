@@ -128,6 +128,8 @@ Cloud synced vaults are not Git repositories. Document that every Codex user mus
 
 Document one live transport for the vault. Human computers may use the provider desktop client while servers use a supported direct mount or sync client for the same folder. If the team also wants GitHub history, put the Git checkout outside the cloud folder and feed it with a one way snapshot. Never copy Git back into the live vault and never run two bidirectional sync engines against the same files.
 
+Dependency trees and build caches (`node_modules/`, `__pycache__/`, and similar) never sync in the live vault and never enter the snapshot repository. They are regenerable from lockfiles with the package manager. Give the snapshot repository a private remote so the vault history survives a single machine failure, and filter dependency trees out of history before the first push.
+
 The vault is the shared knowledge layer. Running services, credentials, personal permissions, notifications, absolute paths, and session state remain outside it.
 
 MCP setup is tool specific. The vault shares the setup guide. Prefer an official provider hosted MCP, use a company hosted MCP for custom shared workflows, and use a local MCP only when local access is required. Claude and Codex may each need a connector definition and user login. Never place a raw credential in the vault or a command argument. Use a redacted inventory when auditing configuration.
@@ -144,7 +146,7 @@ MCP setup is tool specific. The vault shares the setup guide. Prefer an official
 | `brand.md` | Visual identity — colors, fonts, logo rules |
 | `voice.md` | Writing style, tone, vocabulary, messaging guidelines |
 | `processes.md` | How we work — SOPs, standards, workflows |
-| `client-roster.md` | (If org serves clients) Canonical list of ALL clients with scope, contacts, spend, status. Single source of truth — CLAUDE.md links here instead of embedding the full list. Optional: tiers (e.g., full-service / retainer / project / past) |
+| `client-roster.md` | (If org serves clients) Canonical list of ALL clients with scope, contacts, spend, status. Single source of truth — CLAUDE.md links here instead of embedding the full list. Optional: tiers (e.g., full-service / retainer / project / past). If the org already tracks clients in an external system of record (a CRM or database), the roster may instead be a derived mirror of that system, stamped with a synced date in frontmatter. In that case the external system is canonical and the roster is refreshed, never hand edited |
 | `vault-manifest.md` | **Always create.** Master index of every file and folder in the vault. Register every top-level folder, every context file, every skill. This is the L0 entrypoint for discovery. If something is not in the manifest, future sessions will not find it. |
 | `learned-rules.md` | **Always create (starts mostly empty).** Canonical shared corrections and rules. Every AI agent reads this. Local memory and Pattern Review candidates may propose observations but cannot silently override this file. |
 | `vault-isolation-rules.md` | (If user has multiple vaults) Rules preventing cross-contamination between this vault and others |
@@ -205,6 +207,8 @@ Based on my questionnaire answers, create the appropriate grouping folders:
 
 This keeps the root clean as the vault grows. Client #30 doesn't clutter the root alongside org-level folders.
 
+For a large long running project, keep its documents dated and sorted by kind: `plans/`, `designs/`, `handoffs/`, and `notes/` subfolders with a `docs-index.md` listing every document and a `changelog.md` of dated status changes. This replaces a single narrative status field that goes stale. Small projects need only a README.
+
 #### 5. `_client-template/` (or `_project-template/`)
 
 A template folder that gets copied into `clients/` (or `projects/`) for each new client or project. Adapt naming based on my answers.
@@ -257,7 +261,7 @@ resources/
 ├── machines/              (operator-machine identity registry for log attribution)
 │   └── README.md          (explains the registry — one file per person per machine)
 ├── archive/               (completed projects and old campaigns, move here, do not delete)
-│   ├── README.md          (archive policy)
+│   ├── README.md          (archive policy, including any retention TTL)
 │   └── intake-processed/  (processed Intake files land here with date prefix)
 └── learning-library/      (governed reusable learning, always create)
     ├── README.md          (authority, one writer, four week shadow mode, cadence)
@@ -273,6 +277,8 @@ resources/
     ├── pattern-review-records.py
     └── validate-pattern-review.py
 ```
+
+If the archive policy sets a retention TTL for processed intake, make it enforceable: every archived markdown file carries an `archived: YYYY-MM-DD` frontmatter date, and binaries that cannot hold frontmatter are listed in a dated asset manifest file in the same folder. The brain-check skill can then flag files past the TTL for deletion.
 
 Initialize the learning library in `shadow` mode. Fill its designated recurring writer from question 11. If no writer was named, leave a TODO and do not configure a scheduled write. Set the shadow start to the vault creation date and the earliest promotion date to 28 days later. Candidate, proposal, decision, execution, validation, exemplar, and rubric folders are created only when their first real files exist.
 

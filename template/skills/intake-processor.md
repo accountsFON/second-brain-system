@@ -74,6 +74,8 @@ Wait for approval before writing.
 After processing, move the original file to `resources/archive/intake-processed/` with a date prefix:
 `resources/archive/intake-processed/YYYY-MM-DD-original-filename.ext`
 
+Stamp an `archived: YYYY-MM-DD` date in the frontmatter of archived markdown files. For binaries that cannot hold frontmatter, add a line to a dated asset manifest file in the same folder. This keeps any archive retention TTL enforceable by the brain-check skill.
+
 ### 6. Log the processing
 
 Add an entry to today's daily log:

@@ -219,6 +219,8 @@ Choose one document system as the live source of truth. Human computers can use 
 
 Keep Git outside every cloud synced vault. If you want version history in GitHub, copy the live vault into a separate checkout with a one way snapshot job. Never copy that checkout back into the live vault, never place `.git` inside a cloud folder, and never run two bidirectional sync engines against the same files.
 
+Give the snapshot repository a private remote so vault history survives a single machine failure. Dependency trees and build caches (`node_modules/`, `__pycache__/`) never sync and never enter the snapshot history: they regenerate from lockfiles. When the sync client produces a conflict copy, merge the missing content into the canonical file and archive the copy, never keep two live versions.
+
 ## Claude Code Integration
 
 If your team uses Claude Code, the vault automatically provides slash commands for every skill. Type `/daily-log`, `/brain-check`, `/pattern-review`, `/intake-processor`, etc. The commands in `.claude/commands/` are thin one-line wrappers that point to the skill files in `skills/`. One source of truth, no duplication.
