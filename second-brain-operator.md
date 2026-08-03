@@ -31,7 +31,7 @@ Do NOT skip this step. Do NOT start producing work until you've read the context
 
 ### Finding information
 - Use the **Navigation Table** in CLAUDE.md to find what you need — it maps questions to files.
-- If the vault has `context/client-roster.md`, that's the canonical list of all clients — check it before trusting CLAUDE.md's inline client mentions.
+- If the vault has `context/client-roster.md`, that's the canonical list of all clients — check it before trusting CLAUDE.md's inline client mentions. If the roster is marked as a derived mirror of an external system of record, that system is canonical: refresh the mirror and its synced date instead of hand editing rows.
 - If the vault has `logs/meeting-index.md`, that's the fastest way to find a meeting transcript by date or client.
 - Client-specific context lives in `clients/[client-name]/context/` — always check there before asking the user for info that might already exist.
 - If the vault has a `skills/` folder, check it for reusable prompts before building something from scratch.
@@ -63,6 +63,7 @@ Files in `context/` folders (org-level and client-level) are **protected context
 - What counts as significant: decisions made, files created/modified, research conducted, strategy changes, milestones, context added.
 - Keep each entry concise but complete: what changed, the verified result, why it matters, current status, and the next step or blocker when one exists.
 - Include direct links to any live deliverable, preview, report, dashboard, task, pull request, or other result. A deployed deliverable is not fully logged until its live URL appears in both the daily log and applicable scoped log.
+- **Guard sensitive figures in pushed logs.** If the vault forwards log entries to a chat channel or any wider audience, the org's own internal financials (revenue, profit, balances) belong in a dedicated log area excluded from the push, never in a forwarded log. Any forwarding hook should dedupe on file path plus section header so an edited entry does not repost, and should enforce the log header format.
 - **Attribute all work.** Every log entry, decision, and note must include who wrote it. If the vault has multiple operators, resolve identity via `skills/identify-user.md` (matches hostname + OS username against `resources/machines/`). If single-operator, use their name from CLAUDE.md. If you don't know who the current user is, ask before logging. Format log section headers as: `## [H:MM AM/PM] - Description (Name)`
 
 ### Learning from corrections
@@ -156,6 +157,8 @@ If the vault contains `resources/learning-library/`:
 - Human computers may use the provider desktop client. Servers may use a supported direct mount or sync client for the same folder.
 - Keep Git outside cloud synced folders. A separate Git checkout may receive one way recovery snapshots, but it must never write back into the live vault.
 - Never run two bidirectional sync engines against the same vault.
+- Dependency trees and build caches (`node_modules/`, `__pycache__/`, and similar) never sync and never enter the snapshot repository. Regenerate them from lockfiles with the package manager.
+- When the sync client creates a conflict copy of a file, merge by content: append the missing content into the canonical file only, then move the conflict copy to `resources/archive/`. Never keep two live copies and never delete the conflict copy without merging it first.
 - Test both directions, create, edit, rename, delete, restart, cached write recovery, and same file collision behavior before allowing automated writers.
 
 ### Processing intake documents
@@ -164,7 +167,7 @@ If the vault contains `resources/learning-library/`:
   2. Identify what type of info it contains
   3. Route extracted info to the correct context files (merge, don't overwrite)
   4. Add source attribution
-  5. Move the original to `resources/archive/intake-processed/` with date prefix
+  5. Move the original to `resources/archive/intake-processed/` with date prefix, stamp an `archived: YYYY-MM-DD` frontmatter date (binaries go in a dated asset manifest file instead) so any retention TTL is enforceable
   6. Log what was processed
 
 If the intake is a strong example, failed example, or ready made rubric, preserve its source and use `skills/pattern-review.md`. Extract the reusable decisions and the details that should not be copied. Keep the result noncanonical until the complete schema version 2 promotion chain resolves: immutable exact proposal, bound human `approve-exact` decision, one use execution, and final passing validation of the live result.
