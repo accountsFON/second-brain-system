@@ -95,10 +95,10 @@ updated: YYYY-MM-DD
 End every attributed entry with the record's footer on its own line:
 
 ```
-_Logged by: Caleb - Work Laptop_
+_Logged by: Alex - Work Laptop_
 ```
 
-For agent-written entries, keep the agent visible: `_Logged by: Claude (Caleb - Work Laptop)_`.
+For agent-written entries, keep the agent visible: `_Logged by: Claude (Alex - Work Laptop)_`.
 
 ## Setup in your vault
 
