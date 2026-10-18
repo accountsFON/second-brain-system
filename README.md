@@ -1,288 +1,264 @@
 # Second Brain System
 
-A plug-and-play system for building a shared "second brain" for any organization using plain markdown files. Works with any AI tool. No vendor lock-in.
+Build a shared second brain for your whole organization out of plain markdown files. One prompt asks you 14 questions and builds the vault, a session guide keeps every AI tool following the same rules, and the vault keeps growing as your team works.
 
-**One prompt builds it. Template files bootstrap it. Skills keep it alive.**
+Built for agencies, startups, consultancies, solo operators, and any team tired of explaining the same context to AI tools over and over.
 
----
+## Features
 
-## Get Started
+- **One prompt builds it:** point an AI tool at an empty folder, answer 14 questions in one pass, and it creates the full vault.
+- **One brain for every tool:** `CLAUDE.md` is the master file, and `AGENTS.md` and `GEMINI.md` point Codex, Copilot, Cursor, and Gemini CLI back to it.
+- **Session protocol:** every session reads the context first, routes new knowledge to the right file, and logs what happened before it ends.
+- **Context protection:** approved context files only grow. A contradiction stops the AI until a person confirms the change.
+- **Daily logs with attribution:** timestamped entries record who did the work, the verified result, the status, and links to the deliverable.
+- **Starter skills:** reusable workflows for loading context, logging, auditing the vault, processing intake, identifying the operator, setting up clients, and reviewing patterns.
+- **Governed learning:** Pattern Review turns recurring wins and mistakes into candidates, and only an exact proposal approved by a named person can change shared rules.
+- **Plain files:** markdown and folders that open in any editor, with Obsidian as an optional visual layer.
 
-### Just tell your AI:
+## Compatibility
+
+| Requirement | Details |
+|---|---|
+| **AI tool** | One that can read files and write to a local folder: Claude Code, Codex, Gemini CLI, Cursor, or GitHub Copilot |
+| **Chat apps** | ChatGPT, Claude.ai, and similar chat apps can run the questionnaire and draft each file, and you save the files into the folder yourself |
+| **Editor** | Any text editor. [Obsidian](https://obsidian.md) adds graph view and backlinks |
+| **Storage** | One shared folder in a single document system, such as Google Drive, Dropbox, OneDrive, or a shared server |
+| **Python** | Python 3, standard library only, for the Pattern Review record tool, validator, and tests. The rest of the vault needs nothing installed |
+| **Tested on** | The 36 tests in `tests/` and the template validator pass on macOS 26.5.1 with Python 3.10.17 (October 2026) |
+
+A few things to know before you start:
+
+- **Tool coverage:** the builder's final clean session check covers Claude and Codex, from the vault root and from one nested client or project folder. Gemini CLI, Cursor, and Copilot get entry files (`GEMINI.md` and `AGENTS.md`) with no built-in check yet. Reports from those tools are welcome in [Issues](https://github.com/accountsFON/second-brain-system/issues).
+- **Windows and Linux:** the vault is plain markdown and should work anywhere. The Python checks have only been run on macOS so far.
+- **Cloud folders and Git:** keep any Git checkout outside Google Drive, Dropbox, OneDrive, and iCloud, because cloud sync corrupts Git internals. Clone this repo somewhere local, and build your vault in the shared folder.
+- **Codex in a cloud folder:** a cloud synced vault has no `.git`, so each Codex user adds `.codex` to `project_root_markers` in their own `~/.codex/config.toml`. See [Codex Integration](#codex-integration).
+- **Pattern Review takes a month to open:** the learning library starts in a 28 day report only shadow mode, and no candidate can change a rule during that window.
+
+## Quick Start
+
+Open your AI tool in an empty folder and tell it:
 
 > Read https://github.com/accountsFON/second-brain-system and follow the instructions in `second-brain-initiate.md` to build me a second brain vault in this folder.
 
-That's it. The AI reads the repo, asks you 14 questions about your org, and builds the entire vault. Works in Claude, ChatGPT, Gemini, Cursor, Codex, Copilot... any AI tool that can read a URL or files.
+The AI reads the builder prompt, asks you 14 questions about your organization, and builds the vault. It also copies the learning library files from this repo, so the tool needs to reach the repo by URL or a local clone.
 
-### Or clone it first:
+**Prefer to paste it yourself?** Clone the repo to a local folder outside any cloud drive:
 
 ```bash
 git clone https://github.com/accountsFON/second-brain-system.git
 ```
 
-Then open `second-brain-initiate.md`, copy everything below the divider, and paste it into your AI tool while pointing at an empty folder.
+Open [second-brain-initiate.md](second-brain-initiate.md), copy everything below the line that says **Paste everything below this line into your AI assistant**, and paste it into your AI tool while it points at the empty vault folder. Give the tool read access to the clone so it can copy the files under `template/resources/learning-library/`.
 
----
+## Use It
 
-## What is this?
+1. Create an empty folder in the document system your team already shares.
+2. Open your AI tool with that folder as its working directory.
+3. Give it the Quick Start instruction above, or paste the builder prompt.
+4. Answer the 14 questions in one pass: six about the organization, four about clients or projects, and four about workflow. Question 11 names the one person or agent that writes scheduled Pattern Review reports.
+5. Let it build. When it finishes, it gives you a tree of every file, a `CLAUDE.md` walkthrough, steps for adding a client, a team orientation guide, a ranked list of what to fill in next, and the Pattern Review setup.
+6. Share the folder with your team. Everyone starts at `CLAUDE.md`.
+7. At the start of each AI session, load [second-brain-operator.md](second-brain-operator.md) by pasting it or pointing the tool at it. The session reads context first and logs its work before it ends.
 
-A structured folder of interconnected `.md` files that becomes your organization's living memory. Every AI session reads the context first and knows exactly where to find and store information. Every team member benefits from what everyone else has contributed.
-
-It works with **any AI tool** and any text editor. No proprietary formats. No subscriptions. Just markdown files and folder structure.
-
-## The four pillars
-
-### 1. The Brain (CLAUDE.md + cross-tool shims)
-
-One master file that every tool reads first. `AGENTS.md`, `GEMINI.md`, and `README.md` are thin redirects so Claude, Codex, Gemini, Cursor, and humans all land in the same brain. No tool reads a different truth.
-
-### 2. Persistent Memory (learns across sessions)
-
-Two layers working together:
-- **Local memory** (tool specific): captures observations and proposes corrections for review.
-- **Learned rules** (`context/learned-rules.md`): canonical shared policy. Every AI reads it, and local memory cannot silently override it.
-
-### 3. Executable Skills (the vault does things)
-
-Plain markdown files in `skills/` that encode repeatable workflows. Not documentation, execution. `daily-log`, `brain-check`, `pattern-review`, `intake-processor`, `identify-user`. The vault maintains itself.
-
-### 4. Governed Pattern Review (learns without self promotion)
-
-A recurring scan finds positive and negative patterns across finished work, but writes them only as noncanonical candidates. One designated writer runs the recurring report. The first four weeks are shadow mode. Candidates can never be approved directly. Promotion uses an immutable exact proposal, an append only human decision bound to its digest, one use execution authority, and a passing validation receipt.
-
-## What you get
+## What It Builds
 
 ```
 your-vault/
 ├── CLAUDE.md                  # The brain: navigation, rules, org identity
-├── AGENTS.md                  # Cross-tool shim for Codex/Copilot/Cursor
-├── GEMINI.md                  # Cross-tool shim for Gemini CLI
+├── AGENTS.md                  # Entry file for Codex, Copilot, and Cursor
+├── GEMINI.md                  # Entry file for Gemini CLI
+├── README.md                  # Tour for people opening the folder
 ├── .codex/config.toml         # Portable Codex project settings
-├── .agents/skills/            # Thin Codex bridge to canonical skills
-├── README.md                  # Human-readable tour
-├── context/
-│   ├── soul.md                # Identity, voice, values (who the org IS)
-│   ├── org-profile.md         # What the org does
-│   ├── team.md                # Team members and roles
-│   ├── services.md            # What the org offers
-│   ├── tools.md               # Platforms and software
-│   ├── brand.md               # Visual identity
-│   ├── voice.md               # Writing style and tone
-│   ├── processes.md           # SOPs and workflows
-│   ├── client-roster.md       # All clients at a glance
-│   ├── vault-manifest.md      # Master index of everything in the vault
-│   ├── learned-rules.md       # Cross-platform rules learned during work
-│   └── vault-isolation-rules.md
-├── skills/
-│   ├── README.md              # Skill index
-│   ├── context-loader.md      # Session-start bootstrap
-│   ├── daily-log.md           # Session-end logging
-│   ├── brain-check.md         # Vault self-audit
-│   ├── pattern-review.md      # Governed pattern discovery and promotion
-│   ├── intake-processor.md    # Process raw docs from Intake/
-│   ├── identify-user.md       # Resolve operator for log attribution
-│   └── new-client-setup.md    # Set up a new client folder
+├── .agents/skills/            # Thin Codex bridge to the skills folder
 ├── .claude/
-│   ├── commands/              # Slash command wrappers (point to skills/)
-│   └── memory/
-│       └── MEMORY.md          # Persistent memory index (Claude Code)
+│   ├── commands/              # Slash command wrappers that point to skills/
+│   └── memory/MEMORY.md       # Local observation index for Claude Code
+├── context/
+│   ├── soul.md                # Identity, voice, and values
+│   ├── vault-manifest.md      # Master index of everything in the vault
+│   ├── learned-rules.md       # Shared rules every AI tool follows
+│   └── ...                    # org-profile, team, services, tools, brand, voice,
+│                              # processes, and client-roster, once you have content
+├── skills/                    # Shared workflows (listed below)
 ├── clients/                   # One folder per client
 ├── projects/                  # Internal projects
 ├── _client-template/          # Copy for each new client
 ├── templates/                 # Meeting notes, decision records, briefs
 ├── resources/
-│   ├── assets/                # Logos, brand files
-│   ├── machines/              # Operator-machine identity registry
-│   ├── archive/               # Completed work, processed intake
-│   └── learning-library/      # Candidates, decisions, exemplars, rubrics
-├── Intake/                    # Drop raw docs here for AI processing
-└── logs/                      # Daily logs + meeting index
+│   ├── assets/                # Logos and brand files
+│   ├── machines/              # Operator and machine identity registry
+│   ├── agent-platform/        # Shared and local configuration boundary
+│   ├── archive/               # Completed work and processed intake
+│   └── learning-library/      # Pattern Review templates, record tool, validator
+├── Intake/                    # Drop raw docs here for processing
+└── logs/                      # Daily logs and the meeting index
 ```
 
-## The files
+The builder only creates context files you gave it content for, plus three it always creates: `soul.md`, `vault-manifest.md`, and `learned-rules.md`. Missing details become `> TODO:` placeholders.
 
-| File | Purpose | When |
-|------|---------|------|
-| [`second-brain-initiate.md`](second-brain-initiate.md) | Builds the vault from scratch via guided questionnaire | Run **once** |
-| [`second-brain-operator.md`](second-brain-operator.md) | Teaches any AI how to work inside the vault | Load **every session** |
-| [`AGENTS.md`](AGENTS.md) | Auto-loaded by Codex, Copilot, Cursor | Automatic |
-| [`GEMINI.md`](GEMINI.md) | Auto-loaded by Gemini CLI | Automatic |
-| [`template/`](template/) | Starter files the initiate prompt builds from | Reference |
-
-### `second-brain-initiate.md` — Build the vault
-
-Paste into any AI tool pointed at an empty folder. It:
-- Asks 14 questions about your org (takes ~5 min)
-- Creates the full vault structure with CLAUDE.md at the root
-- Populates context files with your answers
-- Creates shared AI skills the whole team can use
-- Sets up client/project templates and an intake pipeline
-- Builds out your first client folder
-
-### `second-brain-operator.md` — Run every session
-
-Load as your first message in any AI session. It teaches the AI to:
-- **Mandatory session start**: read CLAUDE.md, read latest daily log, verify context before work
-- **Context protection**: never overwrite protected files, contradictions require confirmation
-- Route new information to the correct files (not buried in chat)
-- Cross-reference every file to related docs
-- **Mandatory session end**: update daily logs with timestamped outcomes, useful result links, and unfinished work
-- **Automatic routine logging**: factual additions to the current daily and applicable client or project logs need no separate approval
-
-### Cross-tool shims — Automatic
-
-`AGENTS.md` and `GEMINI.md` are thin redirect files that point to CLAUDE.md. When Codex opens your vault, it auto-reads `AGENTS.md` and lands in the same brain as Claude. When Gemini CLI opens it, same thing via `GEMINI.md`. Switch tools freely. Same context, same rules.
-
-### Template files — Reference
-
-The `template/` folder contains starter versions of the key files the initiate prompt generates. Use them as reference for what the vault should look like, or copy them directly if you prefer to set up manually instead of using the questionnaire.
-
-## Starter skills (ship with the vault)
+## Starter Skills
 
 | Skill | What it does |
-|-------|-------------|
-| **context-loader** | Reads the brain file, latest log, and client context. Session-start bootstrap. |
-| **daily-log** | Automatically appends today's daily and applicable scoped logs with concise verified outcomes, current status, next steps, and useful result links. Mandatory at session end. |
-| **brain-check** | Audits structure, staleness, broken links, manifest drift, intake backlog, and learning governance. |
-| **pattern-review** | Finds recurring positive and negative patterns, writes noncanonical candidates, and governs exact proposals, human decisions, executions, and validation proof. |
-| **intake-processor** | Reads a raw doc from Intake/, extracts key info, routes it to the right vault files, archives the original. |
-| **identify-user** | Resolves who is operating the current session by matching hostname + OS username against a registry. For multi-person or multi-machine vaults. |
-| **new-client-setup** | Copies the client template, asks setup questions, populates initial files, registers in the roster. |
+|---|---|
+| **context-loader** | Reads the brain file, the latest log, and client context at session start |
+| **daily-log** | Appends today's daily log and any client or project log with verified outcomes, status, next steps, and result links |
+| **brain-check** | Audits structure, stale dates, broken links, manifest drift, intake backlog, and learning governance |
+| **pattern-review** | Finds recurring patterns, writes candidate reports, and runs the exact proposal, decision, execution, and validation chain |
+| **intake-processor** | Reads a raw doc from `Intake/`, routes what matters to the right files, and archives the original |
+| **identify-user** | Resolves who is operating the session by matching hostname and OS username against `resources/machines/` |
+| **new-client-setup** | Copies the client template, asks setup questions, fills in the first files, and registers the client in the roster |
 
-## Pattern Review: safe reusable learning
+The builder adds skills that fit your work, like a campaign brief skill for a marketing team or a sprint planning skill for a dev shop.
 
-The learning library separates four kinds of guidance:
+## Session Protocol and Context Protection
 
-- **Hard rules** protect nonnegotiable boundaries and deterministic failures.
-- **Rubrics** guide context dependent quality decisions.
-- **Approved exemplars** calibrate judgment with annotated examples and clear limits.
-- **Candidate patterns** hold unapproved observations for review.
+The operator guide gives every session three phases:
 
-Weekly discovery reports include evidence, counterexamples, source independence, outcome signals, confidence, scope, and a proposed destination. Repeated output from the same agent, prompt, artifact, or project iteration counts as one evidence family.
+- **Session start:** read `CLAUDE.md`, `context/learned-rules.md`, the latest daily log, and the client or project context, then confirm the context is loaded before producing work.
+- **During the session:** route new knowledge to its file, add `**Related Files:**` links, register new files in the manifest, and use `> TODO:` for anything missing.
+- **Session end:** append the daily log and any scoped log, update status columns and `updated:` dates, and flag unfinished work.
 
-Broad promotion normally requires three independent occurrences across at least two projects or contexts. A human can approve a documented exception, but the recurring scan never approves itself.
+Files in `context/` folders are protected. The AI adds to them, makes targeted edits only, logs every change, and stops to quote the existing rule when something new contradicts it. Routine factual log entries are preauthorized when the operator's identity is resolved, existing content stays untouched, and nothing sensitive is included.
 
-The first 28 days are report only shadow mode. After that period, a named human can approve only an immutable `FPRP` exact proposal, never a candidate. The system resolves the proposal ID, recomputes its full canonical JSON digest, and records a bound `FPRD` decision. The human does not need to type the digest.
+## Pattern Review
 
-An `approve-exact` decision creates one use authority. Each terminal attempt gets an immutable `FPRE` receipt. Blocked attempts can retry only when no write occurred and all proposal, exact decision binding, revocation, expiration, before hash, and prior consumption checks run again. At most one execution may consume the authorization. A passing `FPRV` receipt must follow execution completion and cover every trusted validator and reported hash. Later audits preserve historical receipts as structural evidence, enforce continuous successful path history, and compare current bytes only with the latest successful validated state.
+Pattern Review is the vault's learning loop, and it is built so the vault can't promote its own ideas. The learning library holds four kinds of guidance:
 
-The public templates define the vendor neutral schema and include a dependency free validator:
+- **Hard rules:** fixed boundaries and deterministic failures.
+- **Rubrics:** guidance for quality calls that depend on context.
+- **Approved exemplars:** annotated examples with stated limits.
+- **Candidate patterns:** unapproved observations waiting for review.
 
-```bash
-python3 template/resources/learning-library/pattern-review-records.py --help
-python3 template/resources/learning-library/validate-pattern-review.py --templates .
-python3 resources/learning-library/validate-pattern-review.py --vault /path/to/vault
-python3 -m unittest discover -s tests -v
-```
+A recurring scan finds positive and negative patterns across finished work and writes them as candidates, with evidence, counterexamples, confidence, scope, and a proposed destination. One designated writer runs the scheduled report. Repeated output from the same agent, prompt, artifact, or project iteration counts as one evidence family, and broad promotion normally needs three independent occurrences across at least two projects or contexts.
 
-The record CLI deterministically creates or verifies proposal, decision, execution, and validation envelopes. It prints without writing by default. An explicit `--output` uses atomic create and refuses to overwrite, so different agents can share one implementation instead of hand calculating hashes. Attempt and sequence fields must be JSON integers and are never coerced from other types.
+The first 28 days are report only shadow mode. After that, a named person approves an immutable `FPRP` exact proposal. The system recomputes the proposal's canonical JSON digest and records a bound `FPRD` decision, so the person never types a hash.
 
-Scheduled reports still use one designated writer to prevent duplicate reports and write collisions. Scheduler credentials and machine configuration stay outside the vault.
+An `approve-exact` decision authorizes one execution, recorded in an `FPRE` receipt. The promotion is complete once a passing `FPRV` validation receipt covers every trusted validator and reported hash. The full contract lives in [approval-contract.md](template/resources/learning-library/approval-contract.md).
 
-## Why it works
+The tradeoff is ceremony. Promotion takes several records and a human decision, which is slower than editing a rules file by hand. In exchange, every change to shared guidance traces back to evidence and a named approver.
 
-Most organizational knowledge dies in chat threads, email chains, and someone's head. This system captures it in files that every future session, by any person, with any tool, can read and build on.
+## Obsidian
 
-- **Start a session**: AI reads the full org context before doing anything
-- **Do the work**: AI routes new knowledge to the right files, not just the chat
-- **End the session**: daily log captures what happened for whoever comes next
-- **Switch tools**: AGENTS.md and GEMINI.md ensure the new tool picks up where the old one left off
-- **Learn safely**: corrections and outcomes become candidates first, then humans promote the useful ones into the right canonical layer
+Open the vault folder in [Obsidian](https://obsidian.md) with **Open folder as vault** for a visual layer:
 
-The vault compounds. Every session makes the next one smarter.
+- **Graph View:** see how every file connects.
+- **Backlinks:** see everything that references the file you're reading.
+- **Quick Search:** find anything across the vault.
+- **Daily Notes:** maps onto the `logs/` folder.
 
-## Who is this for
+Standard markdown links stay the primary format so every tool can follow them. Obsidian `[[wikilinks]]` can be added alongside them as an extra.
 
-- **Agencies** managing multiple clients
-- **Startups** building institutional knowledge from day one
-- **Consultancies** that need context continuity across engagements
-- **Solo operators** who use multiple AI tools and want persistent context
-- **Any team** tired of repeating themselves to AI tools
+## Live Sync for People and Server Agents
 
-## Supercharge it with Obsidian
+Pick one document system as the live source of truth. People can use the provider's desktop client, and an always on server can use a supported direct mount or sync client for the same folder. Everyone then reads and writes the same live files.
 
-The vault is plain markdown and works anywhere. But if you want a visual layer, open it as an [Obsidian](https://obsidian.md) vault. You get:
-
-- **Graph View**: see how every file connects to every other file
-- **Backlinks**: click any file and instantly see everything that references it
-- **Quick Search**: find anything across the entire vault in milliseconds
-- **Live Preview**: edit markdown with a clean visual editor
-- **Daily Notes**: maps perfectly to the `logs/` folder
-
-Obsidian is free, works on Mac/Windows/Linux/mobile, and syncs via any cloud drive (Google Drive, Dropbox, OneDrive, iCloud). Your vault is already Obsidian-compatible out of the box.
-
-**To get started:** Download [Obsidian](https://obsidian.md), click "Open folder as vault", and point it at your vault folder.
-
-### Live sync for humans and server agents
-
-Choose one document system as the live source of truth. Human computers can use the provider desktop client. An always on server can use a supported direct mount or sync client for that same folder. Both sides then read and write the same live documents.
-
-Keep Git outside every cloud synced vault. If you want version history in GitHub, copy the live vault into a separate checkout with a one way snapshot job. Never copy that checkout back into the live vault, never place `.git` inside a cloud folder, and never run two bidirectional sync engines against the same files.
-
-Give the snapshot repository a private remote so vault history survives a single machine failure. Dependency trees and build caches (`node_modules/`, `__pycache__/`) never sync and never enter the snapshot history: they regenerate from lockfiles. When the sync client produces a conflict copy, merge the missing content into the canonical file and archive the copy, never keep two live versions.
+For version history in GitHub, copy the live vault into a separate checkout outside the cloud folder with a one way snapshot job, and give that repo a private remote. Never copy the checkout back into the live vault, and never run two bidirectional sync engines against the same files. Dependency trees and build caches (`node_modules/`, `__pycache__/`) stay out of the vault and out of the snapshot. When the sync client makes a conflict copy, merge the missing content into the canonical file and archive the copy.
 
 ## Claude Code Integration
 
-If your team uses Claude Code, the vault automatically provides slash commands for every skill. Type `/daily-log`, `/brain-check`, `/pattern-review`, `/intake-processor`, etc. The commands in `.claude/commands/` are thin one-line wrappers that point to the skill files in `skills/`. One source of truth, no duplication.
+Every skill can run as a slash command, like `/daily-log` or `/brain-check`, through thin wrappers the builder creates in `.claude/commands/`. Each wrapper points to its file in `skills/`, which stays the single source of truth. Claude Code also reads `CLAUDE.md` automatically when it opens the vault.
 
-The `.claude/memory/` directory can hold Claude observations across sessions. Proposed reusable learning enters Pattern Review as noncanonical evidence. Universal rules reach `context/learned-rules.md` only after the full chain completes: immutable exact proposal, bound human `approve-exact` decision, one use execution, and passing live validation. Other tools then inherit verified policy.
+To add a skill, create the `.md` file in `skills/`, then add a wrapper in `.claude/commands/` containing:
 
-**Adding a new skill:** Create the `.md` file in `skills/`, then add a wrapper in `.claude/commands/` with:
 ```
 Read and execute the skill instructions in skills/[name].md
 
 Do exactly what the skill file says. Do not summarize the skill. Run it.
 ```
 
+`.claude/memory/` can hold Claude's observations across sessions. Reusable learning from memory enters Pattern Review as a candidate, and it reaches `context/learned-rules.md` only after the full approval chain completes.
+
 ## Codex Integration
 
-Codex reads `AGENTS.md` for durable instructions and `.agents/skills/vault-bridge/SKILL.md` for shared workflows. The bridge points back to `skills/`, so Claude and Codex execute the same canonical instructions.
+Codex reads `AGENTS.md` for instructions and [.agents/skills/vault-bridge/SKILL.md](template/.agents/skills/vault-bridge/SKILL.md) for shared workflows. The bridge routes back to `skills/`, so Claude and Codex run the same canonical instructions.
 
-For a cloud synced vault, each operator adds this to their local `~/.codex/config.toml` and restarts Codex:
+For a cloud synced vault, each operator adds this to their own `~/.codex/config.toml` and restarts Codex:
 
 ```toml
 project_root_markers = [".git", ".codex"]
 ```
 
-Keep personal configuration at home. Shared `.codex/config.toml` must not contain credentials, absolute paths, permissions, native notifications, or telemetry commands.
+The shared [.codex/config.toml](template/.codex/config.toml) holds portable settings only. Credentials, absolute paths, permissions, notifications, and telemetry commands stay in each person's home configuration.
 
-The vault is the shared knowledge layer, not a required automation platform. Running services, credentials, personal permissions, notifications, and session state stay outside it.
+## MCP Servers
 
-### MCP Servers (optional, for technical teams)
+For teams that connect outside tools, the vault holds the setup guide: what each connector does, who owns it, how each AI tool connects, how an authorized person signs in, and how to verify it.
 
-If your team uses external tools, the vault should share what each connector does, who owns it, how each tool connects, how an authorized person signs in, and how to verify it.
+- **Order of preference:** an official provider hosted MCP first, a company hosted MCP for custom shared workflows, and a local MCP when it needs that computer's files or apps.
+- **Credentials:** raw credentials and OAuth sessions stay outside the vault and out of command arguments.
+- **Audits:** report server names, scopes, field names, and placement counts. Printing a full MCP config or running a list command can echo stored secrets.
 
-Prefer an official provider hosted MCP. Use a company hosted MCP for custom shared workflows. Use a local MCP when it needs that computer's files or applications. Claude and Codex may require separate one time setup, but the same vault guide can cover both.
+## How It Works
 
-Credentials and OAuth sessions stay outside the vault. Never store a raw credential in a shared file or command argument.
+[second-brain-initiate.md](second-brain-initiate.md) is the builder. Its top section explains how to use it, and everything below the paste line is the prompt: the 14 questions, the folder spec, the file conventions, and the Phase 3 verification list. [second-brain-operator.md](second-brain-operator.md) is the session guide, covering orientation, the rules for finding and adding information, context protection, logging, Pattern Review handling, and the mandatory session end.
 
-Inventory must be redacted by design. Do not tell an agent to print a complete MCP config or run a list command that may echo stored arguments and headers. A safe audit reports only server names, scopes, field names, and placement counts.
+The [template/](template/) folder holds starter versions of the files the builder generates, including [learned-rules.md](template/context/learned-rules.md), [vault-manifest.md](template/context/vault-manifest.md), the [starter skills](template/skills/), and the [agent platform boundary](template/resources/agent-platform/README.md). Pattern Review records are built by [pattern_review_core.py](template/resources/learning-library/pattern_review_core.py), a shared canonical JSON module. [pattern-review-records.py](template/resources/learning-library/pattern-review-records.py) creates or verifies record envelopes, prints by default, and writes only to an explicit `--output` path that it refuses to overwrite. [validate-pattern-review.py](template/resources/learning-library/validate-pattern-review.py) checks the templates or a live vault, and [tests/test_pattern_review_validator.py](tests/test_pattern_review_validator.py) covers the validator.
 
-## Design principles
+## Run the Checks
 
-1. **CLAUDE.md is the brain**: concise navigation file, links to everything. When a section grows long, extract it to `context/` and link back.
-2. **One truth per file**: no mega-docs, everything cross-referenced.
-3. **Context is layered**: org-level at root, client/project folders inherit and override.
-4. **Four-file bootstrap**: CLAUDE.md + AGENTS.md + GEMINI.md + README.md. Every tool lands in the same brain.
-5. **Memory that learns**: local observations propose corrections, and reviewed learned rules distribute approved policy.
-6. **Skills are executable**: not documentation, workflows. The vault does things, not just stores things.
-7. **Daily logs with timestamps, attribution, outcomes, and useful links**: institutional memory that survives across sessions, people, and tools.
-8. **Sessions are active, not passive**: mandatory protocol. Read context first, route knowledge during, log everything at the end.
-9. **Context is protected**: approved content cannot be casually overwritten. Contradictions require confirmation.
-10. **Start minimal**: only create files you have content for. Grow organically.
-11. **Works everywhere**: plain markdown, no tool lock-in.
-12. **Shared and local stay separate**: knowledge and portable adapters are shared. Credentials, paths, permissions, notifications, and caches are machine local.
-13. **Routine logging is preauthorized**: agents append factual current work to daily and applicable scoped logs automatically. Sensitive content, edits to existing entries, and source of truth changes still require approval.
-14. **Completion is evidence based**: every capability and operator machine gets an explicit pass gate. Missing evidence stays pending, and a narrow green test never certifies the full migration.
-15. **One live document transport**: humans and agents share one live vault through supported clients or mounts. Git may receive a one way recovery snapshot but never competes as a second writable source.
-16. **Evidence proposes, humans authorize exact changes**: recurring Pattern Review reports are noncanonical, use one designated writer, begin with four weeks of shadow mode, never allow candidate approval, and require bound execution and validation proof.
+From the repo root:
 
----
+```bash
+python3 template/resources/learning-library/pattern-review-records.py --help
+python3 template/resources/learning-library/validate-pattern-review.py --templates .
+python3 -m unittest discover -s tests -v
+```
+
+Inside a generated vault, validate its records with:
+
+```bash
+python3 resources/learning-library/validate-pattern-review.py --vault .
+```
+
+See [CHANGELOG.md](CHANGELOG.md) for what changed and when.
+
+```
+second-brain-system/
+├── second-brain-initiate.md   builder prompt, run once
+├── second-brain-operator.md   session guide, load every session
+├── AGENTS.md                  contributor rules for repo agents
+├── GEMINI.md                  Gemini CLI entry, points to AGENTS.md
+├── template/                  starter files the builder copies from
+│   ├── .agents/ .claude/ .codex/
+│   ├── context/               soul, manifest, learned rules
+│   ├── logs/                  sample daily log
+│   ├── resources/             agent platform, learning library, machines
+│   └── skills/                starter skills
+├── tests/                     Pattern Review validator tests
+├── CHANGELOG.md
+├── LICENSE
+└── README.md
+```
+
+## Design Principles
+
+1. **`CLAUDE.md` is the brain:** a concise navigation file that links to everything. Long sections move to `context/`.
+2. **One truth per file:** every file owns one topic and links to related files.
+3. **Layered context:** org context at the root, and client or project folders inherit and override it.
+4. **Four file bootstrap:** `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`, and `README.md` send every tool and person to the same brain.
+5. **Memory that learns:** local observations propose corrections, and reviewed learned rules carry approved policy.
+6. **Executable skills:** skills are workflows the AI runs.
+7. **Logs with timestamps, attribution, outcomes, and links:** memory that survives across sessions, people, and tools.
+8. **Active sessions:** read first, route knowledge during, log at the end.
+9. **Protected context:** approved content only changes with confirmation.
+10. **Start minimal:** create files when there's content for them.
+11. **Shared and local stay separate:** knowledge and portable adapters are shared, and credentials, paths, permissions, notifications, and caches stay on each machine.
+12. **Evidence based completion:** every capability and operator machine gets an explicit pass gate, and missing evidence stays pending.
+13. **One live transport:** people and agents share one live vault through supported clients or mounts, and Git receives only a one way recovery snapshot.
+14. **Evidence proposes, people authorize exact changes:** candidates start in shadow mode, and promotion needs bound execution and validation proof.
+
+## Made by Five One Nine Marketing
+
+Second Brain System was built by **Caleb Cody**, founder and CEO of [Five One Nine Marketing](https://www.fonmarketing.com). Five One Nine is a growth partner for businesses that want a clear marketing strategy, the systems to run it, and AI built into how the work gets done. We run our own shared vault on this system, and we build tools like this in-house so a small team can punch well above its weight.
+
+**The team:** Caleb Cody, Founder and CEO · Mollie Huebner, Operations Manager and Creative Director · Julio Aleman, Lead Developer and AI Engineer
+
+**From a client, Zach Goodfellow:**
+
+> "You'll have a hard time finding people more passionate about helping you build your business than Five One Nine."
+
+Your strategy. Your system. Your growth partner. **[Let's talk](https://www.fonmarketing.com/contact)**
 
 ## License
 
-MIT. Use it however you want.
-
----
-
-*Built by [Five One Nine Marketing](https://github.com/accountsFON) for teams who are tired of repeating themselves.*
+[MIT](LICENSE). Free to use, change, and share.
