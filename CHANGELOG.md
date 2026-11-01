@@ -2,6 +2,12 @@
 
 The repo has no version tags yet, so entries are grouped by date. Dates come from the commit history.
 
+## 2026-11-01
+
+- **Reply style:** low verbosity by default, and every reply that saved something ends with a `Logged: [what went where]` line. Added to the initiate spec, the operator skill, and the template learned rules.
+- **Daily log:** one line per bullet, no entries where nothing changed, time order, no tool IDs unless someone needs them.
+- **Field notes:** new [field-notes.md](field-notes.md) with patterns and pitfalls from a real assistant brain.
+
 ## 2026-10-18
 
 - **README:** rebuilt to the Five One Nine public repo standard, with Features, Compatibility, Quick Start, Use It, How It Works, and repo layout sections.

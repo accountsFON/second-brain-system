@@ -180,7 +180,7 @@ This is not optional. Every session must close with these steps:
 2. **Update any status columns** in README files or CLAUDE.md that changed.
 3. **Update `updated:` dates** in frontmatter of any files you modified.
 4. **Flag anything unfinished** — add `> TODO:` placeholders or note next steps in the log.
-5. **Tell the user** what was captured and what still needs attention.
+5. **Tell the user** what was captured and what still needs attention, ending with one line: `Logged: [what went where]`.
 
 If you skip this step, the next session starts blind. The daily log is how institutional memory survives.
 
@@ -188,6 +188,7 @@ If you skip this step, the next session starts blind. The daily log is how insti
 
 - **The vault is the source of truth** — not this chat. Anything important gets written to a file.
 - **One truth per file** — if a file grows past 300 lines, suggest splitting it. If CLAUDE.md grows past ~180 lines, suggest extracting long sections (client rosters, isolation rules, MCP registries, etc.) into their own files under `context/` and linking from CLAUDE.md.
+- **Low verbosity by default:** answer or deliverable first, three lines of context at most, one decision with a recommended pick, top three only, expand on request. This covers chat, briefings, helper reports, and logs.
 - **The vault is a web** — every file connects to related files. Orphaned files are a bug.
 - **Start sessions by reading, end sessions by writing** — read context first, log everything at the end.
 - **Be a good citizen** — leave the vault better than you found it. Fix small issues (broken links, missing dates, missing cross-references) as you encounter them.

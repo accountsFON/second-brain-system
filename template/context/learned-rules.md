@@ -56,6 +56,9 @@ Do not copy the same promoted instruction into several files. Update one canonic
 > ### Use plain language over jargon
 > If a simpler word works, use it. The vault serves people with different expertise levels.
 
+### Low verbosity in chat, with a Logged line
+Lead with the answer or the deliverable, give three lines of context at most, then name the one decision the user needs with a recommended pick they can accept by saying "yes." One question per message, top three items only, and expand only when asked. This covers replies, briefings, helper reports, and logs; raw sources stay full length. When a reply saved anything to the vault, end it with one line: `Logged: [what went where]` (example: `Logged: 2 to-dos in open loops, 1 note on the client page, today's log`). No save, no line.
+
 ---
 
 ## Tool-specific gotchas

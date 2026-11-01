@@ -54,7 +54,7 @@ updated: YYYY-MM-DD
 
 ### 4. Add a timestamped entry
 
-Keep the entry concise but complete. State what changed, the verified result, why it matters, current status, and the next step or blocker when one exists. Include direct links to any live deliverable, preview, report, dashboard, task, pull request, or other useful result. A deployed deliverable is not fully logged until its live URL appears in both the daily log and applicable scoped log.
+Keep the entry concise but complete. State what changed, the verified result, why it matters, current status, and the next step or blocker when one exists. Include direct links to any live deliverable, preview, report, dashboard, task, pull request, or other useful result. A deployed deliverable is not fully logged until its live URL appears in both the daily log and applicable scoped log. Keep each bullet to one line. Skip entries where nothing changed, keep entries in time order, and leave tool IDs (draft, task, message) out unless someone needs them to act.
 
 ```markdown
 ## [H:MM AM/PM] - Description (Name)
